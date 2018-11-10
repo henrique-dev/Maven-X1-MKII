@@ -96,14 +96,11 @@ public class Ajustar {
 	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
 
 		try {
+			Ajustar aj = new Ajustar();
 			Scanner entrada = new Scanner(System.in);
 
         		int servoChannel = 0;
 			int servoPos = 0;
-
-        		System.out.println("Informe o endereco do modulo PWM: ");
-			int modAddress = entrada.nextInt(16);
-			Ajustar aj = new Ajustar(modAddress);
 
         		while (true) {
 				System.out.println("AJUSTANDO SERVO\n\n");
