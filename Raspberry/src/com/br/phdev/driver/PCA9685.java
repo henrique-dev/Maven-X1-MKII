@@ -41,12 +41,12 @@ public class PCA9685 {
 			// Get I2C bus
 			bus = I2CFactory.getInstance(I2CBus.BUS_1); // Depends onthe RasPI version
 			if (verbose)
-				System.out.println("Connected to bus. OK.");
+				System.out.println("Conectado ao barramento. OK");
 
 			// Get the device itself
 			servoDriver = bus.getDevice(address);
 			if (verbose)
-				System.out.println("Connected to device. OK.");
+				System.out.println("Conectado ao dispositivo no endereço " + address + ". OK");
 			// Reseting
 			servoDriver.write(MODE1, (byte) 0x00);
 		} catch (IOException e) {

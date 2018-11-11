@@ -95,6 +95,7 @@ public class Maven {
 				System.out.println("1 - Configuração das pernas");
 				System.out.println("2 - Configuração dos servos");
 				System.out.println("3 - Redefinir sinal de todos os servos");
+				System.out.print(" > ");
 				servoChannel = entrada.nextInt();
 				if (servoChannel == -1) {
 					maven.resetAllServosPos();
