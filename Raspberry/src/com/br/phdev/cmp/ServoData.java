@@ -42,4 +42,14 @@ public class ServoData {
         return maxPosition;
     }
 
+    @Override
+    public String toString() {
+        return "Modulo pertencente: " + module + "\n" +
+                "Canal local: " + localChannel + "\n" +
+                "Canal global: " + globalChannel + "\n" +
+                "Posição minima: pertencente: " + minPosition + "\n" +
+                "Posição média: pertencente: " + midPosition + "\n" +
+                "Posição máxima: pertencente: " + maxPosition + "\n";
+    }
+
 }

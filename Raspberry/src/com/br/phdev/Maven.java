@@ -16,6 +16,9 @@ public class Maven {
     	try {
 			ServoDataRepo servoDataRepo = new ServoDataRepo();
 			List<ServoData> servoDataList = servoDataRepo.loadData();
+			for (ServoData servoData : servoDataList) {
+				System.out.println(servoData.toString());
+			}
     	} catch (Exception e) {
     		System.err.println( e.getClass().getName() + ": " + e.getMessage() );    		
     	}
