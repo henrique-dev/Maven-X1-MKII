@@ -1,6 +1,5 @@
 package com.br.phdev.cmp;
 
-import com.br.phdev.driver.PCA9685;
 import com.br.phdev.jdbc.ConnectionFactory;
 
 import java.sql.Connection;
@@ -10,9 +9,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServoDataRepo {
+public class DataRepo {
 
-    public List<ServoData> loadData() {
+    public List<ServoData> loadServosData() {
         System.out.println("Carregando informações para os servos...");
         List<ServoData> servoDataList = null;
         try {
@@ -34,10 +33,37 @@ public class ServoDataRepo {
             }
             System.out.println("Carregamento completo");
         } catch (SQLException e) {
-            System.out.println("Falha ao carregas as informações para os servos. " + e.getMessage());
+            System.out.println("Falha ao carregar as informações para os servos. " + e.getMessage());
             e.printStackTrace();
         }
         return servoDataList;
     }
+
+    public List<LegData> loadLegsData() {
+        System.out.println("Carregando informações para as pernas...");
+        List<LegData> servoDataList = null;
+        try {
+            Connection connection = new ConnectionFactory().getConnection();
+            String sql = "select * from legs_data";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            servoDataList = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                LegData legData = new LegData(
+                        rs.getInt("leg_number"),
+                        rs.getInt("base_servo"),
+                        rs.getInt("femur_servo"),
+                        rs.getInt("tarsus_servo")
+                );
+                servoDataList.add(legData);
+            }
+            System.out.println("Carregamento completo");
+        } catch (SQLException e) {
+            System.out.println("Falha ao carregar as informações para as pernas " + e.getMessage());
+            e.printStackTrace();
+        }
+        return servoDataList;
+    }
+
 
 }
