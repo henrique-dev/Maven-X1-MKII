@@ -15,6 +15,7 @@ public class Servo {
     }
 
     public void setPosition(int position) {
+        System.out.println(servoData.toString());
         if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
             if (position >= this.servoData.getMinPosition() && position <= this.servoData.getMaxPosition() || position == 0) {
                 module.setPWM(this.servoData.getLocalChannel(), 0, position);
