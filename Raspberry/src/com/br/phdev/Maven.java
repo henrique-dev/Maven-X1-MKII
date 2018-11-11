@@ -10,14 +10,12 @@ public class Maven {
     
     public static void main(String[] args) {
 
-    	String url = "jdbc:mariadb://localhost:5432/maven";
-    	String user = "maven";
-    	String password = "root";
-    	
     	try {
-    		Connection con = DriverManager.getConnection(url, user, password);
-    	} catch (SQLException e) {
-    		e.printStackTrace();
+    		Class.forName(org.sqlite.JDBC);
+    		Connection con = DriverManager.getConnection("jdbc:sqlite:maven.db");
+    		System.out.println("Conexão estabelecida");
+    	} catch (Exception e) {
+    		System.err.println( e.getClass().getName() + ": " + e.getMessage() );    		
     	}
         
     }
