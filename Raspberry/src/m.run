@@ -1,0 +1,4 @@
+
+echo "EXECUTANDO CONFIGURADOR MAVEN"
+
+sudo java -cp .:classes:/opt/pi4j/lib/'*':/opt/maria-db-connector com/br/phdev/Maven
