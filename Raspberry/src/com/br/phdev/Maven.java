@@ -12,7 +12,7 @@ public class Maven {
 
     	try {
     		Class.forName("org.sqlite.JDBC");
-    		Connection con = DriverManager.getConnection("jdbc:sqlite:maven.db");
+    		Connection con = DriverManager.getConnection("jdbc:sqlite:../db_files/maven.db");
     		System.out.println("Conexão estabelecida");
     	} catch (Exception e) {
     		System.err.println( e.getClass().getName() + ": " + e.getMessage() );    		
