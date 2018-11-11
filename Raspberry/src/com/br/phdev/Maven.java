@@ -100,7 +100,7 @@ public class Maven {
 					maven.resetAllServosPos();
 					continue;
 				}
-				System.out.println("Informe a posicao para o servo: ");
+				//System.out.println("Informe a posicao para o servo: ");
 				servoPos = entrada.nextInt();
 
 				if (servoChannel >= 0 && servoChannel < 16) {
