@@ -62,6 +62,7 @@ public class Maven {
 				if (base == null || femur == null || tarsus == null)
 					throw new RuntimeException("Falha ao inicializar as pernas");
 			}
+			System.out.println("Dados de todos os componentes definidos com sucesso :D");
 		} catch (Exception e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
@@ -89,8 +90,11 @@ public class Maven {
 
 			while (true) {
 
-				System.out.println("AJUSTANDO SERVO\n\n");
-				System.out.println("Informe o canal do servo: ");
+				System.out.println("EM FUNCIONAMENTO PARCIAL\n\n");
+				System.out.println("Escolha a opção desesajada: ");
+				System.out.println("1 - Configuração das pernas");
+				System.out.println("2 - Configuração dos servos");
+				System.out.println("3 - Redefinir sinal de todos os servos");
 				servoChannel = entrada.nextInt();
 				if (servoChannel == -1) {
 					maven.resetAllServosPos();
