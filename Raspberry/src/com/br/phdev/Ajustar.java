@@ -18,15 +18,19 @@ public class Ajustar {
 	       	modulo1.setPWMFreq(60);
 		modulo2.setPWMFreq(60);
 
-
-        	for (int i = 0; i < 16; i++) {
-        		modulo1.setPWM(i, 0, 0);
-        		modulo2.setPWM(i, 0, 0);
-        	}
+		resetAllServosPos();
 
 	}
 
-	public void setServoPos(int chf, int pos){
+	private void resetAllServosPos() {
+		System.out.println("Zerando sinal em todos os servos.");
+		for (int i = 0; i < 16; i++) {
+        		modulo1.setPWM(i, 0, 0);
+        		modulo2.setPWM(i, 0, 0);
+        	}
+	}
+
+	private void setServoPos(int chf, int pos){
 		switch (chf) {
 			case 0:
 				modulo1.setPWM(1, 0, pos);
@@ -103,16 +107,68 @@ public class Ajustar {
 			int servoPos = 0;
 
         		while (true) {
+
 				System.out.println("AJUSTANDO SERVO\n\n");
         			System.out.println("Informe o canal do servo: ");
 				servoChannel = entrada.nextInt();
+				if (servoChannel == -1) {
+					aj.resetAllServosPos();
+					continue;
+				}
         			System.out.println("Informe a posicao para o servo: ");
 				servoPos = entrada.nextInt();
-        			System.out.println("Movendo para " + servoPos);
-				if (servoPos >= 150 && servoPos <= 600)
-        				aj.setServoPos(servoChannel, servoPos);
-				else if (servoPos == 0)
-					aj.setServoPos(servoChannel, 0);
+
+				if (servoChannel >= 0 && servoChannel < 16) {
+	        			System.out.println("Movendo para " + servoPos);
+					if (servoPos >= 150 && servoPos <= 600)
+        					aj.setServoPos(servoChannel, servoPos);
+					else if (servoPos == 0)
+						aj.setServoPos(servoChannel, 0);
+				}
+			}
+		} catch (Exception e) {
+			System.out.println("Ocorreu um erro. ");
+			e.printStackTrace();
+		}
+		// 375 servo middle
+	}
+
+	public static void main__(String[] args) throws I2CFactory.UnsupportedBusNumberException {
+
+		try {
+			Ajustar aj = new Ajustar();
+			Scanner entrada = new Scanner(System.in);
+
+			aj.setServoPos(8, 375);
+			aj.setServoPos(7, 375);
+			aj.setServoPos(6, 375);
+			aj.setServoPos(10, 375);
+			aj.setServoPos(12, 375);
+			aj.setServoPos(14, 375);
+
+			aj.setServoPos(8, 375);
+			aj.setServoPos(7, 375);
+			aj.setServoPos(6, 375);
+			aj.setServoPos(10, 375);
+			aj.setServoPos(12, 375);
+			aj.setServoPos(14, 375);
+
+        		while (true) {
+				aj.setServoPos(8, 475);
+				aj.setServoPos(7, 475);
+				aj.setServoPos(6, 475);
+				aj.setServoPos(10, 475);
+				aj.setServoPos(12, 475);
+				aj.setServoPos(14, 475);
+        			aj.delay(300);
+
+        			aj.setServoPos(8, 275);
+				aj.setServoPos(7, 275);
+				aj.setServoPos(6, 275);
+				aj.setServoPos(10, 275);
+				aj.setServoPos(12, 275);
+				aj.setServoPos(14, 275);
+        			aj.delay(300);
 			}
 		} catch (Exception e) {
 			System.out.println("Ocorreu um erro. ");
