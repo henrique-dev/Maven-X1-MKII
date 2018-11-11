@@ -90,12 +90,12 @@ public class Maven {
 
 			while (true) {
 
-				System.out.println("EM FUNCIONAMENTO PARCIAL\n\n");
-				System.out.println("Escolha a opção desesajada: ");
+				System.out.println("\nEM FUNCIONAMENTO PARCIAL\n\n");
+				System.out.println("Escolha a opção desejada: ");
 				System.out.println("1 - Configuração das pernas");
 				System.out.println("2 - Configuração dos servos");
 				System.out.println("3 - Redefinir sinal de todos os servos");
-				System.out.print(" > ");
+				System.out.print("> ");
 				servoChannel = entrada.nextInt();
 				if (servoChannel == -1) {
 					maven.resetAllServosPos();

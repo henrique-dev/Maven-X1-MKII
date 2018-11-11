@@ -46,7 +46,7 @@ public class PCA9685 {
 			// Get the device itself
 			servoDriver = bus.getDevice(address);
 			if (verbose)
-				System.out.println("Conectado ao dispositivo no endereço " + address + ". OK");
+				System.out.println("Conectado ao dispositivo no endereço " + String.valueOf(address) + ". OK");
 			// Reseting
 			servoDriver.write(MODE1, (byte) 0x00);
 		} catch (IOException e) {
