@@ -105,6 +105,8 @@ public class Maven {
 						maven.getServos()[servoChannel].setRawPosition(servoPos);
 					else if (servoPos == 0)
 						maven.getServos()[servoChannel].setRawPosition(0);
+					else if (servoPos == -1)
+						maven.getServos()[servoChannel].moveToMid();
 				}
 			}
 
