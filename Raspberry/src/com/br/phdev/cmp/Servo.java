@@ -16,11 +16,11 @@ public class Servo {
 
     public void setPosition(int position) {
         if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
-            if (position >= this.servoData.getMinPosition() && position <= this.servoData.getMaxPosition()) {
+            if (position >= this.servoData.getMinPosition() && position <= this.servoData.getMaxPosition() || position == 0) {
                 module.setPWM(this.servoData.getLocalChannel(), 0, position);
             }
         } else {
-            if (position >= this.servoData.getMaxPosition() && position <= this.servoData.getMinPosition()) {
+            if (position >= this.servoData.getMaxPosition() && position <= this.servoData.getMinPosition() || position == 0) {
                 module.setPWM(this.servoData.getLocalChannel(), 0, position);
             }
         }
@@ -47,9 +47,9 @@ public class Servo {
     }
 
     public void moveToMid() {
-        System.out.println("Movendo o servo " + this.servoData.getGlobalChannel() + " para a posição " + this.servoData.getMidPosition());
-        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMidPosition());
-        waitFor(1000);
+        //System.out.println("Movendo o servo " + this.servoData.getGlobalChannel() + " para a posição " + this.servoData.getMidPosition());
+        //this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMidPosition());
+        //waitFor(1000);
     }
 
     public void moveToMax() {

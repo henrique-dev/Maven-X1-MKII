@@ -5,6 +5,7 @@ import com.br.phdev.driver.PCA9685;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Maven {
@@ -65,11 +66,48 @@ public class Maven {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		}
 	}
-    
-    public static void main(String[] args) {
+
+	private Servo[] getServos() {
+		return servos;
+	}
+
+	private void resetAllServosPos() {
+		for (int i=0; i<18; i++) {
+			this.servos[i].setPosition(0);
+		}
+	}
+
+	public static void main(String[] args) {
 		try {
 			Maven maven = new Maven();
 			maven.initComponents();
+
+			Scanner entrada = new Scanner(System.in);
+
+			int servoChannel = 0;
+			int servoPos = 0;
+
+			while (true) {
+
+				System.out.println("AJUSTANDO SERVO\n\n");
+				System.out.println("Informe o canal do servo: ");
+				servoChannel = entrada.nextInt();
+				if (servoChannel == -1) {
+					maven.resetAllServosPos();
+					continue;
+				}
+				System.out.println("Informe a posicao para o servo: ");
+				servoPos = entrada.nextInt();
+
+				if (servoChannel >= 0 && servoChannel < 16) {
+					System.out.println("Movendo para " + servoPos);
+					if (servoPos >= 150 && servoPos <= 600)
+						maven.getServos()[servoChannel].setPosition(servoPos);
+					else if (servoPos == 0)
+						maven.getServos()[servoChannel].setPosition(0);
+				}
+			}
+
 		} catch (I2CFactory.UnsupportedBusNumberException e) {
 			e.printStackTrace();
 		}

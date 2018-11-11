@@ -103,25 +103,25 @@ public class Ajustar {
 			Ajustar aj = new Ajustar();
 			Scanner entrada = new Scanner(System.in);
 
-        		int servoChannel = 0;
+			int servoChannel = 0;
 			int servoPos = 0;
 
-        		while (true) {
+			while (true) {
 
 				System.out.println("AJUSTANDO SERVO\n\n");
-        			System.out.println("Informe o canal do servo: ");
+					System.out.println("Informe o canal do servo: ");
 				servoChannel = entrada.nextInt();
 				if (servoChannel == -1) {
 					aj.resetAllServosPos();
 					continue;
 				}
-        			System.out.println("Informe a posicao para o servo: ");
+					System.out.println("Informe a posicao para o servo: ");
 				servoPos = entrada.nextInt();
 
 				if (servoChannel >= 0 && servoChannel < 16) {
-	        			System.out.println("Movendo para " + servoPos);
+						System.out.println("Movendo para " + servoPos);
 					if (servoPos >= 150 && servoPos <= 600)
-        					aj.setServoPos(servoChannel, servoPos);
+							aj.setServoPos(servoChannel, servoPos);
 					else if (servoPos == 0)
 						aj.setServoPos(servoChannel, 0);
 				}
