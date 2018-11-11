@@ -102,9 +102,9 @@ public class Maven {
 				if (servoChannel >= 0 && servoChannel < 16) {
 					System.out.println("Movendo para " + servoPos);
 					if (servoPos >= 150 && servoPos <= 600)
-						maven.getServos()[servoChannel].setPosition(servoPos);
+						maven.getServos()[servoChannel].setRawPosition(servoPos);
 					else if (servoPos == 0)
-						maven.getServos()[servoChannel].setPosition(0);
+						maven.getServos()[servoChannel].setRawPosition(0);
 				}
 			}
 

@@ -14,8 +14,15 @@ public class Servo {
         this.currentPosition = currentPosition;
     }
 
-    public void setPosition(int position) {
+    @Deprecated
+    public void setRawPosition(int position) {
         System.out.println(servoData.toString());
+        if (position > 150 && position < 600) {
+            module.setPWM(this.servoData.getLocalChannel(), 0, position);
+        }
+    }
+
+    public void setPosition(int position) {
         if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
             if (position >= this.servoData.getMinPosition() && position <= this.servoData.getMaxPosition() || position == 0) {
                 module.setPWM(this.servoData.getLocalChannel(), 0, position);
