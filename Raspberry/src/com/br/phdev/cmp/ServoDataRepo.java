@@ -13,6 +13,7 @@ import java.util.List;
 public class ServoDataRepo {
 
     public List<ServoData> loadData() {
+        System.out.println("Carregando informações para os servos...");
         List<ServoData> servoDataList = null;
         try {
             Connection connection = new ConnectionFactory().getConnection();
@@ -22,7 +23,7 @@ public class ServoDataRepo {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 ServoData servoData = new ServoData(
-                        (char)rs.getInt("mod_number"),
+                        rs.getString("mod_number").charAt(0),
                         rs.getInt("global_channel"),
                         rs.getInt("local_channel"),
                         rs.getInt("min"),
@@ -31,7 +32,9 @@ public class ServoDataRepo {
                 );
                 servoDataList.add(servoData);
             }
+            System.out.println("Carregamento completo");
         } catch (SQLException e) {
+            System.out.println("Falha ao carregas as informações para os servos. " + e.getMessage());
             e.printStackTrace();
         }
         return servoDataList;
