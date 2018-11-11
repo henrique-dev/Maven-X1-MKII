@@ -5,45 +5,37 @@ import com.br.phdev.driver.PCA9685;
 public class Servo {
 
     private final PCA9685 module;
-    private final int globalChannel;
-    private final int localChannel;
-    private final int minPosition;
-    private final int midPosition;
-    private final int maxPosition;
+    private ServoData servoData;
     private int currentPosition;
 
-    public Servo(PCA9685 module, int globalChannel, int localChannel, int minPosition, int midPosition, int maxPosition, int currentPosition) {
+    public Servo(PCA9685 module, ServoData servoData, int currentPosition) {
         this.module = module;
-        this.globalChannel = globalChannel;
-        this.localChannel = localChannel;
-        this.minPosition = minPosition;
-        this.midPosition = midPosition;
-        this.maxPosition = maxPosition;
+        this.servoData = servoData;
         this.currentPosition = currentPosition;
     }
 
     public void setPosition(int position) {
-        if (maxPosition > minPosition) {
-            if (position >= minPosition && position <= maxPosition) {
-                module.setPWM(this.localChannel, 0, position);
+        if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
+            if (position >= this.servoData.getMinPosition() && position <= this.servoData.getMaxPosition()) {
+                module.setPWM(this.servoData.getLocalChannel(), 0, position);
             }
         } else {
-            if (position >= maxPosition && position <= minPosition) {
-                module.setPWM(this.localChannel, 0, position);
+            if (position >= this.servoData.getMaxPosition() && position <= this.servoData.getMinPosition()) {
+                module.setPWM(this.servoData.getLocalChannel(), 0, position);
             }
         }
     }
 
     public boolean move(int offset) {
         int newPos = this.currentPosition + offset;
-        if (maxPosition > minPosition) {
-            if (newPos >= minPosition && newPos <= maxPosition) {
-                module.setPWM(this.localChannel, 0, newPos);
+        if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
+            if (newPos >= this.servoData.getMinPosition() && newPos <= this.servoData.getMaxPosition()) {
+                module.setPWM(this.servoData.getLocalChannel(), 0, newPos);
                 return true;
             }
         } else {
-            if (newPos >= maxPosition && newPos <= minPosition) {
-                module.setPWM(this.localChannel, 0, newPos);
+            if (newPos >= this.servoData.getMaxPosition() && newPos <= this.servoData.getMinPosition()) {
+                module.setPWM(this.servoData.getLocalChannel(), 0, newPos);
                 return true;
             }
         }
@@ -55,7 +47,7 @@ public class Servo {
     }
 
     public void moveToMid() {
-
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMidPosition());
     }
 
     public void moveToMax() {
