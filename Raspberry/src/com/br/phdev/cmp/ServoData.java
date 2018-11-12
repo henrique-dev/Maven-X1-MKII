@@ -69,7 +69,7 @@ public class ServoData {
                 "Canal global: " + globalChannel + "\n" +
                 "Posição minima: pertencente: " + minPosition + "\n" +
                 "Posição média: pertencente: " + midPosition + "\n" +
-                "Posição máxima: pertencente: " + maxPosition + "\n";
+                "Posição máxima: pertencente: " + maxPosition;
     }
 
 }
