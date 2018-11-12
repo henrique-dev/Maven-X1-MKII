@@ -44,13 +44,13 @@ public class DataRepo {
         String sql;
         switch (option) {
             case "min":
-                sql = "update table servos_data set min=" + pos + " where global_channel=" + globalChannel;
+                sql = "update servos_data set min=" + pos + " where global_channel=" + globalChannel;
                 break;
             case "mid":
-                sql = "update table servos_data set mid=" + pos + " where global_channel=" + globalChannel;
+                sql = "update servos_data set mid=" + pos + " where global_channel=" + globalChannel;
                 break;
             case "max":
-                sql = "update table servos_data set max=" + pos + " where global_channel=" + globalChannel;
+                sql = "update servos_data set max=" + pos + " where global_channel=" + globalChannel;
                 break;
             default:
                 return;
