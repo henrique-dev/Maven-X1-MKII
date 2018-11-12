@@ -168,7 +168,6 @@ public class Maven {
 															} catch (Exception e) {
 																System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
 															}
-															break;
 														}
 														break;
 													case "general-values":
