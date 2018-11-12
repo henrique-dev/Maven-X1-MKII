@@ -55,11 +55,7 @@ public class Servo {
     }
 
     public void moveToMid() {
-        int gch = this.servoData.getGlobalChannel();
-        if (gch == 12) {
-            //System.out.println("Movendo o servo " + this.servoData.getGlobalChannel() + " para a posição " + this.servoData.getMidPosition());
-            this.module.setPWM(this.servoData.getLocalChannel(), 0, 375);
-        }
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMidPosition());
     }
 
     public void moveToMax() {

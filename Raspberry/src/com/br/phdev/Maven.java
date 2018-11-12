@@ -82,8 +82,13 @@ public class Maven {
 
 	private void moveAllServosToMidPos() {
 		for (int i=0; i<18; i++) {
-			if (i == 12 || i == 14)
-				this.servos[i].setRawPosition(375);
+			this.servos[i].moveToMid();
+		}
+	}
+
+	private void moveAllBasesToMidPos() {
+		for (int i=0; i<6; i++) {
+			this.legs[i].getBase().moveToMid();
 		}
 	}
 
@@ -193,8 +198,11 @@ public class Maven {
 					case "reset-signal":
 						maven.resetAllServosPos();
 						break;
-					case "move-tomid":
+					case "all-tomid":
 						maven.moveAllServosToMidPos();
+						break;
+					case "base-tomid":
+						maven.moveAllBasesToMidPos();
 						break;
 				}
 /*
