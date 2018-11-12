@@ -102,7 +102,7 @@ public class Maven {
 							System.out.print(currentPath + "> ");
 							String parameter = in.nextLine();
 							switch (parameter) {
-								case "quit":
+								case "exit":
 									runningAllServosConfig = false;
 									break;
 								default: {
@@ -112,7 +112,7 @@ public class Maven {
 											boolean runningServoConfig = true;
 											while (runningServoConfig) {
 												currentPath = "configure-servos (servo " + globalChannel + ") ";
-												System.out.println(currentPath + "> ");
+												System.out.print(currentPath + "> ");
 												parameter = in.nextLine();
 												switch (parameter.trim()) {
 													case "min":
@@ -123,7 +123,7 @@ public class Maven {
 														int servoPos = -1;
 														while (runningServoPosConfig) {
 															currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
-															System.out.println(currentPath + "> ");
+															System.out.print(currentPath + "> ");
 															try {
 																parameter = in.nextLine();
 																switch (parameter.trim()) {
