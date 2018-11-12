@@ -80,7 +80,8 @@ public class Maven {
 
 	private void moveAllServosToMidPos() {
 		for (int i=0; i<18; i++) {
-			this.servos[i].setRawPosition(375);
+			if (i == 12 || i == 14)
+				this.servos[i].setRawPosition(375);
 		}
 	}
 
