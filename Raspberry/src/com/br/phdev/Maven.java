@@ -78,6 +78,13 @@ public class Maven {
 		}
 	}
 
+	private void moveAllServosToMidPos() {
+		for (int i=0; i<18; i++) {
+			this.servos[i].moveToMid();
+		}
+	}
+
+
 	public static void main(String[] args) {
 		try {
 			Maven maven = new Maven();
@@ -178,8 +185,10 @@ public class Maven {
 						break;
 					}
 					case "reset-signal":
-						System.out.println("> Resetando sinal de todos os servos");
 						maven.resetAllServosPos();
+						break;
+					case "move-tomid":
+						maven.moveAllServosToMidPos();
 						break;
 				}
 /*
