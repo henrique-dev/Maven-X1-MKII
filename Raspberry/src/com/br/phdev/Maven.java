@@ -90,7 +90,7 @@ public class Maven {
 			while (true) {
 
 				String currentPath = "";
-				System.out.print(currentPath);
+				System.out.print(currentPath + "> ");
 				String command = in.nextLine();
 				switch (command) {
 					case "configure-legs":
