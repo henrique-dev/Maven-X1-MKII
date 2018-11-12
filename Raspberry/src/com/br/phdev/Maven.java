@@ -22,7 +22,7 @@ public class Maven {
 		this.initLegs();
 	}
 
-	public void initLegs() {
+	private void initLegs() {
 		try {
 			DataRepo dataRepo = new DataRepo();
 			List<ServoData> servoDataList = dataRepo.loadServosData();
@@ -83,26 +83,113 @@ public class Maven {
 			Maven maven = new Maven();
 			maven.initComponents();
 
-			Scanner entrada = new Scanner(System.in);
+			Scanner in = new Scanner(System.in);
 
-			int servoChannel = 0;
-			int servoPos = 0;
+			System.out.println("\nEM FUNCIONAMENTO PARCIAL\n\n");
 
 			while (true) {
 
-				System.out.println("\nEM FUNCIONAMENTO PARCIAL\n\n");
-				System.out.println("Escolha a opção desejada: ");
-				System.out.println("1 - Configuração das pernas");
-				System.out.println("2 - Configuração dos servos");
-				System.out.println("3 - Redefinir sinal de todos os servos");
-				System.out.print("> ");
-				servoChannel = entrada.nextInt();
+				String currentPath = "";
+				System.out.print(currentPath);
+				String command = in.nextLine();
+				switch (command) {
+					case "configure-legs":
+						break;
+					case "configure-servos": {
+						boolean runningAllServosConfig = true;
+						while (runningAllServosConfig) {
+							currentPath = "configure-servos ";
+							System.out.print(currentPath + "> ");
+							String parameter = in.nextLine();
+							switch (parameter) {
+								case "quit":
+									runningAllServosConfig = false;
+									break;
+								default: {
+									try {
+										int globalChannel = Integer.parseInt(parameter.substring(6));
+										if (globalChannel >= 0 && globalChannel <= 17) {
+											boolean runningServoConfig = true;
+											while (runningServoConfig) {
+												currentPath = "configure-servos (servo " + globalChannel + ") ";
+												System.out.println(currentPath + "> ");
+												parameter = in.nextLine();
+												switch (parameter.trim()) {
+													case "min":
+													case "mid":
+													case "max":
+														String currentServoConfigName = parameter.trim();
+														boolean runningServoPosConfig = true;
+														int servoPos = -1;
+														while (runningServoPosConfig) {
+															currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
+															System.out.println(currentPath + "> ");
+															try {
+																parameter = in.nextLine();
+																switch (parameter.trim()) {
+																	case "save":
+																		if (servoPos != -1) {
+																			DataRepo dataRepo = new DataRepo();
+																			dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
+																			runningServoPosConfig = false;
+																		} else
+																			System.out.println(currentPath + "> Os dados não foram alterados. ");
+																		break;
+																	case "exit":
+																		runningServoPosConfig = false;
+																		break;
+																	default:
+																		servoPos = Integer.parseInt(in.nextLine());
+																		if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
+																			//maven.getServos()[globalChannel].setRawPosition(servoPos);
+																			System.out.println("MOVENDO SERVO");
+																		else
+																			servoPos = -1;
+																		break;
+																}
+															} catch (Exception e) {
+																System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+															}
+															break;
+														}
+														break;
+													case "general-values":
+														currentPath = "configure-servos (servo " + globalChannel + " - general values) ";
+														System.out.println(currentPath + "> ");
+														break;
+													case "exit":
+														runningServoConfig = false;
+														break;
+													default:
+														System.out.println(currentPath + "> Comando inválido");
+														break;
+												}
+											}
+										} else {
+											System.out.println(currentPath + "> Canal global fora do range");
+										}
+									} catch (Exception e) {
+										System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+									}
+									break;
+								}
+							}
+						}
+						break;
+					}
+					case "reset-signal":
+						System.out.println("> Resetando sinal de todos os servos");
+						maven.resetAllServosPos();
+						break;
+				}
+/*
+				servoChannel = in.nextInt();
 				if (servoChannel == -1) {
 					maven.resetAllServosPos();
 					continue;
 				}
 				//System.out.println("Informe a posicao para o servo: ");
-				servoPos = entrada.nextInt();
+				servoPos = in.nextInt();
 
 				if (servoChannel >= 0 && servoChannel < 16) {
 					System.out.println("Movendo para " + servoPos);
@@ -112,7 +199,7 @@ public class Maven {
 						maven.getServos()[servoChannel].setRawPosition(0);
 					else if (servoPos == -1)
 						maven.getServos()[servoChannel].moveToMid();
-				}
+				}*/
 			}
 
 		} catch (I2CFactory.UnsupportedBusNumberException e) {

@@ -31,12 +31,38 @@ public class DataRepo {
                 );
                 servoDataList.add(servoData);
             }
+            stmt.close();
             System.out.println("Carregamento completo");
         } catch (SQLException e) {
             System.out.println("Falha ao carregar as informações para os servos. " + e.getMessage());
             e.printStackTrace();
         }
         return servoDataList;
+    }
+
+    public void saveServoPosData(int globalChannel, String option, int pos) {
+        String sql;
+        switch (option) {
+            case "min":
+                sql = "update table servos_data set min=" + pos + " where global_channel=" + globalChannel;
+                break;
+            case "mid":
+                sql = "update table servos_data set mid=" + pos + " where global_channel=" + globalChannel;
+                break;
+            case "max":
+                sql = "update table servos_data set max=" + pos + " where global_channel=" + globalChannel;
+                break;
+            default:
+                return;
+        }
+        try {
+            PreparedStatement stmt = new ConnectionFactory().getConnection().prepareCall(sql);
+            stmt.execute();
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public List<LegData> loadLegsData() {
