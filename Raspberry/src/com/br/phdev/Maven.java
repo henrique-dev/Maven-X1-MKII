@@ -146,6 +146,12 @@ public class Maven {
 																		if (servoPos != -1) {
 																			DataRepo dataRepo = new DataRepo();
 																			dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
+																			if (currentServoConfigName.equals("min"))
+																				maven.getServos()[globalChannel].getServoData().setMinPosition(servoPos);
+																			else if (currentServoConfigName.equals("mid"))
+																				maven.getServos()[globalChannel].getServoData().setMidPosition(servoPos);
+																			else if (currentServoConfigName.equals("max"))
+																				maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
 																			runningServoPosConfig = false;
 																		} else
 																			System.out.println(currentPath + "> Os dados não foram alterados. ");
@@ -176,6 +182,9 @@ public class Maven {
 														break;
 													case "exit":
 														runningServoConfig = false;
+														break;
+													case "show":
+
 														break;
 													default:
 														System.out.println(currentPath + "> Comando inválido");

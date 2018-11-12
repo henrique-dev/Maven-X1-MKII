@@ -14,6 +14,14 @@ public class Servo {
         this.currentPosition = currentPosition;
     }
 
+    public ServoData getServoData() {
+        return servoData;
+    }
+
+    public int getCurrentPosition() {
+        return currentPosition;
+    }
+
     @Deprecated
     public void setRawPosition(int position) {
         System.out.println(servoData.toString());
