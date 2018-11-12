@@ -19,6 +19,8 @@ public class Maven {
 	private void initComponents() throws I2CFactory.UnsupportedBusNumberException {
 		this.module1 = new PCA9685(0x40);
 		this.module2 = new PCA9685(0x41);
+		this.module1.setPWMFreq(60);
+		this.module2.setPWMFreq(60);
 		this.initLegs();
 	}
 
@@ -153,10 +155,10 @@ public class Maven {
 																				maven.getServos()[globalChannel].setRawPosition(servoPos);
 																			else
 																				servoPos = -1;
-																			break;
 																		} catch (Exception e) {
 																			System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
 																		}
+																		break;
 																}
 															} catch (Exception e) {
 																System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
