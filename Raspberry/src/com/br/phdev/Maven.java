@@ -27,8 +27,8 @@ public class Maven {
 			DataRepo dataRepo = new DataRepo();
 			List<ServoData> servoDataList = dataRepo.loadServosData();
 			List<LegData> legDataList = dataRepo.loadLegsData();
-			legs = new Leg[6];
-			servos = new Servo[18];
+			this.legs = new Leg[6];
+			this.servos = new Servo[18];
 
 			System.out.println("Definindo os dados para todos os componentes...");
 			for (int i=0; i<legDataList.size(); i++) {
@@ -39,21 +39,21 @@ public class Maven {
 					if (legDataList.get(i).getBaseServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo(servoData.getModule() == '1' ? module1 : module2, servoData, 0);
 						base = new Base(
-								servos[servoData.getGlobalChannel()]
+								this.servos[servoData.getGlobalChannel()]
 						);
 						System.out.println("Servo da base da perna " + i + " carregado.");
 					}
 					if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo(servoData.getModule() == '1' ? module1 : module2, servoData, 0);
 						femur = new Femur(
-								servos[servoData.getGlobalChannel()]
+								this.servos[servoData.getGlobalChannel()]
 						);
 						System.out.println("Servo do femur da perna " + i + " carregado.");
 					}
 					if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo(servoData.getModule() == '1' ? module1 : module2, servoData, 0);
 						tarsus = new Tarsus(
-								servos[servoData.getGlobalChannel()]
+								this.servos[servoData.getGlobalChannel()]
 						);
 						System.out.println("Servo do tarso da perna " + i + " carregado.");
 					}
@@ -80,7 +80,7 @@ public class Maven {
 
 	private void moveAllServosToMidPos() {
 		for (int i=0; i<18; i++) {
-			this.servos[i].moveToMid();
+			this.servos[i].setRawPosition(375);
 		}
 	}
 
@@ -149,8 +149,7 @@ public class Maven {
 																		try {
 																			servoPos = Integer.parseInt(in.nextLine());
 																			if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
-																				//maven.getServos()[globalChannel].setRawPosition(servoPos);
-																				System.out.println("MOVENDO SERVO");
+																				maven.getServos()[globalChannel].setRawPosition(servoPos);
 																			else
 																				servoPos = -1;
 																			break;

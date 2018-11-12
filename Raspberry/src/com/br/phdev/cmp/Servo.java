@@ -5,7 +5,7 @@ import com.br.phdev.driver.PCA9685;
 public class Servo {
 
     private final PCA9685 module;
-    private ServoData servoData;
+    private final ServoData servoData;
     private int currentPosition;
 
     public Servo(PCA9685 module, ServoData servoData, int currentPosition) {
