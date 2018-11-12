@@ -4,7 +4,6 @@ public class Base extends Member {
 
     public Base(Servo servo) {
         super(servo);
-        moveToMid();
     }
 
 }

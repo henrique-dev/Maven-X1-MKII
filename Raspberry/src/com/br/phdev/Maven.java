@@ -146,13 +146,17 @@ public class Maven {
 																		runningServoPosConfig = false;
 																		break;
 																	default:
-																		servoPos = Integer.parseInt(in.nextLine());
-																		if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
-																			//maven.getServos()[globalChannel].setRawPosition(servoPos);
-																			System.out.println("MOVENDO SERVO");
-																		else
-																			servoPos = -1;
-																		break;
+																		try {
+																			servoPos = Integer.parseInt(in.nextLine());
+																			if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
+																				//maven.getServos()[globalChannel].setRawPosition(servoPos);
+																				System.out.println("MOVENDO SERVO");
+																			else
+																				servoPos = -1;
+																			break;
+																		} catch (Exception e) {
+																			System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+																		}
 																}
 															} catch (Exception e) {
 																System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
