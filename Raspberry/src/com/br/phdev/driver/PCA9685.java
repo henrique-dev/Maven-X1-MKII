@@ -33,20 +33,18 @@ public class PCA9685 {
 	private I2CDevice servoDriver;
 
 	public PCA9685() throws I2CFactory.UnsupportedBusNumberException {
-		this(PCA9685_ADDRESS); // 0x40 obtained through sudo i2cdetect -y 1
+		this(PCA9685_ADDRESS);
 	}
 
 	public PCA9685(int address) throws I2CFactory.UnsupportedBusNumberException {
 		try {
-			// Get I2C bus
-			bus = I2CFactory.getInstance(I2CBus.BUS_1); // Depends onthe RasPI version
+			bus = I2CFactory.getInstance(I2CBus.BUS_1);
 			if (verbose)
 				System.out.println("Conectado ao barramento. OK");
 
-			// Get the device itself
 			servoDriver = bus.getDevice(address);
 			if (verbose)
-				System.out.println("Conectado ao dispositivo no endereço " + String.valueOf(address) + ". OK");
+				System.out.println("Conectado ao dispositivo no endereço " + Integer.toHexString(address) + ". OK");
 			// Reseting
 			servoDriver.write(MODE1, (byte) 0x00);
 		} catch (IOException e) {
@@ -64,12 +62,12 @@ public class PCA9685 {
 		preScaleVal /= freq;
 		preScaleVal -= 1.0;
 		if (verbose) {
-			System.out.println("Setting PWM frequency to " + freq + " Hz");
-			System.out.println("Estimated pre-scale: " + preScaleVal);
+			System.out.println("Definindo a frequência do PWM para " + freq + " Hz");
+			System.out.println("Pré escala estimada: " + preScaleVal);
 		}
 		double preScale = Math.floor(preScaleVal + 0.5);
 		if (verbose)
-			System.out.println("Final pre-scale: " + preScale);
+			System.out.println("Pré escala final: " + preScale);
 
 		try {
 			byte oldmode = (byte) servoDriver.read(MODE1);
