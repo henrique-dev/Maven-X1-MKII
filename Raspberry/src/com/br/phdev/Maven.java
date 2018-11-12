@@ -184,7 +184,7 @@ public class Maven {
 														runningServoConfig = false;
 														break;
 													case "show":
-
+														System.out.println(currentPath + "> " + maven.getServos()[globalChannel].getServoData().toString());
 														break;
 													default:
 														System.out.println(currentPath + "> Comando inválido");
