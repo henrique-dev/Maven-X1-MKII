@@ -56,7 +56,7 @@ public class DataRepo {
                 return;
         }
         try {
-            PreparedStatement stmt = new ConnectionFactory().getConnection().prepareCall(sql);
+            PreparedStatement stmt = new ConnectionFactory().getConnection().prepareStatement(sql);
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
