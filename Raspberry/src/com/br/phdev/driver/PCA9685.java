@@ -42,8 +42,7 @@ public class PCA9685 extends Module {
 			bus = I2CFactory.getInstance(I2CBus.BUS_1);
 			if (verbose)
 				System.out.println("Conectado ao barramento. OK");
-
-			servoDriver = bus.getDevice(Integer.parseInt(super.moduleAddress, 16));
+			servoDriver = bus.getDevice(Integer.decode(super.moduleAddress));
 			if (verbose)
 				System.out.println("Conectado ao dispositivo no endereço " + super.moduleAddress + ". OK");
 			// Reseting
