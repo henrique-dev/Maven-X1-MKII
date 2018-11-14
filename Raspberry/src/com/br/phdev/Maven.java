@@ -48,8 +48,6 @@ public class Maven {
 
 				for (ServoData servoData : servoDataList) {
 
-					System.out.println("TESTE = " + this.servos[servoData.getGlobalChannel()].getServoData().getModuleAddress());
-
 					if (legDataList.get(i).getBaseServo() == servoData.getGlobalChannel()) {
 
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
