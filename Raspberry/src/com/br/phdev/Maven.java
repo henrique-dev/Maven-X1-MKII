@@ -344,11 +344,8 @@ public class Maven {
 									runningScript = false;
 									break;
 								default:
-									boolean posFind = false;
 									boolean servoFind = false;
 									StringBuilder currentServoNum = new StringBuilder();
-
-									int servoNum = -1;
 									for (int i=0; i<script.length(); i++) {
 										char c = script.charAt(i);
 										if (c == 's') {
@@ -362,10 +359,12 @@ public class Maven {
 											} else if (script.charAt(i+1) == 'a' && script.charAt(i+2) == 'x') {
 												Log.w("Movendo servo " + currentServoNum.toString() + " para max");
 											}
-											currentServoNum = null;
+											currentServoNum = new StringBuilder();
 											i += 4;
 										} else if (c == '-' && servoFind){
 											servoFind = false;
+										} else if (c == ' ') {
+											
 										} else if (servoFind)
 											currentServoNum.append(c);
 									}
