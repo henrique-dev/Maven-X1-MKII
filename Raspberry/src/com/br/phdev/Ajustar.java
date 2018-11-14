@@ -10,7 +10,7 @@ public class Ajustar {
 
 	private PCA9685 modulo1;
 	private PCA9685 modulo2;
-
+/*
 	public Ajustar() throws I2CFactory.UnsupportedBusNumberException {
 
 		modulo1 = new PCA9685(0x40);
@@ -175,7 +175,7 @@ public class Ajustar {
 			e.printStackTrace();
 		}
 		// 375 servo middle
-	}
+	}*/
 
 }
 
