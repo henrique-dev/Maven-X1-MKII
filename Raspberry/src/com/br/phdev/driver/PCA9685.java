@@ -52,23 +52,6 @@ public class PCA9685 extends Module {
 		}
 	}
 
-	/*
-	public PCA9685(int address) throws I2CFactory.UnsupportedBusNumberException {
-		try {
-			bus = I2CFactory.getInstance(I2CBus.BUS_1);
-			if (verbose)
-				System.out.println("Conectado ao barramento. OK");
-
-			servoDriver = bus.getDevice(address);
-			if (verbose)
-				System.out.println("Conectado ao dispositivo no endereço " + Integer.toHexString(address) + ". OK");
-			// Reseting
-			servoDriver.write(MODE1, (byte) 0x00);
-		} catch (IOException e) {
-			System.err.println(e.getMessage());
-		}
-	}*/
-
 	/**
 	 * @param freq 40..1000
 	 */

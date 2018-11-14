@@ -11,6 +11,10 @@ import java.util.Scanner;
 
 public class Maven {
 
+	private enum Error {
+		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT
+	}
+
 	private List<Module> moduleList;
 	private List<ServoData> servoDataList;
 	private List<LegData> legDataList;
@@ -173,7 +177,7 @@ public class Maven {
 																					maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
 																				runningServoPosConfig = false;
 																			} else
-																				System.out.println(currentPath + "> Os dados não foram alterados. ");
+																				System.out.println("Os dados não foram alterados.");
 																			break;
 																		case "exit":
 																			runningServoPosConfig = false;
@@ -186,12 +190,12 @@ public class Maven {
 																				else
 																					servoPos = -1;
 																			} catch (Exception e) {
-																				System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+																				showError(Error.INVALID_INPUT);
 																			}
 																			break;
 																	}
 																} catch (Exception e) {
-																	System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+																	showError(Error.INVALID_INPUT);
 																}
 															}
 															break;
@@ -206,7 +210,7 @@ public class Maven {
 															System.out.println(maven.getServos()[globalChannel].getServoData().toString());
 															break;
 														default:
-															System.out.println(currentPath + "> Comando inválido");
+															showError(Error.INVALID_COMMAND);
 															break;
 													}
 												}
@@ -221,50 +225,52 @@ public class Maven {
 								}
 							}
 						} else
-							System.out.println(currentPath + "> Sistema não iniciado");
+							showError(Error.SYSTEM_NOT_STARTED);
 						break;
 					}
 					case "reset-signal":
 						if (initSystem) {
 							maven.resetAllServosPos();
 						} else
-							System.out.println(currentPath + "> Sistema não iniciado");
+							showError(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "all-tomid":
 						if (initSystem)
 							maven.moveAllServosToMidPos();
 						else
-							System.out.println(currentPath + "> Sistema não iniciado");
+							showError(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "base-tomid":
 						if (initSystem)
 							maven.moveAllBasesToMidPos();
 						else
-							System.out.println(currentPath + "> Sistema não iniciado");
+							showError(Error.SYSTEM_NOT_STARTED);
+						break;
+					case "\n":
+						break;
+					default:
+						showError(Error.INVALID_COMMAND);
 						break;
 				}
-/*
-				servoChannel = in.nextInt();
-				if (servoChannel == -1) {
-					maven.resetAllServosPos();
-					continue;
-				}
-				//System.out.println("Informe a posicao para o servo: ");
-				servoPos = in.nextInt();
-
-				if (servoChannel >= 0 && servoChannel < 16) {
-					System.out.println("Movendo para " + servoPos);
-					if (servoPos >= 150 && servoPos <= 600)
-						maven.getServos()[servoChannel].setRawPosition(servoPos);
-					else if (servoPos == 0)
-						maven.getServos()[servoChannel].setRawPosition(0);
-					else if (servoPos == -1)
-						maven.getServos()[servoChannel].moveToMid();
-				}*/
 			}
 
 		} catch (I2CFactory.UnsupportedBusNumberException e) {
 			e.printStackTrace();
 		}
 	}
+
+	private static void showError(Error error) {
+		switch (error) {
+			case SYSTEM_NOT_STARTED:
+				System.out.println("Sistema não iniciado");
+				break;
+			case INVALID_COMMAND:
+				System.out.println("Comando inválido");
+				break;
+			case INVALID_INPUT:
+				System.out.println("Entrada inválida");
+				break;
+		}
+	}
+
 }
