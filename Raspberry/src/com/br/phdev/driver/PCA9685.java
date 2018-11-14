@@ -1,5 +1,6 @@
 package com.br.phdev.driver;
 
+import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
@@ -41,14 +42,14 @@ public class PCA9685 extends Module {
 		try {
 			bus = I2CFactory.getInstance(I2CBus.BUS_1);
 			if (verbose)
-				System.out.println("Conectado ao barramento. OK");
+				Log.s("Conectado ao barramento. OK");
 			servoDriver = bus.getDevice(Integer.decode(super.moduleAddress));
 			if (verbose)
-				System.out.println("Conectado ao dispositivo no endereço " + super.moduleAddress + ". OK");
+				Log.s("Conectado ao dispositivo no endereço " + super.moduleAddress + ". OK");
 			// Reseting
 			servoDriver.write(MODE1, (byte) 0x00);
 		} catch (IOException e) {
-			System.err.println(e.getMessage());
+			Log.e(e.getMessage());
 		}
 	}
 
@@ -62,12 +63,12 @@ public class PCA9685 extends Module {
 		preScaleVal /= freq;
 		preScaleVal -= 1.0;
 		if (verbose) {
-			System.out.println("Definindo a frequência do PWM para " + freq + " Hz");
-			System.out.println("Pré escala estimada: " + preScaleVal);
+			Log.i("Definindo a frequência do PWM para " + freq + " Hz");
+			Log.i("Pré escala estimada: " + preScaleVal);
 		}
 		double preScale = Math.floor(preScaleVal + 0.5);
 		if (verbose)
-			System.out.println("Pré escala final: " + preScale);
+			Log.s("Pré escala final: " + preScale);
 
 		try {
 			byte oldmode = (byte) servoDriver.read(MODE1);
@@ -132,98 +133,4 @@ public class PCA9685 extends Module {
 			System.out.println(pulseLength + " us per bit, pulse:" + pulse);
 		this.setPWM(channel, 0, pulse);
 	}
-
-	/*
-	 * Servo       | Standard |   Continuous
-	 * ------------+----------+-------------------
-	 * 1.5ms pulse |   0 deg  |     Stop
-	 * 2ms pulse   |  90 deg  | FullSpeed forward
-	 * 1ms pulse   | -90 deg  | FullSpeed backward
-	 * ------------+----------+-------------------
-	 */
-	/*
-	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
-		int freq = 60;
-		if (args.length > 0)
-			freq = Integer.parseInt(args[0]);
-		PCA9685 servoBoard = new PCA9685();
-		servoBoard.setPWMFreq(freq); // Set frequency to 60 Hz
-		int servoMin = 122; // 130;   // was 150. Min pulse length out of 4096
-		int servoMax = 615;   // was 600. Max pulse length out of 4096
-
-		final int CONTINUOUS_SERVO_CHANNEL = 14;
-		final int STANDARD_SERVO_CHANNEL = 1;
-
-		for (int i = 0; false && i < 5; i++) {
-			System.out.println("i=" + i);
-			servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, servoMin);
-			servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, servoMin);
-			waitfor(1_000);
-			servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, servoMax);
-			servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, servoMax);
-			waitfor(1000);
-		}
-		servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, 0); // Stop the continuous one
-		servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, 0);   // Stop the standard one
-		System.out.println("Done with the demo.");
-
-		for (int i = servoMin; i <= servoMax; i++) {
-			System.out.println("i=" + i);
-			servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, i);
-			waitfor(10);
-		}
-		for (int i = servoMax; i >= servoMin; i--) {
-			System.out.println("i=" + i);
-			servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, i);
-			waitfor(10);
-		}
-
-		servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, 0); // Stop the continuous one
-		servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, 0);   // Stop the standard one
-
-		for (int i = servoMin; i <= servoMax; i++) {
-			System.out.println("i=" + i);
-			servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, i);
-			waitfor(100);
-		}
-		for (int i = servoMax; i >= servoMin; i--) {
-			System.out.println("i=" + i);
-			servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, i);
-			waitfor(100);
-		}
-
-		servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, 0); // Stop the continuous one
-		servoBoard.setPWM(STANDARD_SERVO_CHANNEL, 0, 0);   // Stop the standard one
-		System.out.println("Done with the demo.");
-
-
-		if (false) {
-			System.out.println("Now, servoPulse");
-			servoBoard.setPWMFreq(250);
-			// The same with setServoPulse
-			for (int i = 0; i < 5; i++) {
-				servoBoard.setServoPulse(STANDARD_SERVO_CHANNEL, 1f);
-				servoBoard.setServoPulse(CONTINUOUS_SERVO_CHANNEL, 1f);
-				waitfor(1000);
-				servoBoard.setServoPulse(STANDARD_SERVO_CHANNEL, 2f);
-				servoBoard.setServoPulse(CONTINUOUS_SERVO_CHANNEL, 2f);
-				waitfor(1000);
-			}
-			// Stop, Middle
-			servoBoard.setServoPulse(STANDARD_SERVO_CHANNEL, 1.5f);
-			servoBoard.setServoPulse(CONTINUOUS_SERVO_CHANNEL, 1.5f);
-
-			servoBoard.setPWM(CONTINUOUS_SERVO_CHANNEL, 0, 0); // Stop the continuous one
-		}
-	}
-
-	public static void main__(String[] args) {
-		double pulseLength = 1_000_000; // 1s = 1,000,000 us per pulse. "us" is to be read "micro (mu) sec".
-		pulseLength /= 250;  // 40..1000 Hz
-		pulseLength /= 4096; // 12 bits of resolution
-		int pulse = (int) (1.5 * 1_000);
-		pulse /= pulseLength;
-		if (verbose)
-			System.out.println(pulseLength + " us per bit, pulse:" + pulse);
-	}*/
 }

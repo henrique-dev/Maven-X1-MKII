@@ -3,7 +3,6 @@ package com.br.phdev;
 import com.br.phdev.cmp.*;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
-import com.br.phdev.misc.Color;
 import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
