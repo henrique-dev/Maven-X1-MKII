@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author PH
  */
-public class MPU9150 {
+public class MPU9150 implements Module {
 
     private I2CBus bus;
     private I2CDevice mpuDriver;

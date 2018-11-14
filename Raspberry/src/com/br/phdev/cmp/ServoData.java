@@ -2,15 +2,15 @@ package com.br.phdev.cmp;
 
 public class ServoData {
 
-    private final char module;
+    private final String moduleAddress;
     private int globalChannel;
     private int localChannel;
     private int minPosition;
     private int midPosition;
     private int maxPosition;
 
-    public ServoData(char module, int globalChannel, int localChannel, int minPosition, int midPosition, int maxPosition) {
-        this.module = module;
+    public ServoData(String moduleAddress, int globalChannel, int localChannel, int minPosition, int midPosition, int maxPosition) {
+        this.moduleAddress = moduleAddress;
         this.globalChannel = globalChannel;
         this.localChannel = localChannel;
         this.minPosition = minPosition;
@@ -18,8 +18,8 @@ public class ServoData {
         this.maxPosition = maxPosition;
     }
 
-    public char getModule() {
-        return module;
+    public String getModuleAddress() {
+        return moduleAddress;
     }
 
     public int getGlobalChannel() {
@@ -64,7 +64,7 @@ public class ServoData {
 
     @Override
     public String toString() {
-        return "Modulo pertencente: " + module + "\n" +
+        return "Modulo pertencente: " + moduleAddress + "\n" +
                 "Canal local: " + localChannel + "\n" +
                 "Canal global: " + globalChannel + "\n" +
                 "Posição minima: pertencente: " + minPosition + "\n" +

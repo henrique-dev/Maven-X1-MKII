@@ -9,7 +9,7 @@ import java.io.IOException;
 /*
  * Servo Driver
  */
-public class PCA9685 {
+public class PCA9685 extends Module {
 	public final static int PCA9685_ADDRESS = 0x40;
 
 	public final static int SUBADR1 = 0x02;
@@ -32,10 +32,28 @@ public class PCA9685 {
 	private I2CBus bus;
 	private I2CDevice servoDriver;
 
-	public PCA9685() throws I2CFactory.UnsupportedBusNumberException {
-		this(PCA9685_ADDRESS);
+	public PCA9685(String moduleAddress) {
+		super(moduleAddress);
 	}
 
+	@Override
+	public void init() throws I2CFactory.UnsupportedBusNumberException {
+		try {
+			bus = I2CFactory.getInstance(I2CBus.BUS_1);
+			if (verbose)
+				System.out.println("Conectado ao barramento. OK");
+
+			servoDriver = bus.getDevice(Integer.parseInt(super.moduleAddress));
+			if (verbose)
+				System.out.println("Conectado ao dispositivo no endereço " + Integer.toHexString(Integer.parseInt(super.moduleAddress)) + ". OK");
+			// Reseting
+			servoDriver.write(MODE1, (byte) 0x00);
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+	}
+
+	/*
 	public PCA9685(int address) throws I2CFactory.UnsupportedBusNumberException {
 		try {
 			bus = I2CFactory.getInstance(I2CBus.BUS_1);
@@ -50,7 +68,7 @@ public class PCA9685 {
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 		}
-	}
+	}*/
 
 	/**
 	 * @param freq 40..1000
@@ -141,6 +159,7 @@ public class PCA9685 {
 	 * 1ms pulse   | -90 deg  | FullSpeed backward
 	 * ------------+----------+-------------------
 	 */
+	/*
 	public static void main(String[] args) throws I2CFactory.UnsupportedBusNumberException {
 		int freq = 60;
 		if (args.length > 0)
@@ -224,5 +243,5 @@ public class PCA9685 {
 		pulse /= pulseLength;
 		if (verbose)
 			System.out.println(pulseLength + " us per bit, pulse:" + pulse);
-	}
+	}*/
 }

@@ -1,5 +1,7 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.driver.Module;
+import com.br.phdev.driver.PCA9685;
 import com.br.phdev.jdbc.ConnectionFactory;
 
 import java.sql.Connection;
@@ -10,6 +12,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataRepo {
+
+    public List<Module> loadModulesData() {
+        System.out.println("Carregando informações para os módulos...");
+        List<Module> moduleList = null;
+        try {
+            Connection connection = new ConnectionFactory().getConnection();
+            String sql = "select * from modules_data";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            moduleList = new ArrayList<>();
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                moduleList.add(new PCA9685(rs.getString("mod_address")));
+            }
+        } catch (SQLException e) {
+            System.out.println("Falha ao carregar as informações para os módulos. " + e.getMessage());
+            e.printStackTrace();
+        }
+        return moduleList;
+    }
 
     public List<ServoData> loadServosData() {
         System.out.println("Carregando informações para os servos...");
@@ -22,7 +43,7 @@ public class DataRepo {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 ServoData servoData = new ServoData(
-                        rs.getString("mod_number").charAt(0),
+                        rs.getString("mod_address"),
                         rs.getInt("global_channel"),
                         rs.getInt("local_channel"),
                         rs.getInt("min"),
