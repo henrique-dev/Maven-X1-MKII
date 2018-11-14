@@ -29,6 +29,8 @@ public class DataRepo {
             System.out.println("Falha ao carregar as informações para os módulos. " + e.getMessage());
             e.printStackTrace();
         }
+        if (moduleList == null)
+            System.out.println("ETA CUZA1");
         return moduleList;
     }
 
@@ -58,6 +60,8 @@ public class DataRepo {
             System.out.println("Falha ao carregar as informações para os servos. " + e.getMessage());
             e.printStackTrace();
         }
+        if (servoDataList == null)
+            System.out.println("ETA PORRA");
         return servoDataList;
     }
 
@@ -109,6 +113,8 @@ public class DataRepo {
             System.out.println("Falha ao carregar as informações para as pernas " + e.getMessage());
             e.printStackTrace();
         }
+        if (servoDataList == null)
+            System.out.println("ETA CARA");
         return servoDataList;
     }
 
