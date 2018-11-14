@@ -336,6 +336,8 @@ public class Maven {
 					case "run-script":
 						boolean runningScript = true;
 						while (runningScript) {
+							currentPath = "run-script ";
+							System.out.print(currentPath + "> ");
 							String script = in.nextLine();
 							switch (script) {
 								case "exit":
