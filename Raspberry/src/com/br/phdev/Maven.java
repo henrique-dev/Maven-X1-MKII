@@ -165,7 +165,7 @@ public class Maven {
 										try {
 											int globalChannel;
 											if (parameter.startsWith("servo") && parameter.endsWith("show")) {
-												globalChannel = Integer.parseInt(parameter.substring(6, parameter.indexOf("show")));
+												globalChannel = Integer.parseInt(parameter.substring(6, parameter.indexOf("show")-1));
 												Log.i(maven.getServos()[globalChannel].getServoData().toString());
 											} else {
 												globalChannel = Integer.parseInt(parameter.substring(6));
@@ -258,7 +258,7 @@ public class Maven {
 													showError(Error.SERVO_NOT_FOUND);
 											}
 										} catch (Exception e) {
-											showError(Error.INVALID_COMMAND);
+											showError(Error.INVALID_INPUT);
 										}
 										break;
 									}
