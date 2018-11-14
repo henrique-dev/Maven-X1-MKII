@@ -79,6 +79,7 @@ public class Maven {
 			System.out.println("Dados de todos os componentes definidos com sucesso :D");
 		} catch (Exception e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			e.printStackTrace();
 		}
 	}
 
