@@ -327,11 +327,48 @@ public class Maven {
 						else
 							showError(Error.SYSTEM_NOT_STARTED);
 						break;
-					case "system-restart-module":
+					case "system-restart-modules":
 						for (Module module : maven.getModuleList()) {
 							if (module instanceof PCA9685)
 								module.restartDriver();
 						}
+						break;
+					case "run-script":
+						boolean runningScript = true;
+						while (runningScript) {
+							String script = in.nextLine();
+							switch (script) {
+								case "exit":
+									runningScript = false;
+									break;
+								default:
+									boolean posFind = false;
+									boolean servoFind = false;
+									int servoNum = -1;
+									for (int i=0; i<script.length(); i++) {
+										String currentCommand = script.substring(i);
+										if (currentCommand.startsWith("min")) {
+											currentCommand = script.substring(i + 4);
+											i += 4;
+											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
+										} else if (currentCommand.startsWith("mid")) {
+											currentCommand = script.substring(i + 4);
+											i += 4;
+											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
+										} else if (currentCommand.startsWith("max")) {
+											currentCommand = script.substring(i + 4);
+											i += 4;
+											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
+										} else if (currentCommand.startsWith("s")) {
+											int indexOfMark = currentCommand.indexOf("-");
+											servoNum = Integer.parseInt(currentCommand.substring(i+1), indexOfMark);
+											i = indexOfMark;
+										}
+									}
+									break;
+							}
+						}
+						break;
 					case "":
 						break;
 					default:
