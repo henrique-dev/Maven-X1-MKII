@@ -45,8 +45,8 @@ public class Maven {
 				Base base = null;
 				Femur femur = null;
 				Tarsus tarsus = null;
-				System.out.println("HERE");
 				for (ServoData servoData : servoDataList) {
+					System.out.println("HERE1");
 					if (legDataList.get(i).getBaseServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo(
 								(PCA9685) Module.getModule(this.moduleList, this.servos[servoData.getGlobalChannel()].getServoData().getModuleAddress()), servoData, 0);

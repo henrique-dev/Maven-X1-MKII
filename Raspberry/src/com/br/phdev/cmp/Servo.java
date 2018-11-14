@@ -9,6 +9,7 @@ public class Servo {
     private int currentPosition;
 
     public Servo(PCA9685 module, ServoData servoData, int currentPosition) {
+        System.out.println("HERE2");
         this.module = module;
         this.servoData = servoData;
         this.currentPosition = currentPosition;
