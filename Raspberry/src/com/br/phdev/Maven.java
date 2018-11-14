@@ -185,7 +185,7 @@ public class Maven {
 																				else
 																					servoPos = -1;
 																			} catch (Exception e) {
-																				System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+																				System.out.println(currentPath + "> Erro. Os valaores estão corretos?"); 
 																			}
 																			break;
 																	}
