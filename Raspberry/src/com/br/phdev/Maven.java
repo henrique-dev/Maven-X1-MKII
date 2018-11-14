@@ -174,7 +174,7 @@ public class Maven {
 											int globalChannel;
 											if (parameter.startsWith("servo ")) {
 												int indexOfMark = parameter.indexOf("-");
-												globalChannel = Integer.parseInt(parameter.substring(6, indexOfMark != -1 ? indexOfMark -1 : parameter.length()-1));
+												globalChannel = Integer.parseInt(parameter.substring(6, indexOfMark != -1 ? indexOfMark -1 : parameter.length()));
 												if (maven.findServo(globalChannel)) {
 													if (parameter.endsWith(" -show")) {
 														Log.i(maven.getServos()[globalChannel].getServoData().toString());
