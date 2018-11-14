@@ -376,7 +376,7 @@ public class Maven {
 										} else if (c == ' ') {
 
 										} else if (c == '@') {
-											Maven.waitFor(1000);
+											Maven.waitFor(500);
 										} else if (servoFind)
 											currentServoNum.append(c);
 									}
