@@ -2,6 +2,7 @@ package com.br.phdev.cmp;
 
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
+import com.br.phdev.exceptions.MavenDataException;
 import com.br.phdev.jdbc.ConnectionFactory;
 
 import java.sql.Connection;
@@ -13,8 +14,7 @@ import java.util.List;
 
 public class DataRepo {
 
-    public List<Module> loadModulesData() {
-        System.out.println("Carregando informações para os módulos...");
+    public List<Module> loadModulesData() throws MavenDataException {
         List<Module> moduleList = null;
         try {
             Connection connection = new ConnectionFactory().getConnection();
@@ -26,14 +26,12 @@ public class DataRepo {
                 moduleList.add(new PCA9685(rs.getString("mod_address")));
             }
         } catch (SQLException e) {
-            System.out.println("Falha ao carregar as informações para os módulos. " + e.getMessage());
-            e.printStackTrace();
+            throw new MavenDataException("Falha ao carregar as informações para os módulos.", e);
         }
         return moduleList;
     }
 
-    public List<ServoData> loadServosData() {
-        System.out.println("Carregando informações para os servos...");
+    public List<ServoData> loadServosData() throws MavenDataException {
         List<ServoData> servoDataList = null;
         try {
             Connection connection = new ConnectionFactory().getConnection();
@@ -53,15 +51,13 @@ public class DataRepo {
                 servoDataList.add(servoData);
             }
             stmt.close();
-            System.out.println("Carregamento completo");
         } catch (SQLException e) {
-            System.out.println("Falha ao carregar as informações para os servos. " + e.getMessage());
-            e.printStackTrace();
+            throw new MavenDataException("Falha ao carregar as informações para os servos", e);
         }
         return servoDataList;
     }
 
-    public void saveServoPosData(int globalChannel, String option, int pos) {
+    public void saveServoPosData(int globalChannel, String option, int pos) throws MavenDataException {
         String sql;
         switch (option) {
             case "min":
@@ -81,13 +77,12 @@ public class DataRepo {
             stmt.execute();
             stmt.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new MavenDataException("Falha ao salvar os dados para os servos", e);
         }
 
     }
 
-    public List<LegData> loadLegsData() {
-        System.out.println("Carregando informações para as pernas...");
+    public List<LegData> loadLegsData() throws MavenDataException {
         List<LegData> servoDataList = null;
         try {
             Connection connection = new ConnectionFactory().getConnection();
@@ -106,8 +101,7 @@ public class DataRepo {
             }
             System.out.println("Carregamento completo");
         } catch (SQLException e) {
-            System.out.println("Falha ao carregar as informações para as pernas " + e.getMessage());
-            e.printStackTrace();
+            throw new MavenDataException("Falha ao carregar as informações para as pernas", e);
         }
         return servoDataList;
     }

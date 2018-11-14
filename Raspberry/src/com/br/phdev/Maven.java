@@ -3,6 +3,7 @@ package com.br.phdev;
 import com.br.phdev.cmp.*;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
+import com.br.phdev.exceptions.MavenDataException;
 import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
@@ -24,20 +25,32 @@ public class Maven {
 	private Servo[] servos;
 
 	private void initSystem() throws I2CFactory.UnsupportedBusNumberException {
-		this.loadData();
-		for (Module module : moduleList) {
-			module.init();
-			if (module instanceof PCA9685)
-				((PCA9685) module).setPWMFreq(60);
-		}
-		this.initLegs();
+		if (this.loadData()) {
+			for (Module module : moduleList) {
+				module.init();
+				if (module instanceof PCA9685)
+					((PCA9685) module).setPWMFreq(60);
+			}
+			this.initLegs();
+		} else
+			Log.e("Falha ao iniciar o sistema");
 	}
 
-	private void loadData() {
+	private boolean loadData() {
 		DataRepo dataRepo = new DataRepo();
-		this.moduleList = dataRepo.loadModulesData();
-		this.servoDataList = dataRepo.loadServosData();
-		this.legDataList = dataRepo.loadLegsData();
+		try {
+			Log.i("Carregando informações para os módulos...");
+			this.moduleList = dataRepo.loadModulesData();
+			Log.i("Carregando informações para os servos...");
+			this.servoDataList = dataRepo.loadServosData();
+			Log.i("Carregando informações para as pernas...");
+			this.legDataList = dataRepo.loadLegsData();
+		} catch (MavenDataException e) {
+			Log.e("Falha ao carregar as informações. " + e.getMessage());
+			return false;
+		}
+		Log.s("Informações carregadas");
+		return true;
 	}
 
 	private void initLegs() {
@@ -80,7 +93,7 @@ public class Maven {
 				if (base == null || femur == null || tarsus == null)
 					throw new RuntimeException("Falha ao inicializar as pernas");
 			}
-			System.out.println("Dados de todos os componentes definidos com sucesso");
+			Log.i("Dados de todos os componentes definidos com sucesso");
 		} catch (Exception e) {
 			Log.e("Falha ao inicializar as pernas. " + e.getMessage());
 			e.printStackTrace();
