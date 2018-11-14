@@ -7,6 +7,7 @@ import com.br.phdev.exceptions.MavenDataException;
 import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -106,6 +107,10 @@ public class Maven {
 				return true;
 		}
 		return false;
+	}
+
+	private List<Module> getModuleList() {
+		return this.moduleList;
 	}
 
 	private Servo[] getServos() {
@@ -322,6 +327,11 @@ public class Maven {
 						else
 							showError(Error.SYSTEM_NOT_STARTED);
 						break;
+					case "system-restart-module":
+						for (Module module : maven.getModuleList()) {
+							if (module instanceof PCA9685)
+								module.restartDriver();
+						}
 					case "":
 						break;
 					default:
@@ -332,7 +342,11 @@ public class Maven {
 			}
 
 		} catch (I2CFactory.UnsupportedBusNumberException e) {
-			e.printStackTrace();
+			Log.e(e.getMessage());
+			//e.printStackTrace();
+		} catch (IOException e) {
+			Log.e(e.getMessage());
+			//e.printStackTrace();
 		}
 	}
 

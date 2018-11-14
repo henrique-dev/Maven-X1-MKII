@@ -53,6 +53,11 @@ public class PCA9685 extends Module {
 		}
 	}
 
+	@Override
+	public void restartDriver() throws IOException {
+		servoDriver.write(MODE1, (byte) 0x00);
+	}
+
 	/**
 	 * @param freq 40..1000
 	 */

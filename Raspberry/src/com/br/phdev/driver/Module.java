@@ -2,6 +2,7 @@ package com.br.phdev.driver;
 
 import com.pi4j.io.i2c.I2CFactory;
 
+import java.io.IOException;
 import java.util.List;
 
 public class Module {
@@ -13,6 +14,10 @@ public class Module {
     }
 
     public void init() throws I2CFactory.UnsupportedBusNumberException {
+
+    }
+
+    public void restartDriver() throws IOException {
 
     }
 
