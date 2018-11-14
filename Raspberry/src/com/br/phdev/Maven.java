@@ -3,6 +3,7 @@ package com.br.phdev;
 import com.br.phdev.cmp.*;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
+import com.br.phdev.misc.Color;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class Maven {
 						base = new Base(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println("Servo da base da perna " + i + " carregado");
+						System.out.println(Color.ANSI_GREEN + "Servo da base da perna " + i + " carregado" + Color.ANSI_RESET);
 					}
 					if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
@@ -254,6 +255,7 @@ public class Maven {
 					case "\n":
 						break;
 					default:
+						System.out.println(command);
 						showError(Error.INVALID_COMMAND);
 						break;
 				}
