@@ -1,7 +1,5 @@
 #!/bin/bash
 
-MESSAGE = "TESTE"
-
 git add .. .
-git commit -m MESSAGE
+git commit -m $0
 git push origin master
