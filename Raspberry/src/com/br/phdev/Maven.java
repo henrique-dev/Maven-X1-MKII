@@ -351,7 +351,6 @@ public class Maven {
 										char c = script.charAt(i);
 										if (c == 's') {
 											servoFind = true;
-											continue;
 										} else if (c == 'm') {
 											servoFind = false;
 											if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'n') {
@@ -363,10 +362,10 @@ public class Maven {
 											}
 											currentServoNum = null;
 											i += 4;
-										} else {
-											if (servoFind)
-												currentServoNum.append(c);
-										}
+										} else if (c == '-' && servoFind){
+											servoFind = false;
+										} else if (servoFind)
+											currentServoNum.append(c);
 									}
 									break;
 							}
