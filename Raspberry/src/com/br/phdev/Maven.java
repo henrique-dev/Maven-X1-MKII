@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Maven {
 
 	private enum Error {
-		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT
+		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND
 	}
 
 	private List<Module> moduleList;
@@ -41,8 +41,8 @@ public class Maven {
 
 	private void initLegs() {
 		try {
-			this.legs = new Leg[6];
-			this.servos = new Servo[18];
+			this.legs = new Leg[legDataList.size()];
+			this.servos = new Servo[servoDataList.size()];
 
 			System.out.println("Definindo os dados para todos os componentes...");
 			for (int i=0; i<legDataList.size(); i++) {
@@ -58,28 +58,28 @@ public class Maven {
 						base = new Base(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println("Servo da base da perna " + i + " carregado.");
+						System.out.println("Servo da base da perna " + i + " carregado");
 					}
 					if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						femur = new Femur(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println("Servo do femur da perna " + i + " carregado.");
+						System.out.println("Servo do femur da perna " + i + " carregado");
 					}
 					if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						tarsus = new Tarsus(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println("Servo do tarso da perna " + i + " carregado.");
+						System.out.println("Servo do tarso da perna " + i + " carregado");
 					}
 					legs[i] = new Leg(legDataList.get(i), base, femur, tarsus);
 				}
 				if (base == null || femur == null || tarsus == null)
 					throw new RuntimeException("Falha ao inicializar as pernas");
 			}
-			System.out.println("Dados de todos os componentes definidos com sucesso :D");
+			System.out.println("Dados de todos os componentes definidos com sucesso");
 		} catch (Exception e) {
 			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 			e.printStackTrace();
@@ -146,79 +146,84 @@ public class Maven {
 									default: {
 										try {
 											int globalChannel = Integer.parseInt(parameter.substring(6));
-											if (globalChannel >= 0 && globalChannel <= 17) {
-												boolean runningServoConfig = true;
-												while (runningServoConfig) {
-													currentPath = "configure-servos (servo " + globalChannel + ") ";
-													System.out.print(currentPath + "> ");
-													parameter = in.nextLine();
-													switch (parameter.trim()) {
-														case "min":
-														case "mid":
-														case "max":
-															String currentServoConfigName = parameter.trim();
-															boolean runningServoPosConfig = true;
-															int servoPos = -1;
-															while (runningServoPosConfig) {
-																currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
-																System.out.print(currentPath + "> ");
-																try {
-																	parameter = in.nextLine();
-																	switch (parameter.trim()) {
-																		case "save":
-																			if (servoPos != -1) {
-																				DataRepo dataRepo = new DataRepo();
-																				dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
-																				if (currentServoConfigName.equals("min"))
-																					maven.getServos()[globalChannel].getServoData().setMinPosition(servoPos);
-																				else if (currentServoConfigName.equals("mid"))
-																					maven.getServos()[globalChannel].getServoData().setMidPosition(servoPos);
-																				else if (currentServoConfigName.equals("max"))
-																					maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
+											boolean servoFound = false;
+											for (int i=0; i<maven.getServos().length; i++) {
+												if (globalChannel == maven.getServos()[i].getServoData().getGlobalChannel()) {
+													servoFound = true;
+													boolean runningServoConfig = true;
+													while (runningServoConfig) {
+														currentPath = "configure-servos (servo " + globalChannel + ") ";
+														System.out.print(currentPath + "> ");
+														parameter = in.nextLine();
+														switch (parameter.trim()) {
+															case "min":
+															case "mid":
+															case "max":
+																String currentServoConfigName = parameter.trim();
+																boolean runningServoPosConfig = true;
+																int servoPos = -1;
+																while (runningServoPosConfig) {
+																	currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
+																	System.out.print(currentPath + "> ");
+																	try {
+																		parameter = in.nextLine();
+																		switch (parameter.trim()) {
+																			case "save":
+																				if (servoPos != -1) {
+																					DataRepo dataRepo = new DataRepo();
+																					dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
+																					if (currentServoConfigName.equals("min"))
+																						maven.getServos()[globalChannel].getServoData().setMinPosition(servoPos);
+																					else if (currentServoConfigName.equals("mid"))
+																						maven.getServos()[globalChannel].getServoData().setMidPosition(servoPos);
+																					else if (currentServoConfigName.equals("max"))
+																						maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
+																					runningServoPosConfig = false;
+																				} else
+																					System.out.println("Os dados não foram alterados.");
+																				break;
+																			case "exit":
 																				runningServoPosConfig = false;
-																			} else
-																				System.out.println("Os dados não foram alterados.");
-																			break;
-																		case "exit":
-																			runningServoPosConfig = false;
-																			break;
-																		default:
-																			try {
-																				servoPos = Integer.parseInt(parameter);
-																				if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
-																					maven.getServos()[globalChannel].setRawPosition(servoPos);
-																				else
-																					servoPos = -1;
-																			} catch (Exception e) {
-																				showError(Error.INVALID_INPUT);
-																			}
-																			break;
+																				break;
+																			default:
+																				try {
+																					servoPos = Integer.parseInt(parameter);
+																					if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
+																						maven.getServos()[globalChannel].setRawPosition(servoPos);
+																					else
+																						servoPos = -1;
+																				} catch (Exception e) {
+																					showError(Error.INVALID_INPUT);
+																				}
+																				break;
+																		}
+																	} catch (Exception e) {
+																		showError(Error.INVALID_INPUT);
 																	}
-																} catch (Exception e) {
-																	showError(Error.INVALID_INPUT);
 																}
-															}
-															break;
-														case "general-values":
-															currentPath = "configure-servos (servo " + globalChannel + " - general values) ";
-															System.out.println(currentPath + "> ");
-															break;
-														case "exit":
-															runningServoConfig = false;
-															break;
-														case "show":
-															System.out.println(maven.getServos()[globalChannel].getServoData().toString());
-															break;
-														default:
-															showError(Error.INVALID_COMMAND);
-															break;
+																break;
+															case "general-values":
+																currentPath = "configure-servos (servo " + globalChannel + " - general values) ";
+																System.out.println(currentPath + "> ");
+																break;
+															case "exit":
+																runningServoConfig = false;
+																break;
+															case "show":
+																System.out.println(maven.getServos()[globalChannel].getServoData().toString());
+																break;
+															default:
+																showError(Error.INVALID_COMMAND);
+																break;
+														}
 													}
+													break;
 												}
-											} else {
-												System.out.println(currentPath + "> Canal global fora do range");
 											}
+											if (!servoFound)
+												showError(Error.SERVO_NOT_FOUND);
 										} catch (Exception e) {
-											System.out.println(currentPath + "> Erro. Os valaores estão corretos?");
+											showError(Error.INVALID_COMMAND);
 										}
 										break;
 									}
@@ -269,6 +274,9 @@ public class Maven {
 				break;
 			case INVALID_INPUT:
 				System.out.println("Entrada inválida");
+				break;
+			case SERVO_NOT_FOUND:
+				System.out.println("Servo não encontrado");
 				break;
 		}
 	}
