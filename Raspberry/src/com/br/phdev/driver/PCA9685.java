@@ -43,9 +43,9 @@ public class PCA9685 extends Module {
 			if (verbose)
 				System.out.println("Conectado ao barramento. OK");
 
-			servoDriver = bus.getDevice(Integer.parseInt(super.moduleAddress));
+			servoDriver = bus.getDevice(Integer.parseInt(super.moduleAddress, 16));
 			if (verbose)
-				System.out.println("Conectado ao dispositivo no endereço " + Integer.toHexString(Integer.parseInt(super.moduleAddress)) + ". OK");
+				System.out.println("Conectado ao dispositivo no endereço " + super.moduleAddress + ". OK");
 			// Reseting
 			servoDriver.write(MODE1, (byte) 0x00);
 		} catch (IOException e) {
