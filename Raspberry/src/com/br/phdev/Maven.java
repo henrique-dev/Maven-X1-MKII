@@ -368,16 +368,15 @@ public class Maven {
 											} else if (script.charAt(i+1) == 'a' && script.charAt(i+2) == 'x') {
 												Log.w("Movendo servo " + currentServoNum.toString() + " para max");
 												i += 3;
-											} else if (script.charAt(i+1) == '@') {
-												Log.w("Esperando");
-												Maven.waitFor(300);
-												i += 2;
 											}
 											currentServoNum = new StringBuilder();
 										} else if (c == '-' && servoFind){
 											servoFind = false;
 										} else if (c == ' ') {
 
+										} else if (c == '@') {
+											Log.w("Esperando");
+											Maven.waitFor(300);
 										} else if (servoFind)
 											currentServoNum.append(c);
 									}
