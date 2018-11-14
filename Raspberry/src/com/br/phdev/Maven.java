@@ -157,6 +157,10 @@ public class Maven {
 									case "exit":
 										runningAllServosConfig = false;
 										break;
+									case "exit-f":
+										runningAllServosConfig = false;
+										runningProgram = false;
+										break;
 									default: {
 										try {
 											int globalChannel = Integer.parseInt(parameter.substring(6));
@@ -199,6 +203,12 @@ public class Maven {
 																			case "exit":
 																				runningServoPosConfig = false;
 																				break;
+																			case "exit-f":
+																				runningAllServosConfig = false;
+																				runningProgram = false;
+																				runningServoConfig = false;
+																				runningServoPosConfig = false;
+																				break;
 																			default:
 																				try {
 																					servoPos = Integer.parseInt(parameter);
@@ -225,6 +235,11 @@ public class Maven {
 																break;
 															case "show":
 																Log.i(maven.getServos()[globalChannel].getServoData().toString());
+																break;
+															case "exit-f":
+																runningAllServosConfig = false;
+																runningProgram = false;
+																runningServoConfig = false;
 																break;
 															default:
 																showError(Error.INVALID_COMMAND);
