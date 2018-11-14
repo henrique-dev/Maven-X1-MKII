@@ -179,11 +179,11 @@ public class Maven {
 													if (parameter.endsWith(" -show")) {
 														Log.i(maven.getServos()[globalChannel].getServoData().toString());
 													} else if (parameter.endsWith(" -min")) {
-
+														maven.getServos()[globalChannel].moveToMin();
 													} else if (parameter.endsWith(" -mid")) {
-
+														maven.getServos()[globalChannel].moveToMid();
 													} else if (parameter.endsWith(" -max")) {
-
+														maven.getServos()[globalChannel].moveToMax();
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {

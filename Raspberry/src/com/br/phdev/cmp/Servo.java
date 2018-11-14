@@ -58,7 +58,7 @@ public class Servo {
     }
 
     public void moveToMin() {
-
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMinPosition());
     }
 
     public void moveToMid() {
@@ -66,7 +66,7 @@ public class Servo {
     }
 
     public void moveToMax() {
-
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMaxPosition());
     }
 
     private static void waitFor(long howMuch) {
