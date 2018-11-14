@@ -99,7 +99,6 @@ public class DataRepo {
                 );
                 servoDataList.add(legData);
             }
-            System.out.println("Carregamento completo");
         } catch (SQLException e) {
             throw new MavenDataException("Falha ao carregar as informações para as pernas", e);
         }

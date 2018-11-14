@@ -79,7 +79,7 @@ public class Maven {
 						femur = new Femur(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						Log.s("Servo do femur da perna \" + i + \" carregado");
+						Log.s("Servo do femur da perna " + i + " carregado");
 					}
 					if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
