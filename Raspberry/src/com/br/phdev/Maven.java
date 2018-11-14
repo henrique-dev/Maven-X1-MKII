@@ -100,6 +100,14 @@ public class Maven {
 		}
 	}
 
+	private boolean findServo(int globalChannel) {
+		for (Servo servo : this.servos) {
+			if (globalChannel == servo.getServoData().getGlobalChannel())
+				return true;
+		}
+		return false;
+	}
+
 	private Servo[] getServos() {
 		return servos;
 	}
@@ -164,15 +172,18 @@ public class Maven {
 									default: {
 										try {
 											int globalChannel;
-											if (parameter.startsWith("servo") && parameter.endsWith("show")) {
-												globalChannel = Integer.parseInt(parameter.substring(6, parameter.indexOf("show")-1));
-												Log.i(maven.getServos()[globalChannel].getServoData().toString());
-											} else {
-												globalChannel = Integer.parseInt(parameter.substring(6));
-												boolean servoFound = false;
-												for (int i = 0; i < maven.getServos().length; i++) {
-													if (globalChannel == maven.getServos()[i].getServoData().getGlobalChannel()) {
-														servoFound = true;
+											if (parameter.startsWith("servo ")) {
+												globalChannel = Integer.parseInt(parameter.substring(6, parameter.indexOf("-")-1));
+												if (maven.findServo(globalChannel)) {
+													if (parameter.endsWith(" -show")) {
+														Log.i(maven.getServos()[globalChannel].getServoData().toString());
+													} else if (parameter.endsWith(" -min")) {
+
+													} else if (parameter.endsWith(" -mid")) {
+
+													} else if (parameter.endsWith(" -max")) {
+
+													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
 															currentPath = "configure-servos (servo " + globalChannel + ") ";
@@ -251,11 +262,10 @@ public class Maven {
 																	break;
 															}
 														}
-														break;
 													}
-												}
-												if (!servoFound)
+												} else {
 													showError(Error.SERVO_NOT_FOUND);
+												}
 											}
 										} catch (Exception e) {
 											showError(Error.INVALID_INPUT);
