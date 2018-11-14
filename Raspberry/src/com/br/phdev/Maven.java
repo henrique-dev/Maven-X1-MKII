@@ -361,7 +361,7 @@ public class Maven {
 											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
 										} else if (currentCommand.startsWith("s")) {
 											int indexOfMark = currentCommand.indexOf("-");
-											servoNum = Integer.parseInt(currentCommand.substring(i+1), indexOfMark);
+											servoNum = Integer.parseInt(currentCommand.substring(i+1, indexOfMark));
 											i = indexOfMark;
 										}
 									}
