@@ -130,6 +130,18 @@ public class Maven {
 		}
 	}
 
+	private void moveAllFemursToMidPos() {
+		for (int i=0; i<6; i++) {
+			this.legs[i].getFemur().moveToMid();
+		}
+	}
+
+	private void moveAllTarsosToMidPos() {
+		for (int i=0; i<6; i++) {
+			this.legs[i].getTarsus().moveToMid();
+		}
+	}
+
 
 	public static void main(String[] args) {
 		try {
@@ -214,9 +226,9 @@ public class Maven {
 																							maven.getServos()[globalChannel].getServoData().setMidPosition(servoPos);
 																						else if (currentServoConfigName.equals("max"))
 																							maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
-																						runningServoPosConfig = false;
 																					} else
 																						Log.w("Os dados não foram alterados");
+																					runningServoPosConfig = false;
 																					break;
 																				case "exit":
 																					runningServoPosConfig = false;
@@ -295,6 +307,18 @@ public class Maven {
 					case "base-tomid":
 						if (initSystem)
 							maven.moveAllBasesToMidPos();
+						else
+							showError(Error.SYSTEM_NOT_STARTED);
+						break;
+					case "femur-tomid":
+						if (initSystem)
+							maven.moveAllFemursToMidPos();
+						else
+							showError(Error.SYSTEM_NOT_STARTED);
+						break;
+					case "tarso-tomid":
+						if (initSystem)
+							maven.moveAllTarsosToMidPos();
 						else
 							showError(Error.SYSTEM_NOT_STARTED);
 						break;
