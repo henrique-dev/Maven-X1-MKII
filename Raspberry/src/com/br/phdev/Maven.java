@@ -344,25 +344,28 @@ public class Maven {
 								default:
 									boolean posFind = false;
 									boolean servoFind = false;
+									StringBuilder currentServoNum = new StringBuilder();
+
 									int servoNum = -1;
 									for (int i=0; i<script.length(); i++) {
-										String currentCommand = script.substring(i);
-										if (currentCommand.startsWith("min")) {
-											currentCommand = script.substring(i + 4);
+										char c = script.charAt(i);
+										if (c == 's') {
+											servoFind = true;
+											continue;
+										} else if (c == 'm') {
+											servoFind = false;
+											if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'n') {
+												Log.w("Movendo servo " + currentServoNum.toString() + " para min");
+											} else if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'd') {
+												Log.w("Movendo servo " + currentServoNum.toString() + " para mid");
+											} else if (script.charAt(i+1) == 'a' && script.charAt(i+2) == 'x') {
+												Log.w("Movendo servo " + currentServoNum.toString() + " para max");
+											}
+											currentServoNum = null;
 											i += 4;
-											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
-										} else if (currentCommand.startsWith("mid")) {
-											currentCommand = script.substring(i + 4);
-											i += 4;
-											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
-										} else if (currentCommand.startsWith("max")) {
-											currentCommand = script.substring(i + 4);
-											i += 4;
-											Log.w("Movendo servo " + servoNum + " para " + currentCommand);
-										} else if (currentCommand.startsWith("s")) {
-											int indexOfMark = currentCommand.indexOf("-");
-											servoNum = Integer.parseInt(currentCommand.substring(i+1, indexOfMark));
-											i = indexOfMark;
+										} else {
+											if (servoFind)
+												currentServoNum.append(c);
 										}
 									}
 									break;
