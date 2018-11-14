@@ -22,6 +22,7 @@ public class Module {
 
     public static Module getModule(List<Module> moduleList, String address) {
         for (Module module : moduleList) {
+            System.out.println(address + " = " + module.getModuleAddress());
             if (module.getModuleAddress().equals(address))
                 return module;
         }
