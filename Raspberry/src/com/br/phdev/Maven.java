@@ -224,7 +224,7 @@ public class Maven {
 																runningServoConfig = false;
 																break;
 															case "show":
-																System.out.println(maven.getServos()[globalChannel].getServoData().toString());
+																Log.i(maven.getServos()[globalChannel].getServoData().toString());
 																break;
 															default:
 																showError(Error.INVALID_COMMAND);
