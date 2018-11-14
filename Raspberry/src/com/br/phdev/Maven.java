@@ -4,6 +4,7 @@ import com.br.phdev.cmp.*;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.misc.Color;
+import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;
@@ -45,7 +46,7 @@ public class Maven {
 			this.legs = new Leg[legDataList.size()];
 			this.servos = new Servo[servoDataList.size()];
 
-			System.out.println("Definindo os dados para todos os componentes...");
+			Log.i("Definindo os dados para todos os componentes...");
 			for (int i=0; i<legDataList.size(); i++) {
 				Base base = null;
 				Femur femur = null;
@@ -59,21 +60,21 @@ public class Maven {
 						base = new Base(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println(Color.ANSI_GREEN + "Servo da base da perna " + i + " carregado" + Color.ANSI_RESET);
+						Log.s("Servo da base da perna " + i + " carregado");
 					}
 					if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						femur = new Femur(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println("Servo do femur da perna " + i + " carregado");
+						Log.s("Servo do femur da perna \" + i + \" carregado");
 					}
 					if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
 						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						tarsus = new Tarsus(
 								this.servos[servoData.getGlobalChannel()]
 						);
-						System.out.println("Servo do tarso da perna " + i + " carregado");
+						Log.s("Servo do tarso da perna " + i + " carregado");
 					}
 					legs[i] = new Leg(legDataList.get(i), base, femur, tarsus);
 				}
@@ -82,7 +83,7 @@ public class Maven {
 			}
 			System.out.println("Dados de todos os componentes definidos com sucesso");
 		} catch (Exception e) {
-			System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+			Log.e("Falha ao inicializar as pernas. " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -181,7 +182,7 @@ public class Maven {
 																						maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
 																					runningServoPosConfig = false;
 																				} else
-																					System.out.println("Os dados não foram alterados.");
+																					Log.w("Os dados não foram alterados");
 																				break;
 																			case "exit":
 																				runningServoPosConfig = false;
@@ -269,16 +270,16 @@ public class Maven {
 	private static void showError(Error error) {
 		switch (error) {
 			case SYSTEM_NOT_STARTED:
-				System.out.println("Sistema não iniciado");
+				Log.e("Sistema não iniciado");
 				break;
 			case INVALID_COMMAND:
-				System.out.println("Comando inválido");
+				Log.e("Comando inválido");
 				break;
 			case INVALID_INPUT:
-				System.out.println("Entrada inválida");
+				Log.e("Entrada inválida");
 				break;
 			case SERVO_NOT_FOUND:
-				System.out.println("Servo não encontrado");
+				Log.e("Servo não encontrado");
 				break;
 		}
 	}
