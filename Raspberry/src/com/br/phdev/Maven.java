@@ -207,6 +207,7 @@ public class Maven {
 																					if (servoPos != -1) {
 																						DataRepo dataRepo = new DataRepo();
 																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
+																						Log.s("A informação foi salva");
 																						if (currentServoConfigName.equals("min"))
 																							maven.getServos()[globalChannel].getServoData().setMinPosition(servoPos);
 																						else if (currentServoConfigName.equals("mid"))
