@@ -52,24 +52,21 @@ public class Maven {
 
 					if (legDataList.get(i).getBaseServo() == servoData.getGlobalChannel()) {
 
-						this.servos[servoData.getGlobalChannel()] = new Servo(
-								(PCA9685) Module.getModule(this.moduleList, this.servos[servoData.getGlobalChannel()].getServoData().getModuleAddress()), servoData, 0);
+						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						base = new Base(
 								this.servos[servoData.getGlobalChannel()]
 						);
 						System.out.println("Servo da base da perna " + i + " carregado.");
 					}
 					if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
-						this.servos[servoData.getGlobalChannel()] = new Servo(
-								(PCA9685) Module.getModule(this.moduleList, this.servos[servoData.getGlobalChannel()].getServoData().getModuleAddress()), servoData, 0);
+						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						femur = new Femur(
 								this.servos[servoData.getGlobalChannel()]
 						);
 						System.out.println("Servo do femur da perna " + i + " carregado.");
 					}
 					if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
-						this.servos[servoData.getGlobalChannel()] = new Servo(
-								(PCA9685) Module.getModule(this.moduleList, this.servos[servoData.getGlobalChannel()].getServoData().getModuleAddress()), servoData, 0);
+						this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
 						tarsus = new Tarsus(
 								this.servos[servoData.getGlobalChannel()]
 						);
