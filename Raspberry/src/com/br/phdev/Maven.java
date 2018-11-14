@@ -123,7 +123,7 @@ public class Maven {
 				String currentPath = "";
 				System.out.print(currentPath + "> ");
 				String command = in.nextLine();
-				switch (command) {
+				switch (command.trim()) {
 					case "exit":
 						runningProgram = false;
 						break;
@@ -252,7 +252,7 @@ public class Maven {
 						else
 							showError(Error.SYSTEM_NOT_STARTED);
 						break;
-					case "\n":
+					case "":
 						break;
 					default:
 						System.out.println(command);
