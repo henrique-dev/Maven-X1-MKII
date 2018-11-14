@@ -359,14 +359,15 @@ public class Maven {
 										if (c == 's') {
 											servoFind = true;
 										} else if (c == 'm') {
+											int channelGlobal = Integer.parseInt(currentServoNum.toString());
 											if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'n') {
-												Log.w("Movendo servo " + currentServoNum.toString() + " para min");
+												maven.getServos()[channelGlobal].moveToMin();
 												i += 3;
 											} else if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'd') {
-												Log.w("Movendo servo " + currentServoNum.toString() + " para mid");
+												maven.getServos()[channelGlobal].moveToMid();
 												i += 3;
 											} else if (script.charAt(i+1) == 'a' && script.charAt(i+2) == 'x') {
-												Log.w("Movendo servo " + currentServoNum.toString() + " para max");
+												maven.getServos()[channelGlobal].moveToMax();
 												i += 3;
 											}
 											currentServoNum = new StringBuilder();
@@ -376,7 +377,7 @@ public class Maven {
 
 										} else if (c == '@') {
 											Log.w("Esperando");
-											Maven.waitFor(300);
+											Maven.waitFor(500);
 										} else if (servoFind)
 											currentServoNum.append(c);
 									}
