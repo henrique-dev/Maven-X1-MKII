@@ -147,6 +147,14 @@ public class Maven {
 		}
 	}
 
+	private static void waitFor(long howMuch) {
+		try {
+			Thread.sleep(howMuch);
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+	}
+
 
 	public static void main(String[] args) {
 		try {
@@ -351,20 +359,25 @@ public class Maven {
 										if (c == 's') {
 											servoFind = true;
 										} else if (c == 'm') {
-											servoFind = false;
 											if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'n') {
 												Log.w("Movendo servo " + currentServoNum.toString() + " para min");
+												i += 3;
 											} else if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'd') {
 												Log.w("Movendo servo " + currentServoNum.toString() + " para mid");
+												i += 3;
 											} else if (script.charAt(i+1) == 'a' && script.charAt(i+2) == 'x') {
 												Log.w("Movendo servo " + currentServoNum.toString() + " para max");
+												i += 3;
+											} else if (script.charAt(i+1) == '@') {
+												Log.w("Esperando");
+												Maven.waitFor(300);
+												i += 2;
 											}
 											currentServoNum = new StringBuilder();
-											i += 4;
 										} else if (c == '-' && servoFind){
 											servoFind = false;
 										} else if (c == ' ') {
-											
+
 										} else if (servoFind)
 											currentServoNum.append(c);
 									}
