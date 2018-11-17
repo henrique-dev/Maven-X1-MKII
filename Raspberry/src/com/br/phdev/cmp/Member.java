@@ -24,4 +24,7 @@ public class Member {
         this.servo.moveToMax();
     }
 
+    public Servo getServo() {
+        return servo;
+    }
 }

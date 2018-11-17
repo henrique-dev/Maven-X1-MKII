@@ -52,4 +52,3 @@ INSERT INTO "legs_data" VALUES(3,6,5,2);
 INSERT INTO "legs_data" VALUES(4,10,11,9);
 INSERT INTO "legs_data" VALUES(5,12,16,13);
 INSERT INTO "legs_data" VALUES(6,14,17,15);
-COMMIT;

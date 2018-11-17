@@ -8,6 +8,7 @@ import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -117,6 +118,10 @@ public class Maven {
 		return servos;
 	}
 
+	private Leg[] getLegs() {
+		return this.legs;
+	}
+
 	private static void waitFor(long howMuch) {
 		try {
 			Thread.sleep(howMuch);
@@ -163,6 +168,9 @@ public class Maven {
 									case "exit-f":
 										runningAllServosConfig = false;
 										runningProgram = false;
+										break;
+									case "show-s":
+										showTHIS(maven.getLegs());
 										break;
 									default: {
 										try {
@@ -415,6 +423,69 @@ public class Maven {
 				Log.e("Comando temporiariamente desabilitado");
 				break;
 		}
+	}
+
+	private static void showTHIS(Leg[] legs) {
+		int l1t = legs[0].getTarsus().getServo().getServoData().getGlobalChannel();
+		String l1f = legs[0].getFemur().getServo().getServoData().getGlobalChannel() + "";
+		String l1b = legs[0].getBase().getServo().getServoData().getGlobalChannel() + "";
+		System.out.println();
+		System.out.println();
+		System.out.println("       _____                                   _____");
+		System.out.println("      |     |                                 |     |");
+		System.out.println("      |  " + s_(legs[0].getTarsus().getServo().getServoData().getGlobalChannel())  +
+				" |                                 |  " + s_(legs[1].getTarsus().getServo().getServoData().getGlobalChannel()) + " |");
+		System.out.println("      |_____|                                 |_____|");
+		System.out.println("             o                               o");
+		System.out.println("              o                             o");
+		System.out.println("               o_____                 _____o");
+		System.out.println("               |     |               |     |");
+		System.out.println("               |  " + s_(legs[0].getFemur().getServo().getServoData().getGlobalChannel()) +
+				" |               |  " + s_(legs[1].getFemur().getServo().getServoData().getGlobalChannel()) + " |");
+		System.out.println("               |_____|_____     _____|_____|");
+		System.out.println("                     |     |mmm|     |");
+		System.out.println("                     | " + s_(legs[0].getBase().getServo().getServoData().getGlobalChannel()) +
+				"  |   |  " + s_(legs[1].getBase().getServo().getServoData().getGlobalChannel()) + " |");
+		System.out.println("                     |_____|   |_____|");
+		System.out.println("                       m           m");
+		System.out.println("                       m M A V E N m");
+		System.out.println("                       m           m");
+		System.out.println("                       m           m");
+		System.out.println("   _____       _____  _m___     ___m_ _____       _____");
+		System.out.println("  |     |     |     ||     |   |     |     |     |     |");
+		System.out.println("  | " + s_(legs[2].getTarsus().getServo().getServoData().getGlobalChannel()) +
+				"  |o o o| " + s_(legs[2].getFemur().getServo().getServoData().getGlobalChannel()) +
+				"  || " + s_(legs[2].getBase().getServo().getServoData().getGlobalChannel()) + "  |   | " +
+				s_(legs[3].getBase().getServo().getServoData().getGlobalChannel())+"  | " +
+				s_(legs[3].getFemur().getServo().getServoData().getGlobalChannel())+"  |o o o| " +
+				s_(legs[3].getTarsus().getServo().getServoData().getGlobalChannel())+"  |");
+		System.out.println("  |_____|     |_____||_____|   |_____|_____|     |_____|");
+		System.out.println("                       m           m");
+		System.out.println("                       m           m");
+		System.out.println("                      _m___     ___m_");
+		System.out.println("                     |     |   |     |");
+		System.out.println("                     | " + s_(legs[4].getBase().getServo().getServoData().getGlobalChannel()) +
+				"  |   | " + s_(legs[5].getBase().getServo().getServoData().getGlobalChannel()) + "  |");
+		System.out.println("                _____|_____|mmm|_____|_____");
+		System.out.println("               |     |               |     |");
+		System.out.println("               | " + s_(legs[4].getFemur().getServo().getServoData().getGlobalChannel()) +
+				"  |               | " + s_(legs[5].getFemur().getServo().getServoData().getGlobalChannel()) + "  |");
+		System.out.println("               |_____|               |_____|");
+		System.out.println("               o                            o");
+		System.out.println("              o                              o");
+		System.out.println("       _____ o                                o_____");
+		System.out.println("      |     |                                 |     |");
+		System.out.println("      | " +s_(legs[4].getTarsus().getServo().getServoData().getGlobalChannel()) +
+				"  |                                 | " + s_(legs[5].getTarsus().getServo().getServoData().getGlobalChannel()) + "  |");
+		System.out.println("      |_____|                                 |_____|");
+		System.out.println();
+		System.out.println();
+	}
+
+	private static String s_(int value) {
+		if (value > 9)
+			return value + "";
+		return value + " ";
 	}
 
 }
