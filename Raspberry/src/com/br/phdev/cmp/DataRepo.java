@@ -46,7 +46,9 @@ public class DataRepo {
                         rs.getInt("local_channel"),
                         rs.getInt("min"),
                         rs.getInt("mid"),
-                        rs.getInt("max")
+                        rs.getInt("max"),
+                        rs.getInt("limit_min"),
+                        rs.getInt("limit_max")
                 );
                 servoDataList.add(servoData);
             }

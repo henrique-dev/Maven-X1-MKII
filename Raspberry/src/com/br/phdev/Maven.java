@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Maven {
 
 	private enum Error {
-		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND
+		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND, COMMAND_DISABLED
 	}
 
 	private List<Module> moduleList;
@@ -117,36 +117,6 @@ public class Maven {
 		return servos;
 	}
 
-	private void resetAllServosPos() {
-		for (int i=0; i<18; i++) {
-			this.servos[i].setPosition(0);
-		}
-	}
-
-	private void moveAllServosToMidPos() {
-		for (int i=0; i<18; i++) {
-			this.servos[i].moveToMid();
-		}
-	}
-
-	private void moveAllBasesToMidPos() {
-		for (int i=0; i<6; i++) {
-			this.legs[i].getBase().moveToMid();
-		}
-	}
-
-	private void moveAllFemursToMidPos() {
-		for (int i=0; i<6; i++) {
-			this.legs[i].getFemur().moveToMid();
-		}
-	}
-
-	private void moveAllTarsosToMidPos() {
-		for (int i=0; i<6; i++) {
-			this.legs[i].getTarsus().moveToMid();
-		}
-	}
-
 	private static void waitFor(long howMuch) {
 		try {
 			Thread.sleep(howMuch);
@@ -204,11 +174,14 @@ public class Maven {
 													if (parameter.endsWith(" -show")) {
 														Log.i(maven.getServos()[globalChannel].getServoData().toString());
 													} else if (parameter.endsWith(" -min")) {
-														maven.getServos()[globalChannel].moveToMin();
+														//maven.getServos()[globalChannel].moveToMin();
+														showError(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -mid")) {
-														maven.getServos()[globalChannel].moveToMid();
+														//maven.getServos()[globalChannel].moveToMid();
+														showError(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -max")) {
-														maven.getServos()[globalChannel].moveToMax();
+														//maven.getServos()[globalChannel].moveToMax();
+														showError(Error.COMMAND_DISABLED);
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
@@ -218,7 +191,7 @@ public class Maven {
 															switch (parameter.trim()) {
 																case "min":
 																case "mid":
-																case "max":
+																case "max": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
 																	int servoPos = -1;
@@ -269,6 +242,58 @@ public class Maven {
 																		}
 																	}
 																	break;
+																}
+																case "limit-min":
+																case "limit-max": {
+																	String currentServoConfigName = parameter.trim();
+																	boolean runningServoPosConfig = true;
+																	int servoPos = -1;
+																	while (runningServoPosConfig) {
+																		currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
+																		System.out.print(currentPath + "> ");
+																		try {
+																			parameter = in.nextLine();
+																			switch (parameter.trim()) {
+																				case "save":
+																					if (servoPos != -1) {
+																						DataRepo dataRepo = new DataRepo();
+																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
+																						Log.s("A informação foi salva");
+																						if (currentServoConfigName.equals("limit-min"))
+																							maven.getServos()[globalChannel].getServoData().setLimitMin(servoPos);
+																						else if (currentServoConfigName.equals("limit-max"))
+																							maven.getServos()[globalChannel].getServoData().setLimitMax(servoPos);
+																					} else
+																						Log.w("Os dados não foram alterados");
+																					runningServoPosConfig = false;
+																					break;
+																				case "exit":
+																					runningServoPosConfig = false;
+																					break;
+																				case "exit-f":
+																					runningAllServosConfig = false;
+																					runningProgram = false;
+																					runningServoConfig = false;
+																					runningServoPosConfig = false;
+																					break;
+																				default:
+																					try {
+																						servoPos = Integer.parseInt(parameter);
+																						if (servoPos >= -90 && servoPos <= 90)
+																							maven.getServos()[globalChannel].move(servoPos);
+																						else
+																							servoPos = -1;
+																					} catch (Exception e) {
+																						showError(Error.INVALID_INPUT);
+																					}
+																					break;
+																			}
+																		} catch (Exception e) {
+																			showError(Error.INVALID_INPUT);
+																		}
+																	}
+																	break;
+																}
 																case "general-values":
 																	currentPath = "configure-servos (servo " + globalChannel + " - general values) ";
 																	System.out.println(currentPath + "> ");
@@ -305,36 +330,6 @@ public class Maven {
 							showError(Error.SYSTEM_NOT_STARTED);
 						break;
 					}
-					case "reset-signal":
-						if (initSystem) {
-							maven.resetAllServosPos();
-						} else
-							showError(Error.SYSTEM_NOT_STARTED);
-						break;
-					case "all-tomid":
-						if (initSystem)
-							maven.moveAllServosToMidPos();
-						else
-							showError(Error.SYSTEM_NOT_STARTED);
-						break;
-					case "base-tomid":
-						if (initSystem)
-							maven.moveAllBasesToMidPos();
-						else
-							showError(Error.SYSTEM_NOT_STARTED);
-						break;
-					case "femur-tomid":
-						if (initSystem)
-							maven.moveAllFemursToMidPos();
-						else
-							showError(Error.SYSTEM_NOT_STARTED);
-						break;
-					case "tarso-tomid":
-						if (initSystem)
-							maven.moveAllTarsosToMidPos();
-						else
-							showError(Error.SYSTEM_NOT_STARTED);
-						break;
 					case "system-restart-modules":
 						for (Module module : maven.getModuleList()) {
 							if (module instanceof PCA9685)
@@ -415,6 +410,9 @@ public class Maven {
 				break;
 			case SERVO_NOT_FOUND:
 				Log.e("Servo não encontrado");
+				break;
+			case COMMAND_DISABLED:
+				Log.e("Comando temporiariamente desabilitado");
 				break;
 		}
 	}

@@ -8,10 +8,6 @@ public class Member {
         this.servo = servo;
     }
 
-    public void setPosition(int position) {
-        this.servo.setPosition(position);
-    }
-
     public boolean move(int offset) {
         return this.servo.move(offset);
     }

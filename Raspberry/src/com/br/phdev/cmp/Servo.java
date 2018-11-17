@@ -6,20 +6,20 @@ public class Servo {
 
     private final PCA9685 module;
     private final ServoData servoData;
-    private int currentPosition;
+    private int currentPositionDegrees;
 
-    public Servo(PCA9685 module, ServoData servoData, int currentPosition) {
+    public Servo(PCA9685 module, ServoData servoData, int currentPositionDegrees) {
         this.module = module;
         this.servoData = servoData;
-        this.currentPosition = currentPosition;
+        this.currentPositionDegrees = currentPositionDegrees;
     }
 
     public ServoData getServoData() {
         return servoData;
     }
 
-    public int getCurrentPosition() {
-        return currentPosition;
+    public int getCurrentPositionDegrees() {
+        return currentPositionDegrees;
     }
 
     @Deprecated
@@ -29,30 +29,30 @@ public class Servo {
         }
     }
 
-    public void setPosition(int position) {
-        if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
-            if (position >= this.servoData.getMinPosition() && position <= this.servoData.getMaxPosition() || position == 0) {
-                module.setPWM(this.servoData.getLocalChannel(), 0, position);
+    public boolean move(int degrees) {
+        float newPos = degrees * this.servoData.getStep();
+        if (degrees > 0) {
+            if ((int)newPos < this.servoData.getLimitMax()) {
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)newPos);
+                this.currentPositionDegrees = degrees;
+            } else {
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getLimitMax());
+                this.currentPositionDegrees = 90;
+                return true;
             }
-        } else {
-            if (position >= this.servoData.getMaxPosition() && position <= this.servoData.getMinPosition() || position == 0) {
-                module.setPWM(this.servoData.getLocalChannel(), 0, position);
-            }
-        }
-    }
-
-    public boolean move(int offset) {
-        int newPos = this.currentPosition + offset;
-        if (this.servoData.getMaxPosition() > this.servoData.getMinPosition()) {
-            if (newPos >= this.servoData.getMinPosition() && newPos <= this.servoData.getMaxPosition()) {
-                module.setPWM(this.servoData.getLocalChannel(), 0, newPos);
+        } else if (degrees < 0){
+            if ((int)newPos > this.servoData.getLimitMin()) {
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)newPos);
+                this.currentPositionDegrees = degrees;
+            } else {
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, this.getServoData().getLimitMin());
+                this.currentPositionDegrees = -90;
                 return true;
             }
         } else {
-            if (newPos >= this.servoData.getMaxPosition() && newPos <= this.servoData.getMinPosition()) {
-                module.setPWM(this.servoData.getLocalChannel(), 0, newPos);
-                return true;
-            }
+            this.module.setPWM(this.servoData.getLocalChannel(), 0, this.getServoData().getMidPosition());
+            this.currentPositionDegrees = 0;
+            return true;
         }
         return false;
     }
