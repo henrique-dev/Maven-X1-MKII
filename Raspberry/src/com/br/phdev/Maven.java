@@ -431,6 +431,8 @@ public class Maven {
 		String l1b = legs[0].getBase().getServo().getServoData().getGlobalChannel() + "";
 		System.out.println();
 		System.out.println();
+		System.out.println("                           FRONT                    ");
+		System.out.println();
 		System.out.println("       _____                                   _____");
 		System.out.println("      |     |                                 |     |");
 		System.out.println("      |  " + s_(legs[0].getTarsus().getServo().getServoData().getGlobalChannel())  +
@@ -449,7 +451,7 @@ public class Maven {
 		System.out.println("                     |_____|   |_____|");
 		System.out.println("                       m           m");
 		System.out.println("                       m M A V E N m");
-		System.out.println("                       m           m");
+		System.out.println("        LEFT           m           m              RIGHT");
 		System.out.println("                       m           m");
 		System.out.println("   _____       _____  _m___     ___m_ _____       _____");
 		System.out.println("  |     |     |     ||     |   |     |     |     |     |");
@@ -479,6 +481,8 @@ public class Maven {
 				"  |                                 | " + s_(legs[5].getTarsus().getServo().getServoData().getGlobalChannel()) + "  |");
 		System.out.println("      |_____|                                 |_____|");
 		System.out.println();
+		System.out.println();
+		System.out.println("                           BACK                      ");
 		System.out.println();
 	}
 
