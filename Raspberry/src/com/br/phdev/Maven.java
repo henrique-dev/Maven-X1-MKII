@@ -235,7 +235,7 @@ public class Maven {
 																					break;
 																				default:
 																					try {
-																						servoPos = Integer.parseInt(parameter);
+																						servoPos = Float.parseFloat(parameter);
 																						if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
 																							maven.getServos()[globalChannel].setRawPosition(servoPos);
 																						else
