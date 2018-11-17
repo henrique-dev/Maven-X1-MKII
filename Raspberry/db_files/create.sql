@@ -11,9 +11,9 @@ CREATE TABLE servos_data (
     mod_address varchar(5) not null,
     local_channel tinyint not null default -1,
     global_channel tinyint not null primary key,
-    min smallint not null default 0,
-    mid smallint not null default 375,
-    max smallint not null default 0,
+    min float(3,1) not null default 0,
+    mid float(3,1) not null default 375,
+    max float(3,1) not null default 0,
     limit_min smallint not null default 0,
     limit_max smallint not null default 0,
     FOREIGN KEY (mod_address) references modules_data (mod_address)

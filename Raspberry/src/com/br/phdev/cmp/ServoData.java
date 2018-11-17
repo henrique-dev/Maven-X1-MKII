@@ -5,14 +5,14 @@ public class ServoData {
     private final String moduleAddress;
     private int globalChannel;
     private int localChannel;
-    private int minPosition; // -90°
-    private int midPosition; // 0°
-    private int maxPosition; // 90°
+    private float minPosition; // -90° position
+    private float midPosition; // 0° position
+    private float maxPosition; // 90° position
     private int limitMin;
     private int limitMax;
     private float step;
 
-    public ServoData(String moduleAddress, int globalChannel, int localChannel, int minPosition, int midPosition, int maxPosition, int limitMin, int limitMax) {
+    public ServoData(String moduleAddress, int globalChannel, int localChannel, float minPosition, float midPosition, float maxPosition, int limitMin, int limitMax) {
         this.moduleAddress = moduleAddress;
         this.globalChannel = globalChannel;
         this.localChannel = localChannel;
@@ -21,7 +21,7 @@ public class ServoData {
         this.maxPosition = maxPosition;
         this.limitMin = limitMin;
         this.limitMax = limitMax;
-        this.step = ((float)maxPosition - (float)minPosition) / 180;
+        this.step = (maxPosition - minPosition) / 180.f;
     }
 
     public String getModuleAddress() {
@@ -36,15 +36,15 @@ public class ServoData {
         return localChannel;
     }
 
-    public int getMinPosition() {
+    public float getMinPosition() {
         return minPosition;
     }
 
-    public int getMidPosition() {
+    public float getMidPosition() {
         return midPosition;
     }
 
-    public int getMaxPosition() {
+    public float getMaxPosition() {
         return maxPosition;
     }
 
@@ -64,15 +64,15 @@ public class ServoData {
         this.localChannel = localChannel;
     }
 
-    public void setMinPosition(int minPosition) {
+    public void setMinPosition(float minPosition) {
         this.minPosition = minPosition;
     }
 
-    public void setMidPosition(int midPosition) {
+    public void setMidPosition(float midPosition) {
         this.midPosition = midPosition;
     }
 
-    public void setMaxPosition(int maxPosition) {
+    public void setMaxPosition(float maxPosition) {
         this.maxPosition = maxPosition;
     }
 

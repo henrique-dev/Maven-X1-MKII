@@ -202,7 +202,7 @@ public class Maven {
 																case "max": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
-																	int servoPos = -1;
+																	float servoPos = -1;
 																	while (runningServoPosConfig) {
 																		currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
 																		System.out.print(currentPath + "> ");

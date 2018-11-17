@@ -23,9 +23,9 @@ public class Servo {
     }
 
     @Deprecated
-    public void setRawPosition(int position) {
+    public void setRawPosition(float position) {
         if (position >= 150 && position <= 600) {
-            module.setPWM(this.servoData.getLocalChannel(), 0, position);
+            module.setPWM(this.servoData.getLocalChannel(), 0, (int)position);
         }
     }
 
@@ -50,7 +50,7 @@ public class Servo {
                 return true;
             }
         } else {
-            this.module.setPWM(this.servoData.getLocalChannel(), 0, this.getServoData().getMidPosition());
+            this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.getServoData().getMidPosition());
             this.currentPositionDegrees = 0;
             return true;
         }
@@ -58,15 +58,15 @@ public class Servo {
     }
 
     public void moveToMin() {
-        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMinPosition());
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.servoData.getMinPosition());
     }
 
     public void moveToMid() {
-        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMidPosition());
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.servoData.getMidPosition());
     }
 
     public void moveToMax() {
-        this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getMaxPosition());
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.servoData.getMaxPosition());
     }
 
     private static void waitFor(long howMuch) {

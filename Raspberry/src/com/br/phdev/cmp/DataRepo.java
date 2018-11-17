@@ -44,9 +44,9 @@ public class DataRepo {
                         rs.getString("mod_address"),
                         rs.getInt("global_channel"),
                         rs.getInt("local_channel"),
-                        rs.getInt("min"),
-                        rs.getInt("mid"),
-                        rs.getInt("max"),
+                        rs.getFloat("min"),
+                        rs.getFloat("mid"),
+                        rs.getFloat("max"),
                         rs.getInt("limit_min"),
                         rs.getInt("limit_max")
                 );
@@ -59,7 +59,7 @@ public class DataRepo {
         return servoDataList;
     }
 
-    public void saveServoPosData(int globalChannel, String option, int pos) throws MavenDataException {
+    public void saveServoPosData(int globalChannel, String option, float pos) throws MavenDataException {
         String sql;
         switch (option) {
             case "min":
