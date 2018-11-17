@@ -24,7 +24,7 @@ public class Servo {
 
     @Deprecated
     public void setRawPosition(float position) {
-        if (position >= 150 && position <= 600) {
+        if (position >= 100 && position <= 650) {
             module.setPWM(this.servoData.getLocalChannel(), 0, (int)position);
         }
     }

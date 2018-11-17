@@ -236,7 +236,7 @@ public class Maven {
 																				default:
 																					try {
 																						servoPos = Float.parseFloat(parameter);
-																						if (servoPos >= 150 && servoPos <= 600 || servoPos == 0)
+																						if (servoPos >= 100 && servoPos <= 650 || servoPos == 0)
 																							maven.getServos()[globalChannel].setRawPosition(servoPos);
 																						else
 																							servoPos = -1;
