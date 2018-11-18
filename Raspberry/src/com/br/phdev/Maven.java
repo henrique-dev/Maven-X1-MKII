@@ -182,14 +182,14 @@ public class Maven {
 													if (parameter.endsWith(" -show")) {
 														Log.i(maven.getServos()[globalChannel].getServoData().toString());
 													} else if (parameter.endsWith(" -min")) {
-														//maven.getServos()[globalChannel].moveToMin();
-														showError(Error.COMMAND_DISABLED);
+														maven.getServos()[globalChannel].moveToMin();
+														//showError(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -mid")) {
-														//maven.getServos()[globalChannel].moveToMid();
-														showError(Error.COMMAND_DISABLED);
+														maven.getServos()[globalChannel].moveToMid();
+														//showError(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -max")) {
-														//maven.getServos()[globalChannel].moveToMax();
-														showError(Error.COMMAND_DISABLED);
+														maven.getServos()[globalChannel].moveToMax();
+														//showError(Error.COMMAND_DISABLED);
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
