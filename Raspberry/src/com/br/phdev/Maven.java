@@ -208,6 +208,14 @@ public class Maven {
 														maven.getServos()[globalChannel].moveToMid();
 													} else if (parameter.endsWith(" -max")) {
 														maven.getServos()[globalChannel].moveToMax();
+													} else if (parameter.endsWith(" -limit-max")) {
+														maven.getServos()[globalChannel].moveToLimitMax();
+													} else if (parameter.endsWith(" -limit-min")) {
+														maven.getServos()[globalChannel].moveToLimitMin();
+													} else if (parameter.endsWith(" -max-up")) {
+														maven.getServos()[globalChannel].moveMaxUp();
+													} else if (parameter.endsWith(" -max-down")) {
+														maven.getServos()[globalChannel].moveMaxDown();
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
