@@ -463,6 +463,10 @@ public class Maven {
 														commandCloseFound = true;
 														commandOpenFound = false;
 
+														System.out.println(currentTimer.toString());
+														System.out.println(currentServoNum.toString());
+														System.out.println(currentPos.toString());
+
 														ScriptCommand.ScriptPos scriptPos;
 														switch (currentPos.toString()) {
 															case "up":
