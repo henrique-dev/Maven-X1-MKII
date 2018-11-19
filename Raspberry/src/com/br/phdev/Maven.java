@@ -244,7 +244,10 @@ public class Maven {
 																							case "max": maven.getServos()[globalChannel].getServoData().setMaxPosition(valueForServo); break;
 																							case "limit-min": maven.getServos()[globalChannel].getServoData().setLimitMin((int)valueForServo); break;
 																							case "limit-max": maven.getServos()[globalChannel].getServoData().setLimitMax((int)valueForServo); break;
-																							case "opening": maven.getServos()[globalChannel].getServoData().setDegreesOpening((int)valueForServo); break;
+																							case "opening":
+																								maven.getServos()[globalChannel].getServoData().setDegreesOpening((int)valueForServo);
+																								maven.getServos()[globalChannel].getServoData().setStep();
+																								break;
 																							case "inverted": maven.getServos()[globalChannel].getServoData().setInverted(valueForServo == 1);
 																						}
 																						Log.s("A configuração foi salva");

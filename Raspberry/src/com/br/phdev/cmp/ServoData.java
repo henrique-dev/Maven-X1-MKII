@@ -107,6 +107,13 @@ public class ServoData {
         return step;
     }
 
+    public void setStep() {
+        if (this.degreesOpening != 0)
+            this.step = (this.maxPosition - this.minPosition) / (float)degreesOpening;
+        else
+            this.step = 0;
+    }
+
     public void setStep(float step) {
         this.step = step;
     }
