@@ -1,7 +1,6 @@
 package com.br.phdev.cmp;
 
 import com.br.phdev.misc.Log;
-import com.sun.corba.se.spi.activation.LocatorPackage.ServerLocationPerORBHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -63,6 +62,7 @@ public class LegsControl {
 
     public void addTasks(List<Task> taskList) {
         this.getBufferTaskList().addAll(taskList);
+        Log.w("tarefas para servo adicionada");
     }
 
     private class MainThread extends Thread {
@@ -84,9 +84,9 @@ public class LegsControl {
                         i -= 1;
                         Log.w("excluindo tarefas");
                     }
-                    LegsControl.this.taskList.addAll(getBufferTaskList());
-                    getBufferTaskList().clear();
                 }
+                LegsControl.this.taskList.addAll(getBufferTaskList());
+                getBufferTaskList().clear();
             }
         }
 
