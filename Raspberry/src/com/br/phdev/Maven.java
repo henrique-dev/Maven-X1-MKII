@@ -309,13 +309,14 @@ public class Maven {
 																								float mid = maven.getServos()[globalChannel].getServoData().getMidPosition();
 																								float min = maven.getServos()[globalChannel].getServoData().getMinPosition();
 																								float servoPos = valueForServo * step;
-																								float newServoPos = servoPos + mid;
+																								boolean inverted = maven.getServos()[globalChannel].getServoData().isInverted();
+																								float newServoPos = inverted ? servoPos - mid : servoPos + mid;
 
 																								if (newServoPos >= min && newServoPos <= max) {
 																									Log.w("DENTRO DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
-																									//maven.getServos()[globalChannel].setRawPosition(newServoPos);
-																									maven.getServos()[globalChannel].moveToRawDegrees((int)valueForServo);
+																									maven.getServos()[globalChannel].setRawPosition(newServoPos);
+																									//maven.getServos()[globalChannel].moveToRawDegrees((int)valueForServo);
 																								} else {
 																									Log.e("FORA DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
