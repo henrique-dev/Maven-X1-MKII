@@ -507,7 +507,7 @@ public class Maven {
 															currentServoNum.append(c);
 														} else if (timerFound && !servoFound && !posFound) {
 															currentTimer.append(c);
-														} else if (posFound && !servoFound && timerFound) {
+														} else if (posFound && !servoFound && !timerFound) {
 															currentPos.append(c);
 														} else {
 															//throw new ScriptException("caractere invalido");
