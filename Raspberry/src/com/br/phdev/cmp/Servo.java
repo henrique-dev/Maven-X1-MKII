@@ -69,6 +69,14 @@ public class Servo {
         this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.servoData.getMaxPosition());
     }
 
+    public void moveToLimitMin() {
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getStep() * (float)this.servoData.getLimitMin()));
+    }
+
+    public void moveToLimitMax() {
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getStep() * (float)this.servoData.getLimitMax()));
+    }
+
     private static void waitFor(long howMuch) {
         try {
             Thread.sleep(howMuch);

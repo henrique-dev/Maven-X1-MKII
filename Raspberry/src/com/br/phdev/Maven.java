@@ -187,6 +187,9 @@ public class Maven {
 										runningAllServosConfig = false;
 										runningProgram = false;
 										break;
+									case "exit-m":
+										runningAllServosConfig = false;
+										break;
 									case "show-s":
 										showTHIS(maven.getLegs());
 										break;
@@ -201,13 +204,10 @@ public class Maven {
 														Log.i(maven.getServos()[globalChannel].getServoData().toString());
 													} else if (parameter.endsWith(" -min")) {
 														maven.getServos()[globalChannel].moveToMin();
-														//show(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -mid")) {
 														maven.getServos()[globalChannel].moveToMid();
-														//show(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -max")) {
 														maven.getServos()[globalChannel].moveToMax();
-														//show(Error.COMMAND_DISABLED);
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
@@ -251,6 +251,27 @@ public class Maven {
 																					runningServoConfig = false;
 																					runningServoPosConfig = false;
 																					break;
+																				case "exit-m":
+																					runningAllServosConfig = false;
+																					runningServoConfig = false;
+																					runningServoPosConfig = false;
+																				case "-min":
+																					maven.getServos()[globalChannel].moveToMin();
+																					break;
+																				case "-mid":
+																					maven.getServos()[globalChannel].moveToMid();
+																					break;
+																				case "-max":
+																					maven.getServos()[globalChannel].moveToMax();
+																					break;
+																				case "-limit-min":
+																					maven.getServos()[globalChannel].moveToLimitMin();
+																					break;
+																				case "-limit-max":
+																					maven.getServos()[globalChannel].moveToLimitMax();
+																					break;
+																				case "":
+																					break;
 																				default:
 																					try {
 																						valueForServo = Float.parseFloat(parameter);
@@ -269,14 +290,13 @@ public class Maven {
 																								float servoPos = valueForServo * step;
 																								float newServoPos = servoPos + mid;
 
-																								if (newServoPos > min && newServoPos < max) {
+																								if (newServoPos >= min && newServoPos <= max) {
 																									System.out.println("DENTRO DOS VALORES");
 																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
 																								} else {
 																									System.out.println("FORA DOS VALORES");
 																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
 																								}
-
 																								break;
 																						}
 																					} catch (Exception e) {
@@ -294,16 +314,26 @@ public class Maven {
 																	currentPath = "configure-servos (servo " + globalChannel + " - general values) ";
 																	System.out.println(currentPath + "> ");
 																	break;
-																case "exit":
-																	runningServoConfig = false;
-																	break;
 																case "show":
 																	Log.i(maven.getServos()[globalChannel].getServoData().toString());
+																	break;
+																case "reload-servos":
+																	maven.loadData(false);
+																	maven.initLegs();
+																	break;
+																case "exit":
+																	runningServoConfig = false;
 																	break;
 																case "exit-f":
 																	runningAllServosConfig = false;
 																	runningProgram = false;
 																	runningServoConfig = false;
+																	break;
+																case "exit-m":
+																	runningServoConfig = false;
+																	runningAllServosConfig = false;
+																	break;
+																case "":
 																	break;
 																default:
 																	show(Error.INVALID_COMMAND);
