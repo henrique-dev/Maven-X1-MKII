@@ -72,7 +72,7 @@ public class LegsControl {
         @Override
         public void run() {
             this.runningMainLoop = true;
-            Log.w("iniciando thread");
+            Log.w("iniciando thread\n");
             while (this.runningMainLoop) {
                 for (Task task : LegsControl.this.taskList) {
                     task.doTask();
