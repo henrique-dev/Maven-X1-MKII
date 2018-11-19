@@ -10,23 +10,41 @@ public class ServoTask implements Task {
     private long currentTime;
     private Timer timer;
 
+    private boolean startTask;
+
     public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.currentPos = servo.getCurrentPositionDegrees();
         this.delay = delayInMilli;
-        this.currentTime = 0;
+        this.currentTime = 100;
         this.timer = new Timer();
         this.step = (targetPos - this.currentPos) / delayInMilli;
+        this.startTask = false;
+    }
+
+    public ServoTask start() {
+        this.startTask = true;
+        this.timer.start();
+        return this;
     }
 
     @Override
     public void doTask() {
-
+        if (!isTaskOver() && this.startTask) {
+            if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
+                this.currentPos += this.step;
+                this.servo.move(this.currentPos);
+                this.currentTime += 100;
+            }
+        }
     }
 
     @Override
     public boolean isTaskOver() {
-        return this.currentPos >= this.targetPos;
+        if (step >= 0)
+            return this.currentPos >= this.targetPos;
+        else
+            return this.currentPos <= this.targetPos;
     }
 }

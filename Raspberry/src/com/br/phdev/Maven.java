@@ -4,10 +4,12 @@ import com.br.phdev.cmp.*;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.MavenDataException;
+import com.br.phdev.exceptions.ScriptException;
 import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,11 +17,11 @@ import java.util.Scanner;
 public class Maven {
 
 	private enum Error {
-		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND, COMMAND_DISABLED
+		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND, COMMAND_DISABLED, ERROR_ON_SCRIPT
 	}
 
 	private enum Warning {
-		SYSTEM_ALLREADY_STARTED
+		SYSTEM_ALL_READY_STARTED
 	}
 
 	private List<Module> moduleList;
@@ -159,7 +161,7 @@ public class Maven {
 							maven.initSystem();
 							initSystem = true;
 						} else
-							show(Warning.SYSTEM_ALLREADY_STARTED);
+							show(Warning.SYSTEM_ALL_READY_STARTED);
 						break;
 					case "reload-system":
 						break;
@@ -424,48 +426,105 @@ public class Maven {
 					case "run-script":
 						if (initSystem) {
 							boolean runningScript = true;
+							List<ScriptCommand> scriptCommandList = new ArrayList<>();
 							while (runningScript) {
 								currentPath = "run-script ";
 								System.out.print(currentPath + "> ");
 								String script = in.nextLine();
-								switch (script) {
-									case "exit":
-										runningScript = false;
-										break;
-									default:
-										boolean servoFind = false;
-										StringBuilder currentServoNum = new StringBuilder();
-										for (int i = 0; i < script.length(); i++) {
-											char c = script.charAt(i);
-											if (c == 's') {
-												servoFind = true;
-											} else if (c == 'm') {
-												int channelGlobal = Integer.parseInt(currentServoNum.toString());
-												if (script.charAt(i + 1) == 'i' && script.charAt(i + 2) == 'n') {
-													maven.getServos()[channelGlobal].moveToMin();
-													i += 3;
-												} else if (script.charAt(i + 1) == 'i' && script.charAt(i + 2) == 'd') {
-													maven.getServos()[channelGlobal].moveToMid();
-													i += 3;
-												} else if (script.charAt(i + 1) == 'a' && script.charAt(i + 2) == 'x') {
-													maven.getServos()[channelGlobal].moveToMax();
-													i += 3;
-												}
-												currentServoNum = new StringBuilder();
-											} else if (c == '-' && servoFind) {
-												servoFind = false;
-											} else if (c == ' ') {
+								try {
+									switch (script) {
+										case "exit":
+											runningScript = false;
+											scriptCommandList.clear();
+											scriptCommandList = null;
+											break;
+										case "":
+											break;
+										default:
+											boolean commandOpenFound = false;
+											boolean commandCloseFound = false;
+											boolean timerFound = false;
+											boolean posFound = false;
+											boolean servoFound = false;
+											StringBuilder currentTimer = new StringBuilder();
+											StringBuilder currentServoNum = new StringBuilder();
+											StringBuilder currentPos = new StringBuilder();
+											for (int i = 0; i < script.length(); i++) {
+												char c = script.charAt(i);
+												switch (c) {
+													case '<':
+														if (commandCloseFound)
+															throw new ScriptException();
+														commandCloseFound = true;
+														break;
+													case '>':
+														if (!commandOpenFound)
+															throw new ScriptException();
+														commandCloseFound = true;
+														commandOpenFound = false;
 
-											} else if (c == '@') {
-												Maven.waitFor(500);
-											} else if (servoFind)
-												currentServoNum.append(c);
-										}
-										break;
+														ScriptCommand.ScriptPos scriptPos;
+														switch (currentPos.toString()) {
+															case "up":
+																scriptPos = ScriptCommand.ScriptPos.UP;
+																break;
+															case "mid":
+																scriptPos = ScriptCommand.ScriptPos.MID;
+																break;
+															case "down":
+																scriptPos = ScriptCommand.ScriptPos.DOWN;
+																break;
+															default:
+																throw new ScriptException();
+														}
+														int servoNum = Integer.parseInt(currentServoNum.toString().trim());
+														long delay = Long.parseLong(currentTimer.toString().trim());
+														scriptCommandList.add(new ScriptCommand(servoNum, delay, scriptPos));
+														currentTimer = new StringBuilder();
+														currentServoNum = new StringBuilder();
+														currentPos = new StringBuilder();
+														break;
+													case 's':
+														servoFound = true;
+														break;
+													case 't':
+														servoFound = false;
+														break;
+													case 'p':
+														posFound = true;
+														break;
+													case '-':
+														servoFound = false;
+														timerFound = false;
+														posFound = false;
+													default: {
+														if (servoFound && !timerFound && !posFound) {
+															currentServoNum.append(c);
+														} else if (timerFound && !servoFound && !posFound) {
+															currentTimer.append(c);
+														} else if (posFound && !servoFound && timerFound) {
+															currentPos.append(c);
+														} else {
+															throw new ScriptException();
+														}
+														break;
+													}
+												}
+											}
+
+											for (ScriptCommand sc : scriptCommandList) {
+												sc.toString();
+											}
+											break;
+									}
+								} catch (ScriptException e) {
+									show(Error.ERROR_ON_SCRIPT);
 								}
 							}
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
+						break;
+					case "init-legs-system":
 						break;
 					case "":
 						break;
@@ -501,12 +560,15 @@ public class Maven {
 			case COMMAND_DISABLED:
 				Log.e("Comando temporiariamente desabilitado");
 				break;
+			case ERROR_ON_SCRIPT:
+				Log.e("Script invalido");
+				break;
 		}
 	}
 
 	private static void show(Warning warning) {
 		switch (warning) {
-			case SYSTEM_ALLREADY_STARTED:
+			case SYSTEM_ALL_READY_STARTED:
 				Log.w("O sistema já está iniciado");
 				break;
 		}
