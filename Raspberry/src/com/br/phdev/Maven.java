@@ -30,7 +30,7 @@ public class Maven {
 	private Servo[] servos;
 
 	private void initSystem() throws I2CFactory.UnsupportedBusNumberException {
-		if (this.loadData()) {
+		if (this.loadData(true)) {
 			for (Module module : moduleList) {
 				module.init();
 				if (module instanceof PCA9685)
@@ -41,11 +41,13 @@ public class Maven {
 			Log.e("Falha ao iniciar o sistema");
 	}
 
-	private boolean loadData() {
+	private boolean loadData(boolean loadModules) {
 		DataRepo dataRepo = new DataRepo();
 		try {
-			Log.i("Carregando informações para os módulos...");
-			this.moduleList = dataRepo.loadModulesData();
+			if (loadModules) {
+				Log.i("Carregando informações para os módulos...");
+				this.moduleList = dataRepo.loadModulesData();
+			}
 			Log.i("Carregando informações para os servos...");
 			this.servoDataList = dataRepo.loadServosData();
 			Log.i("Carregando informações para as pernas...");
@@ -155,6 +157,12 @@ public class Maven {
 					case "init-system":
 						maven.initSystem();
 						initSystem = true;
+						break;
+					case "reload-system":
+						break;
+					case "reload-servos":
+						maven.loadData(false);
+						maven.initLegs();
 						break;
 					case "configure-legs":
 						break;
