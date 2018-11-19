@@ -8,13 +8,15 @@ public class ServoTask implements Task {
     private float step;
     private long delay;
     private long currentTime;
+    private Timer timer;
 
-    public ServoTask(Servo servo, int targetPos, long delayInMilli) {
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli) {
         this.servo = servo;
-        this.targetPos = targetPos;
+        this.targetPos = targetPosDegrees;
         this.currentPos = servo.getCurrentPositionDegrees();
         this.delay = delayInMilli;
         this.currentTime = 0;
+        this.timer = new Timer();
         this.step = (targetPos - this.currentPos) / delayInMilli;
     }
 

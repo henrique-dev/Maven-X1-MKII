@@ -7,9 +7,9 @@ public class Servo {
 
     private final PCA9685 module;
     private final ServoData servoData;
-    private int currentPositionDegrees;
+    private float currentPositionDegrees;
 
-    public Servo(PCA9685 module, ServoData servoData, int currentPositionDegrees) {
+    public Servo(PCA9685 module, ServoData servoData, float currentPositionDegrees) {
         this.module = module;
         this.servoData = servoData;
         this.currentPositionDegrees = currentPositionDegrees;
@@ -19,8 +19,12 @@ public class Servo {
         return servoData;
     }
 
-    public int getCurrentPositionDegrees() {
+    public float getCurrentPositionDegrees() {
         return currentPositionDegrees;
+    }
+
+    public void setCurrentPositionDegrees(float currentPositionDegrees) {
+        this.currentPositionDegrees = currentPositionDegrees;
     }
 
     @Deprecated
@@ -30,21 +34,33 @@ public class Servo {
         }
     }
 
-    @Deprecated
-    public void moveToRawDegrees(int degrees) {
-        float newPos;
-        if (this.servoData.isInverted()) {
-            newPos = this.servoData.getMidPosition() - (this.servoData.getStep() * (float)degrees);
+    public boolean move(float degrees) {
+        if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
+            if (this.servoData.isInverted()) {
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - (this.servoData.getStep() * degrees)));
+            } else {
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + (this.servoData.getStep() * degrees)));
+            }
+            this.currentPositionDegrees = degrees;
+            return true;
         } else {
-            newPos = this.servoData.getMidPosition() + (this.servoData.getStep() * (float)degrees);
+            Log.w("Posição ultrapassa os limites");
+            if (degrees > this.servoData.getLimitMax()) {
+                if (this.servoData.isInverted()) {
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
+                } else {
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
+                }
+                this.currentPositionDegrees = this.servoData.getLimitMax();
+            } else if (degrees < this.servoData.getLimitMin()) {
+                if (this.servoData.isInverted()) {
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
+                } else {
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
+                }
+                this.currentPositionDegrees = this.servoData.getLimitMin();
+            }
         }
-        if (newPos >= this.servoData.getMinPosition() && newPos <= this.servoData.getMaxPosition())
-            this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)newPos);
-        else
-            Log.e("Nova posição fora da faixa: " + newPos);
-    }
-
-    public boolean move(int degrees) {
         return false;
     }
 

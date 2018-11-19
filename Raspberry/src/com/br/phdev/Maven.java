@@ -224,7 +224,7 @@ public class Maven {
 															parameter = in.nextLine();
 															switch (parameter.trim()) {
 																case "opening": case "limit-min": case "limit-max": case "min": case "mid": case "max":
-																case "inverted": {
+																case "inverted": case "move": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
 																	float valueForServo = -1;
@@ -321,6 +321,10 @@ public class Maven {
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
 																									valueForServo = -1;
 																								}
+																								break;
+																							case "move":
+																								valueForServo = Float.parseFloat(parameter);
+																								maven.getServos()[globalChannel].move(valueForServo);
 																								break;
 																							case "opening":
 																								valueForServo = Integer.parseInt(parameter);
