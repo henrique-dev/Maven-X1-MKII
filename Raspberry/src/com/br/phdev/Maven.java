@@ -513,8 +513,11 @@ public class Maven {
 											}
 
 											for (ScriptCommand sc : scriptCommandList) {
-												sc.toString();
+												Log.w(sc.toString());
 											}
+
+											scriptCommandList.clear();
+
 											break;
 									}
 								} catch (ScriptException e) {
