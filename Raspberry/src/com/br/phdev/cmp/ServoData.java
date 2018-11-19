@@ -12,8 +12,9 @@ public class ServoData {
     private int limitMax;
     private int degreesOpening;
     private float step;
+    private boolean inverted;
 
-    public ServoData(String moduleAddress, int globalChannel, int localChannel, float minPosition, float midPosition, float maxPosition, int limitMin, int limitMax, int degreesOpening) {
+    public ServoData(String moduleAddress, int globalChannel, int localChannel, float minPosition, float midPosition, float maxPosition, int limitMin, int limitMax, int degreesOpening, boolean inverted) {
         this.moduleAddress = moduleAddress;
         this.globalChannel = globalChannel;
         this.localChannel = localChannel;
@@ -23,6 +24,7 @@ public class ServoData {
         this.limitMin = limitMin;
         this.limitMax = limitMax;
         this.degreesOpening = degreesOpening;
+        this.inverted = inverted;
         if (degreesOpening != 0)
             this.step = (maxPosition - minPosition) / (float)degreesOpening;
         else
@@ -109,6 +111,14 @@ public class ServoData {
         this.step = step;
     }
 
+    public boolean isInverted() {
+        return inverted;
+    }
+
+    public void setInverted(boolean inverted) {
+        this.inverted = inverted;
+    }
+
     @Override
     public String toString() {
         return "\nModulo pertencente: " + this.moduleAddress + "\n" +
@@ -120,7 +130,8 @@ public class ServoData {
                 "Abertura total do servo: " + this.degreesOpening + "\n" +
                 "Limite máximo de abertura: " + this.limitMax + "\n" +
                 "Limite mínimo de abertura: " + this.limitMin + "\n" +
-                "Passo: " + this.step + "\n";
+                "Passo: " + this.step + "\n" +
+                "Ivertido: " + this.inverted + "\n";
     }
 
 }

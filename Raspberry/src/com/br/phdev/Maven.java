@@ -215,7 +215,8 @@ public class Maven {
 															System.out.print(currentPath + "> ");
 															parameter = in.nextLine();
 															switch (parameter.trim()) {
-																case "opening": case "limit-min": case "limit-max": case "min": case "mid": case "max": {
+																case "opening": case "limit-min": case "limit-max": case "min": case "mid": case "max":
+																case "inverted": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
 																	float valueForServo = -1;
@@ -236,6 +237,7 @@ public class Maven {
 																							case "limit-min": maven.getServos()[globalChannel].getServoData().setLimitMin((int)valueForServo); break;
 																							case "limit-max": maven.getServos()[globalChannel].getServoData().setLimitMax((int)valueForServo); break;
 																							case "opening": maven.getServos()[globalChannel].getServoData().setDegreesOpening((int)valueForServo); break;
+																							case "inverted": maven.getServos()[globalChannel].getServoData().setInverted(valueForServo == 1);
 																						}
 																						Log.s("A configuração foi salva");
 																					} else
@@ -274,15 +276,17 @@ public class Maven {
 																					break;
 																				default:
 																					try {
-																						valueForServo = Float.parseFloat(parameter);
+
 																						switch (currentServoConfigName) {
 																							case "min": case "mid": case "max":
+																								valueForServo = Float.parseFloat(parameter);
 																								if (valueForServo >= 100 && valueForServo <= 650 || valueForServo == 0)
 																									maven.getServos()[globalChannel].setRawPosition(valueForServo);
 																								else
 																									valueForServo = -1;
 																								break;
 																							case "limit-min": case "limit-max":
+																								valueForServo = Integer.parseInt(parameter);
 																								float step = maven.getServos()[globalChannel].getServoData().getStep();
 																								float max = maven.getServos()[globalChannel].getServoData().getMaxPosition();
 																								float mid = maven.getServos()[globalChannel].getServoData().getMidPosition();
@@ -297,6 +301,9 @@ public class Maven {
 																									System.out.println("FORA DOS VALORES");
 																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
 																								}
+																								break;
+																							case "inverted":
+																								valueForServo = Boolean.parseBoolean(parameter) ? 1 : 0;
 																								break;
 																						}
 																					} catch (Exception e) {
