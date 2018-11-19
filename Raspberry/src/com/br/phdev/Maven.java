@@ -310,7 +310,7 @@ public class Maven {
 																								float min = maven.getServos()[globalChannel].getServoData().getMinPosition();
 																								float servoPos = valueForServo * step;
 																								boolean inverted = maven.getServos()[globalChannel].getServoData().isInverted();
-																								float newServoPos = inverted ? servoPos - mid : servoPos + mid;
+																								float newServoPos = inverted ? mid - servoPos : mid + servoPos;
 
 																								if (newServoPos >= min && newServoPos <= max) {
 																									Log.w("DENTRO DOS VALORES");
