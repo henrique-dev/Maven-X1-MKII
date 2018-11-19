@@ -488,7 +488,7 @@ public class Maven {
 														servoFound = true;
 														break;
 													case 't':
-														servoFound = false;
+														timerFound = true;
 														break;
 													case 'p':
 														posFound = true;
