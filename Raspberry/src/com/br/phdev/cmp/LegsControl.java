@@ -62,7 +62,7 @@ public class LegsControl {
 
     public void addTasks(List<Task> taskList) {
         this.getBufferTaskList().addAll(taskList);
-        Log.w("tarefas para servo adicionada");
+        Log.w("tarefas para servo adicionada. tamanho da lista: " + this.getBufferTaskList().size());
     }
 
     private class MainThread extends Thread {
@@ -86,7 +86,7 @@ public class LegsControl {
                     }
                 }
                 LegsControl.this.taskList.addAll(getBufferTaskList());
-                getBufferTaskList().clear();
+                //getBufferTaskList().clear();
             }
         }
 

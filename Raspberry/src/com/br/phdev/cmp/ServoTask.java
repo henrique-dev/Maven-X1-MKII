@@ -31,6 +31,7 @@ public class ServoTask implements Task {
 
     @Override
     public void doTask() {
+        System.out.println("here");
         if (!this.startTask)
             this.startTask = true;
         if (!isTaskOver() && this.startTask) {
