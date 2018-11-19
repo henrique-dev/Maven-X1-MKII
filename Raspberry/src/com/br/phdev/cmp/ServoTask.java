@@ -31,9 +31,10 @@ public class ServoTask implements Task {
 
     @Override
     public void doTask() {
-        System.out.println("here");
-        if (!this.startTask)
+        if (!this.startTask) {
             this.startTask = true;
+            this.timer.start();
+        }
         if (!isTaskOver() && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 System.out.println("executando tarefa");
