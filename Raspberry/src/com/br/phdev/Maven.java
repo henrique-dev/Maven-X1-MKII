@@ -469,13 +469,13 @@ public class Maven {
 
 														ScriptCommand.ScriptPos scriptPos;
 														switch (currentPos.toString()) {
-															case "up":
+															case "max":
 																scriptPos = ScriptCommand.ScriptPos.UP;
 																break;
 															case "mid":
 																scriptPos = ScriptCommand.ScriptPos.MID;
 																break;
-															case "down":
+															case "min":
 																scriptPos = ScriptCommand.ScriptPos.DOWN;
 																break;
 															default:
