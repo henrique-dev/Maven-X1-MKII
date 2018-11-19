@@ -497,6 +497,7 @@ public class Maven {
 														servoFound = false;
 														timerFound = false;
 														posFound = false;
+														break;
 													default: {
 														if (servoFound && !timerFound && !posFound) {
 															currentServoNum.append(c);
