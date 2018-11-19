@@ -31,6 +31,8 @@ public class ServoTask implements Task {
 
     @Override
     public void doTask() {
+        if (!this.startTask)
+            this.startTask = true;
         if (!isTaskOver() && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 this.currentPos += this.step;

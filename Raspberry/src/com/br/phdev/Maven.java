@@ -24,6 +24,8 @@ public class Maven {
 		SYSTEM_ALL_READY_STARTED
 	}
 
+	private LegsControl legsControl;
+
 	private List<Module> moduleList;
 	private List<ServoData> servoDataList;
 	private List<LegData> legDataList;
@@ -109,6 +111,16 @@ public class Maven {
 		}
 	}
 
+	private void initLegsControl() {
+		this.legsControl = new LegsControl(this.legs, this.servos);
+		this.legsControl.start();
+	}
+
+	private void stopLegsControl() {
+		if (this.legsControl != null)
+			this.legsControl.stop();
+	}
+
 	private boolean findServo(int globalChannel) {
 		for (Servo servo : this.servos) {
 			if (globalChannel == servo.getServoData().getGlobalChannel())
@@ -155,6 +167,8 @@ public class Maven {
 					case "exit-f":
 					case "exit":
 						runningProgram = false;
+						if (initSystem)
+							maven.stopLegsControl();
 						break;
 					case "init-system":
 						if (!initSystem) {
@@ -518,7 +532,25 @@ public class Maven {
 											}
 
 											for (ScriptCommand sc : scriptCommandList) {
-												Log.w(sc.toString());
+												List<Task> taskList = new ArrayList<>();
+												switch (sc.getScriptPos()) {
+													case UP:
+														taskList.add(new ServoTask(
+																maven.getServos()[sc.getServoNum()],
+																maven.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay()));
+																break;
+													case MID:
+														taskList.add(new ServoTask(
+																maven.getServos()[sc.getServoNum()],
+																0, sc.getDelay()));
+														break;
+													case DOWN:
+														taskList.add(new ServoTask(
+																maven.getServos()[sc.getServoNum()],
+																maven.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay()));
+														break;
+												}
+												maven.legsControl.addTasks(taskList);
 											}
 
 											scriptCommandList.clear();

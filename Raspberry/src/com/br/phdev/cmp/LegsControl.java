@@ -56,6 +56,10 @@ public class LegsControl {
         this.getBufferTaskList().add(task);
     }
 
+    public void addTasks(List<Task> taskList) {
+        this.getBufferTaskList().addAll(taskList);
+    }
+
     private class MainThread extends Thread {
 
         private boolean runningMainLoop;
