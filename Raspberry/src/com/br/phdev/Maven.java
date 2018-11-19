@@ -308,6 +308,9 @@ public class Maven {
 																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
 																								}
 																								break;
+																							case "opening":
+																								valueForServo = Integer.parseInt(parameter);
+																								break;
 																							case "inverted":
 																								valueForServo = Boolean.parseBoolean(parameter) ? 1 : 0;
 																								break;
