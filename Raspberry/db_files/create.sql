@@ -24,24 +24,24 @@ CREATE TABLE servos_data (
     mid float(3,1) not null default 375,
     max float(3,1) not null default 0,
     limit_min smallint not null default 0,
-    limit_max smallint not null default 0,
+    limit_max smallint not null default 0, degrees_opening smallint not null default 0, inverted boolean not null default false,
     FOREIGN KEY (mod_address) references modules_data (mod_address)
 );
-INSERT INTO "servos_data" VALUES('0x40',1,0,190.0,382.5,575.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',2,1,170.0,380.0,590.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',3,2,185.0,392.5,600.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',4,3,225.0,335.0,445.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',15,4,225.0,335.0,445.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',6,5,250.0,355.0,460.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',7,6,255.0,365.0,475.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',8,7,250.0,360.0,470.0,0,0);
-INSERT INTO "servos_data" VALUES('0x40',9,8,275.0,375.0,475.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',1,9,160.0,380.0,600.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',2,10,255.0,365.0,475.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',3,11,215.0,325.0,435.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',4,12,265.0,370.0,475.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',5,13,165.0,377.5,590.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',6,14,255.0,377.5,500.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',7,15,152.5,365.0,577.5,0,0);
-INSERT INTO "servos_data" VALUES('0x41',8,16,210.0,325.0,440.0,0,0);
-INSERT INTO "servos_data" VALUES('0x41',9,17,215.0,330.0,445.0,0,0);
+INSERT INTO "servos_data" VALUES('0x40',1,0,172.5,364.5,557.5,-50,40,180,'false');
+INSERT INTO "servos_data" VALUES('0x40',2,1,180.0,390.0,600.0,-50,40,180,1);
+INSERT INTO "servos_data" VALUES('0x40',3,2,185.0,392.5,600.0,-50,40,180,1);
+INSERT INTO "servos_data" VALUES('0x40',4,3,225.0,335.0,445.0,-45,45,90,1);
+INSERT INTO "servos_data" VALUES('0x40',15,4,225.0,335.0,445.0,-45,45,90,'false');
+INSERT INTO "servos_data" VALUES('0x40',6,5,250.0,355.0,460.0,-45,45,90,'false');
+INSERT INTO "servos_data" VALUES('0x40',7,6,255.0,365.0,475.0,-45,45,90,'false');
+INSERT INTO "servos_data" VALUES('0x40',8,7,250.0,360.0,470.0,-45,45,90,1);
+INSERT INTO "servos_data" VALUES('0x40',9,8,275.0,375.0,475.0,-45,45,90,'false');
+INSERT INTO "servos_data" VALUES('0x41',1,9,160.0,380.0,600.0,-50,40,180,'false');
+INSERT INTO "servos_data" VALUES('0x41',2,10,255.0,365.0,475.0,-45,45,90,1);
+INSERT INTO "servos_data" VALUES('0x41',3,11,215.0,325.0,435.0,-45,45,90,1);
+INSERT INTO "servos_data" VALUES('0x41',4,12,265.0,370.0,475.0,-45,45,90,'false');
+INSERT INTO "servos_data" VALUES('0x41',5,13,165.0,377.5,590.0,-50,40,180,'false');
+INSERT INTO "servos_data" VALUES('0x41',6,14,255.0,377.5,500.0,-45,45,90,1);
+INSERT INTO "servos_data" VALUES('0x41',7,15,162.5,375.0,587.5,-50,40,180,1);
+INSERT INTO "servos_data" VALUES('0x41',8,16,210.0,325.0,440.0,-45,45,90,1);
+INSERT INTO "servos_data" VALUES('0x41',9,17,215.0,330.0,445.0,-45,45,90,'false');
