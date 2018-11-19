@@ -8,10 +8,6 @@ import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,6 +16,10 @@ public class Maven {
 
 	private enum Error {
 		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND, COMMAND_DISABLED
+	}
+
+	private enum Warning {
+		SYSTEM_ALLREADY_STARTED
 	}
 
 	private List<Module> moduleList;
@@ -155,14 +155,20 @@ public class Maven {
 						runningProgram = false;
 						break;
 					case "init-system":
-						maven.initSystem();
-						initSystem = true;
+						if (!initSystem) {
+							maven.initSystem();
+							initSystem = true;
+						} else
+							show(Warning.SYSTEM_ALLREADY_STARTED);
 						break;
 					case "reload-system":
 						break;
 					case "reload-servos":
-						maven.loadData(false);
-						maven.initLegs();
+						if (initSystem) {
+							maven.loadData(false);
+							maven.initLegs();
+						} else
+							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "configure-legs":
 						break;
@@ -195,13 +201,13 @@ public class Maven {
 														Log.i(maven.getServos()[globalChannel].getServoData().toString());
 													} else if (parameter.endsWith(" -min")) {
 														maven.getServos()[globalChannel].moveToMin();
-														//showError(Error.COMMAND_DISABLED);
+														//show(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -mid")) {
 														maven.getServos()[globalChannel].moveToMid();
-														//showError(Error.COMMAND_DISABLED);
+														//show(Error.COMMAND_DISABLED);
 													} else if (parameter.endsWith(" -max")) {
 														maven.getServos()[globalChannel].moveToMax();
-														//showError(Error.COMMAND_DISABLED);
+														//show(Error.COMMAND_DISABLED);
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
@@ -274,12 +280,12 @@ public class Maven {
 																								break;
 																						}
 																					} catch (Exception e) {
-																						showError(Error.INVALID_INPUT);
+																						show(Error.INVALID_INPUT);
 																					}
 																					break;
 																			}
 																		} catch (Exception e) {
-																			showError(Error.INVALID_INPUT);
+																			show(Error.INVALID_INPUT);
 																		}
 																	}
 																	break;
@@ -300,80 +306,85 @@ public class Maven {
 																	runningServoConfig = false;
 																	break;
 																default:
-																	showError(Error.INVALID_COMMAND);
+																	show(Error.INVALID_COMMAND);
 																	break;
 															}
 														}
 													}
 												} else {
-													showError(Error.SERVO_NOT_FOUND);
+													show(Error.SERVO_NOT_FOUND);
 												}
 											}
 										} catch (Exception e) {
-											showError(Error.INVALID_INPUT);
+											show(Error.INVALID_INPUT);
 										}
 										break;
 									}
 								}
 							}
 						} else
-							showError(Error.SYSTEM_NOT_STARTED);
+							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					}
 					case "system-restart-modules":
-						for (Module module : maven.getModuleList()) {
-							if (module instanceof PCA9685)
-								module.restartDriver();
-						}
+						if (initSystem) {
+							for (Module module : maven.getModuleList()) {
+								if (module instanceof PCA9685)
+									module.restartDriver();
+							}
+						} else
+							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "run-script":
-						boolean runningScript = true;
-						while (runningScript) {
-							currentPath = "run-script ";
-							System.out.print(currentPath + "> ");
-							String script = in.nextLine();
-							switch (script) {
-								case "exit":
-									runningScript = false;
-									break;
-								default:
-									boolean servoFind = false;
-									StringBuilder currentServoNum = new StringBuilder();
-									for (int i=0; i<script.length(); i++) {
-										char c = script.charAt(i);
-										if (c == 's') {
-											servoFind = true;
-										} else if (c == 'm') {
-											int channelGlobal = Integer.parseInt(currentServoNum.toString());
-											if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'n') {
-												maven.getServos()[channelGlobal].moveToMin();
-												i += 3;
-											} else if (script.charAt(i+1) == 'i' && script.charAt(i+2) == 'd') {
-												maven.getServos()[channelGlobal].moveToMid();
-												i += 3;
-											} else if (script.charAt(i+1) == 'a' && script.charAt(i+2) == 'x') {
-												maven.getServos()[channelGlobal].moveToMax();
-												i += 3;
-											}
-											currentServoNum = new StringBuilder();
-										} else if (c == '-' && servoFind){
-											servoFind = false;
-										} else if (c == ' ') {
+						if (initSystem) {
+							boolean runningScript = true;
+							while (runningScript) {
+								currentPath = "run-script ";
+								System.out.print(currentPath + "> ");
+								String script = in.nextLine();
+								switch (script) {
+									case "exit":
+										runningScript = false;
+										break;
+									default:
+										boolean servoFind = false;
+										StringBuilder currentServoNum = new StringBuilder();
+										for (int i = 0; i < script.length(); i++) {
+											char c = script.charAt(i);
+											if (c == 's') {
+												servoFind = true;
+											} else if (c == 'm') {
+												int channelGlobal = Integer.parseInt(currentServoNum.toString());
+												if (script.charAt(i + 1) == 'i' && script.charAt(i + 2) == 'n') {
+													maven.getServos()[channelGlobal].moveToMin();
+													i += 3;
+												} else if (script.charAt(i + 1) == 'i' && script.charAt(i + 2) == 'd') {
+													maven.getServos()[channelGlobal].moveToMid();
+													i += 3;
+												} else if (script.charAt(i + 1) == 'a' && script.charAt(i + 2) == 'x') {
+													maven.getServos()[channelGlobal].moveToMax();
+													i += 3;
+												}
+												currentServoNum = new StringBuilder();
+											} else if (c == '-' && servoFind) {
+												servoFind = false;
+											} else if (c == ' ') {
 
-										} else if (c == '@') {
-											Maven.waitFor(500);
-										} else if (servoFind)
-											currentServoNum.append(c);
-									}
-									break;
+											} else if (c == '@') {
+												Maven.waitFor(500);
+											} else if (servoFind)
+												currentServoNum.append(c);
+										}
+										break;
+								}
 							}
-						}
+						} else
+							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "":
 						break;
 					default:
-						System.out.println(command);
-						showError(Error.INVALID_COMMAND);
+						show(Error.INVALID_COMMAND);
 						break;
 				}
 			}
@@ -387,7 +398,7 @@ public class Maven {
 		}
 	}
 
-	private static void showError(Error error) {
+	private static void show(Error error) {
 		switch (error) {
 			case SYSTEM_NOT_STARTED:
 				Log.e("Sistema não iniciado");
@@ -406,6 +417,16 @@ public class Maven {
 				break;
 		}
 	}
+
+	private static void show(Warning warning) {
+		switch (warning) {
+			case SYSTEM_ALLREADY_STARTED:
+				Log.w("O sistema já está iniciado");
+				break;
+		}
+	}
+
+
 
 	private static void showTHIS(Leg[] legs) {
 		int l1t = legs[0].getTarsus().getServo().getServoData().getGlobalChannel();
