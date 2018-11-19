@@ -1,5 +1,8 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.misc.Log;
+import com.sun.corba.se.spi.activation.LocatorPackage.ServerLocationPerORBHelper;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +27,7 @@ public class LegsControl {
 
     public void start() {
         if (this.mainThread == null) {
+            Log.w("Iniciando sistema das pernas");
             this.mainThread = new MainThread();
             this.mainThread.start();
         }
@@ -45,6 +49,7 @@ public class LegsControl {
             if (this.taskList != null)
                 this.taskList.clear();
             this.taskList = null;
+            Log.w("Encerrando sistema das pernas");
         }
     }
 
@@ -67,6 +72,7 @@ public class LegsControl {
         @Override
         public void run() {
             this.runningMainLoop = true;
+            Log.w("iniciando thread");
             while (this.runningMainLoop) {
                 for (Task task : LegsControl.this.taskList) {
                     task.doTask();
@@ -76,6 +82,7 @@ public class LegsControl {
                     if (task.isTaskOver()) {
                         LegsControl.this.taskList.remove(i);
                         i -= 1;
+                        Log.w("excluindo tarefas");
                     }
                     LegsControl.this.taskList.addAll(getBufferTaskList());
                     getBufferTaskList().clear();
