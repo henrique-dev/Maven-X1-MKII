@@ -301,11 +301,12 @@ public class Maven {
 																								float newServoPos = servoPos + mid;
 
 																								if (newServoPos >= min && newServoPos <= max) {
-																									System.out.println("DENTRO DOS VALORES");
-																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
+																									Log.w("DENTRO DOS VALORES");
+																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
 																								} else {
-																									System.out.println("FORA DOS VALORES");
-																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
+																									Log.e("FORA DOS VALORES");
+																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
+																									valueForServo = -1;
 																								}
 																								break;
 																							case "opening":
