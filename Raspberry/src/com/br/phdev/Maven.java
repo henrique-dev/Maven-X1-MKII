@@ -566,6 +566,7 @@ public class Maven {
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "init-legs-system":
+						maven.initLegsControl();
 						break;
 					case "":
 						break;
