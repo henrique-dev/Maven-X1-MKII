@@ -455,7 +455,7 @@ public class Maven {
 													case '<':
 														if (commandCloseFound)
 															throw new ScriptException("fechamento achado antes de abertura");
-														commandCloseFound = true;
+														commandOpenFound = true;
 														break;
 													case '>':
 														if (!commandOpenFound)
