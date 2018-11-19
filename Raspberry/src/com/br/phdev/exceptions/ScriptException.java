@@ -6,6 +6,10 @@ public class ScriptException extends Exception {
         super();
     }
 
+    public ScriptException(String msg) {
+        super(msg);
+    }
+
     public ScriptException(Exception e) {
         super(e);
     }

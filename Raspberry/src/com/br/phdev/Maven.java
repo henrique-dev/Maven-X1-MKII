@@ -454,12 +454,12 @@ public class Maven {
 												switch (c) {
 													case '<':
 														if (commandCloseFound)
-															throw new ScriptException();
+															throw new ScriptException("fechamento achado antes de abertura");
 														commandCloseFound = true;
 														break;
 													case '>':
 														if (!commandOpenFound)
-															throw new ScriptException();
+															throw new ScriptException("abertura antes de fechamento não achada");
 														commandCloseFound = true;
 														commandOpenFound = false;
 
@@ -475,7 +475,7 @@ public class Maven {
 																scriptPos = ScriptCommand.ScriptPos.DOWN;
 																break;
 															default:
-																throw new ScriptException();
+																throw new ScriptException("posição invalida");
 														}
 														int servoNum = Integer.parseInt(currentServoNum.toString().trim());
 														long delay = Long.parseLong(currentTimer.toString().trim());
@@ -505,7 +505,7 @@ public class Maven {
 														} else if (posFound && !servoFound && timerFound) {
 															currentPos.append(c);
 														} else {
-															throw new ScriptException();
+															throw new ScriptException("caractere invalido");
 														}
 														break;
 													}
@@ -522,6 +522,7 @@ public class Maven {
 									}
 								} catch (ScriptException e) {
 									show(Error.ERROR_ON_SCRIPT);
+									Log.e(e.getMessage());
 								}
 							}
 						} else
