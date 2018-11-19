@@ -314,7 +314,8 @@ public class Maven {
 																								if (newServoPos >= min && newServoPos <= max) {
 																									Log.w("DENTRO DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
-																									maven.getServos()[globalChannel].setRawPosition(newServoPos);
+																									//maven.getServos()[globalChannel].setRawPosition(newServoPos);
+																									maven.getServos()[globalChannel].moveToRawDegrees((int)valueForServo);
 																								} else {
 																									Log.e("FORA DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);

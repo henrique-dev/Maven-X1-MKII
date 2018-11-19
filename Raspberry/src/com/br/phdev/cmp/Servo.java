@@ -1,6 +1,7 @@
 package com.br.phdev.cmp;
 
 import com.br.phdev.driver.PCA9685;
+import com.br.phdev.misc.Log;
 
 public class Servo {
 
@@ -29,31 +30,21 @@ public class Servo {
         }
     }
 
-    public boolean move(int degrees) {
-        float newPos = degrees * this.servoData.getStep();
-        if (degrees > 0) {
-            if ((int)newPos < this.servoData.getLimitMax()) {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)newPos);
-                this.currentPositionDegrees = degrees;
-            } else {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, this.servoData.getLimitMax());
-                this.currentPositionDegrees = 90;
-                return true;
-            }
-        } else if (degrees < 0){
-            if ((int)newPos > this.servoData.getLimitMin()) {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)newPos);
-                this.currentPositionDegrees = degrees;
-            } else {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, this.getServoData().getLimitMin());
-                this.currentPositionDegrees = -90;
-                return true;
-            }
+    @Deprecated
+    public void moveToRawDegrees(int degrees) {
+        float newPos;
+        if (this.servoData.isInverted()) {
+            newPos = this.servoData.getMidPosition() - (this.servoData.getStep() * (float)degrees);
         } else {
-            this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.getServoData().getMidPosition());
-            this.currentPositionDegrees = 0;
-            return true;
+            newPos = this.servoData.getMidPosition() + (this.servoData.getStep() * (float)degrees);
         }
+        if (newPos >= this.servoData.getMinPosition() && newPos <= this.servoData.getMaxPosition())
+            this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)newPos);
+        else
+            Log.e("Nova posição fora da faixa: " + newPos);
+    }
+
+    public boolean move(int degrees) {
         return false;
     }
 
