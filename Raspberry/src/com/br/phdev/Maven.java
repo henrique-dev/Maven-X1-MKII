@@ -393,7 +393,8 @@ public class Maven {
 												} else {
 													show(Error.SERVO_NOT_FOUND);
 												}
-											}
+											} else
+												show(Error.INVALID_COMMAND);
 										} catch (Exception e) {
 											show(Error.INVALID_INPUT);
 										}

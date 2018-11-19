@@ -134,9 +134,9 @@ public class ServoData {
                 "Posição minima: " + this.minPosition + "\n" +
                 "Posição média: " + this.midPosition + "\n" +
                 "Posição máxima: " + this.maxPosition + "\n" +
-                "Abertura total do servo: " + this.degreesOpening + "\n" +
-                "Limite máximo de abertura: " + this.limitMax + "\n" +
-                "Limite mínimo de abertura: " + this.limitMin + "\n" +
+                "Abertura total do servo: " + this.degreesOpening + "°" + "\n" +
+                "Limite máximo de abertura: " + this.limitMax + "°" + "\n" +
+                "Limite mínimo de abertura: " + this.limitMin + "°" + "\n" +
                 "Passo: " + this.step + "\n" +
                 "Invertido: " + this.inverted + "\n";
     }
