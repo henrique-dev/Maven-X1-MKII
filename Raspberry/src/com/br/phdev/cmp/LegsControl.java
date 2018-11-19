@@ -82,11 +82,10 @@ public class LegsControl {
                     if (task.isTaskOver()) {
                         LegsControl.this.taskList.remove(i);
                         i -= 1;
-                        Log.w("excluindo tarefas");
                     }
                 }
                 LegsControl.this.taskList.addAll(getBufferTaskList());
-                //getBufferTaskList().clear();
+                getBufferTaskList().clear();
             }
         }
 
