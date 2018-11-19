@@ -328,6 +328,21 @@ public class Maven {
 																	maven.loadData(false);
 																	maven.initLegs();
 																	break;
+																case "-min":
+																	maven.getServos()[globalChannel].moveToMin();
+																	break;
+																case "-mid":
+																	maven.getServos()[globalChannel].moveToMid();
+																	break;
+																case "-max":
+																	maven.getServos()[globalChannel].moveToMax();
+																	break;
+																case "-limit-min":
+																	maven.getServos()[globalChannel].moveToLimitMin();
+																	break;
+																case "-limit-max":
+																	maven.getServos()[globalChannel].moveToLimitMax();
+																	break;
 																case "exit":
 																	runningServoConfig = false;
 																	break;
