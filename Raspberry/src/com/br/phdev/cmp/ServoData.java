@@ -131,7 +131,7 @@ public class ServoData {
                 "Limite máximo de abertura: " + this.limitMax + "\n" +
                 "Limite mínimo de abertura: " + this.limitMin + "\n" +
                 "Passo: " + this.step + "\n" +
-                "Ivertido: " + this.inverted + "\n";
+                "Invertido: " + this.inverted + "\n";
     }
 
 }

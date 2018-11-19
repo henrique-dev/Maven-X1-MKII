@@ -272,6 +272,12 @@ public class Maven {
 																				case "-limit-max":
 																					maven.getServos()[globalChannel].moveToLimitMax();
 																					break;
+																				case "-max-down":
+																					maven.getServos()[globalChannel].moveMaxDown();
+																					break;
+																				case "-max-up":
+																					maven.getServos()[globalChannel].moveMaxUp();
+																					break;
 																				case "":
 																					break;
 																				default:
@@ -342,6 +348,12 @@ public class Maven {
 																	break;
 																case "-limit-max":
 																	maven.getServos()[globalChannel].moveToLimitMax();
+																	break;
+																case "-max-down":
+																	maven.getServos()[globalChannel].moveMaxDown();
+																	break;
+																case "-max-up":
+																	maven.getServos()[globalChannel].moveMaxUp();
 																	break;
 																case "exit":
 																	runningServoConfig = false;
