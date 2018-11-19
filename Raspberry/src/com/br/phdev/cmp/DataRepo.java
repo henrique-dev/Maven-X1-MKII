@@ -48,7 +48,8 @@ public class DataRepo {
                         rs.getFloat("mid"),
                         rs.getFloat("max"),
                         rs.getInt("limit_min"),
-                        rs.getInt("limit_max")
+                        rs.getInt("limit_max"),
+                        rs.getInt("degrees_opening")
                 );
                 servoDataList.add(servoData);
             }
@@ -70,6 +71,15 @@ public class DataRepo {
                 break;
             case "max":
                 sql = "update servos_data set max=" + pos + " where global_channel=" + globalChannel;
+                break;
+            case "limit-min":
+                sql = "update servos_data set limit_min=" + (int)pos + " where global_channel=" + globalChannel;
+                break;
+            case "limit-max":
+                sql = "update servos_data set limit_max=" + (int)pos + " where global_channel=" + globalChannel;
+                break;
+            case "opening":
+                sql = "update servos_data set degrees_opening=" + (int)pos + " where global_channel=" + globalChannel;
                 break;
             default:
                 return;

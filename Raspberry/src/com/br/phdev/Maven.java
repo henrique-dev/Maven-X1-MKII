@@ -8,6 +8,9 @@ import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
@@ -145,6 +148,7 @@ public class Maven {
 				System.out.print(currentPath + "> ");
 				String command = in.nextLine();
 				switch (command.trim()) {
+					case "exit-f":
 					case "exit":
 						runningProgram = false;
 						break;
@@ -197,12 +201,10 @@ public class Maven {
 															System.out.print(currentPath + "> ");
 															parameter = in.nextLine();
 															switch (parameter.trim()) {
-																case "min":
-																case "mid":
-																case "max": {
+																case "opening": case "limit-min": case "limit-max": case "min": case "mid": case "max": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
-																	float servoPos = -1;
+																	float valueForServo = -1;
 																	while (runningServoPosConfig) {
 																		currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
 																		System.out.print(currentPath + "> ");
@@ -210,16 +212,18 @@ public class Maven {
 																			parameter = in.nextLine();
 																			switch (parameter.trim()) {
 																				case "save":
-																					if (servoPos != -1) {
+																					if (valueForServo != -1) {
 																						DataRepo dataRepo = new DataRepo();
-																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
-																						Log.s("A informação foi salva");
-																						if (currentServoConfigName.equals("min"))
-																							maven.getServos()[globalChannel].getServoData().setMinPosition(servoPos);
-																						else if (currentServoConfigName.equals("mid"))
-																							maven.getServos()[globalChannel].getServoData().setMidPosition(servoPos);
-																						else if (currentServoConfigName.equals("max"))
-																							maven.getServos()[globalChannel].getServoData().setMaxPosition(servoPos);
+																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, valueForServo);
+																						switch (currentServoConfigName) {
+																							case "min": maven.getServos()[globalChannel].getServoData().setMinPosition(valueForServo); break;
+																							case "mid": maven.getServos()[globalChannel].getServoData().setMidPosition(valueForServo); break;
+																							case "max": maven.getServos()[globalChannel].getServoData().setMaxPosition(valueForServo); break;
+																							case "limit-min": maven.getServos()[globalChannel].getServoData().setLimitMin((int)valueForServo); break;
+																							case "limit-max": maven.getServos()[globalChannel].getServoData().setLimitMax((int)valueForServo); break;
+																							case "opening": maven.getServos()[globalChannel].getServoData().setDegreesOpening((int)valueForServo); break;
+																						}
+																						Log.s("A configuração foi salva");
 																					} else
 																						Log.w("Os dados não foram alterados");
 																					runningServoPosConfig = false;
@@ -235,62 +239,32 @@ public class Maven {
 																					break;
 																				default:
 																					try {
-																						servoPos = Float.parseFloat(parameter);
-																						if (servoPos >= 100 && servoPos <= 650 || servoPos == 0)
-																							maven.getServos()[globalChannel].setRawPosition(servoPos);
-																						else
-																							servoPos = -1;
-																					} catch (Exception e) {
-																						showError(Error.INVALID_INPUT);
-																					}
-																					break;
-																			}
-																		} catch (Exception e) {
-																			showError(Error.INVALID_INPUT);
-																		}
-																	}
-																	break;
-																}
-																case "limit-min":
-																case "limit-max": {
-																	String currentServoConfigName = parameter.trim();
-																	boolean runningServoPosConfig = true;
-																	int servoPos = -1;
-																	while (runningServoPosConfig) {
-																		currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
-																		System.out.print(currentPath + "> ");
-																		try {
-																			parameter = in.nextLine();
-																			switch (parameter.trim()) {
-																				case "save":
-																					if (servoPos != -1) {
-																						DataRepo dataRepo = new DataRepo();
-																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, servoPos);
-																						Log.s("A informação foi salva");
-																						if (currentServoConfigName.equals("limit-min"))
-																							maven.getServos()[globalChannel].getServoData().setLimitMin(servoPos);
-																						else if (currentServoConfigName.equals("limit-max"))
-																							maven.getServos()[globalChannel].getServoData().setLimitMax(servoPos);
-																					} else
-																						Log.w("Os dados não foram alterados");
-																					runningServoPosConfig = false;
-																					break;
-																				case "exit":
-																					runningServoPosConfig = false;
-																					break;
-																				case "exit-f":
-																					runningAllServosConfig = false;
-																					runningProgram = false;
-																					runningServoConfig = false;
-																					runningServoPosConfig = false;
-																					break;
-																				default:
-																					try {
-																						servoPos = Integer.parseInt(parameter);
-																						if (servoPos >= -90 && servoPos <= 90)
-																							maven.getServos()[globalChannel].move(servoPos);
-																						else
-																							servoPos = -1;
+																						valueForServo = Float.parseFloat(parameter);
+																						switch (currentServoConfigName) {
+																							case "min": case "mid": case "max":
+																								if (valueForServo >= 100 && valueForServo <= 650 || valueForServo == 0)
+																									maven.getServos()[globalChannel].setRawPosition(valueForServo);
+																								else
+																									valueForServo = -1;
+																								break;
+																							case "limit-min": case "limit-max":
+																								float step = maven.getServos()[globalChannel].getServoData().getStep();
+																								float max = maven.getServos()[globalChannel].getServoData().getMaxPosition();
+																								float mid = maven.getServos()[globalChannel].getServoData().getMidPosition();
+																								float min = maven.getServos()[globalChannel].getServoData().getMinPosition();
+																								float servoPos = valueForServo * step;
+																								float newServoPos = servoPos + mid;
+
+																								if (newServoPos > min && newServoPos < max) {
+																									System.out.println("DENTRO DOS VALORES");
+																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
+																								} else {
+																									System.out.println("FORA DOS VALORES");
+																									System.out.println("Posição do servo correspondente ao grau: " + newServoPos);
+																								}
+
+																								break;
+																						}
 																					} catch (Exception e) {
 																						showError(Error.INVALID_INPUT);
 																					}
