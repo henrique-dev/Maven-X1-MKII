@@ -5,7 +5,6 @@ import com.br.phdev.misc.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class ServoTaskController {
 
@@ -58,8 +57,6 @@ public class ServoTaskController {
         @Override
         public void run() {
             this.runningMainLoop = true;
-            Log.s("Controlador das pernas iniciado");
-            Log.s("Aguardando tarefas");
             while (this.runningMainLoop) {
                 synchronized (ServoTaskController.this.taskList) {
                     for (int i=0; i<ServoTaskController.this.taskList.size(); i++) {

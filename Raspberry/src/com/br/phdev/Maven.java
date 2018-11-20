@@ -443,8 +443,8 @@ public class Maven {
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
-					case "init-legs-system":
-						maven.initLegsControl();
+					case "init-task-system":
+						maven.initServoTaskController();
 						break;
 					case "":
 						break;
