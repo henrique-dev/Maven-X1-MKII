@@ -1,15 +1,17 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.cmp.servo.Servo;
+
 public class Member {
 
-    private Servo servo;
+    protected Servo servo;
 
     public Member(Servo servo) {
         this.servo = servo;
     }
 
-    public boolean move(int offset) {
-        return this.servo.move(offset);
+    public boolean move(float degrees) {
+        return this.servo.move(degrees);
     }
 
     public void moveToMin() {

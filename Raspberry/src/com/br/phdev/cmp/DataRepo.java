@@ -1,5 +1,6 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.cmp.servo.ServoData;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.MavenDataException;

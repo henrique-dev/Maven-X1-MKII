@@ -1,4 +1,7 @@
-package com.br.phdev.cmp;
+package com.br.phdev.cmp.servo;
+
+import com.br.phdev.cmp.Task;
+import com.br.phdev.cmp.Timer;
 
 public class ServoTask implements Task {
 
@@ -43,6 +46,12 @@ public class ServoTask implements Task {
                 System.out.println("executando tarefa " + this.currentTime + " - " + this.currentPos);
             }
         }
+    }
+
+    @Override
+    public void deleteTask() {
+        this.timer.stop();
+        this.timer = null;
     }
 
     @Override

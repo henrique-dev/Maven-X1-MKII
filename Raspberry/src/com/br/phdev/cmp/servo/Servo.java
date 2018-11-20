@@ -1,4 +1,4 @@
-package com.br.phdev.cmp;
+package com.br.phdev.cmp.servo;
 
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.misc.Log;
@@ -52,6 +52,7 @@ public class Servo {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
                 }
                 this.currentPositionDegrees = this.servoData.getLimitMax();
+                return false;
             } else if (degrees < this.servoData.getLimitMin()) {
                 if (this.servoData.isInverted()) {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
@@ -59,6 +60,7 @@ public class Servo {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
                 }
                 this.currentPositionDegrees = this.servoData.getLimitMin();
+                return false;
             }
         }
         return false;
