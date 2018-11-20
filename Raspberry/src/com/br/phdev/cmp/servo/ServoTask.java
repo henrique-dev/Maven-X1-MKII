@@ -2,6 +2,7 @@ package com.br.phdev.cmp.servo;
 
 import com.br.phdev.cmp.Task;
 import com.br.phdev.cmp.Timer;
+import com.br.phdev.misc.Log;
 
 public class ServoTask implements Task {
 
@@ -24,6 +25,7 @@ public class ServoTask implements Task {
         this.timer = new Timer();
         this.step = (targetPos - this.currentPos) / delayInMilli;
         this.startTask = false;
+        Log.w("nova tardefa");
     }
 
     public ServoTask start() {
@@ -37,6 +39,7 @@ public class ServoTask implements Task {
         if (!this.startTask) {
             this.startTask = true;
             this.timer.start();
+            Log.w("a tarefa sera iniciada");
         }
         if (!isTaskOver() && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {

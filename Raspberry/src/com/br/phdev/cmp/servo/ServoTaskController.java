@@ -61,8 +61,8 @@ public class ServoTaskController {
                 synchronized (ServoTaskController.this.taskList) {
                     for (Task task : ServoTaskController.this.taskList) {
                         task.doTask();
-                        if (task.isTaskOver())
-                            ServoTaskController.this.taskList.removeIf(Predicate.isEqual(task));
+                        //if (task.isTaskOver())
+                            //ServoTaskController.this.taskList.removeIf(Predicate.isEqual(task));
                     }
                 }
             }
