@@ -7,6 +7,7 @@ import com.br.phdev.misc.Log;
 public class ServoTask implements Task {
 
     private Servo servo;
+    private float startPosition;
     private float currentPos;
     private int targetPos;
     private float step;
@@ -20,6 +21,7 @@ public class ServoTask implements Task {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.currentPos = servo.getCurrentPositionDegrees();
+        this.startPosition = servo.getCurrentPositionDegrees();
         this.delay = delayInMilli;
         this.currentTime = 100;
         this.timer = new Timer();
@@ -45,7 +47,7 @@ public class ServoTask implements Task {
         if (!isTaskOver() && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 this.currentPos = this.step * this.currentTime;
-                this.servo.move(this.currentPos);
+                this.servo.move(this.startPosition + this.currentPos);
                 System.out.println("executando tarefa " + this.currentTime + " - " + this.currentPos);
                 this.currentTime += 100;
             }
