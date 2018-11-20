@@ -59,10 +59,15 @@ public class ServoTaskController {
             this.runningMainLoop = true;
             while (this.runningMainLoop) {
                 synchronized (ServoTaskController.this.taskList) {
-                    for (Task task : ServoTaskController.this.taskList) {
+                    for (int i=0; i<ServoTaskController.this.taskList.size(); i++) {
+                        Task task = ServoTaskController.this.taskList.get(i);
                         task.doTask();
-                        //if (task.isTaskOver())
-                            //ServoTaskController.this.taskList.removeIf(Predicate.isEqual(task));
+                        if (task.isTaskOver()) {
+                            ServoTaskController.this.taskList.remove(i);
+                            i--;
+                            if (ServoTaskController.this.taskList.isEmpty())
+                                break;
+                        }
                     }
                 }
             }
