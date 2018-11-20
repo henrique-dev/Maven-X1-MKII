@@ -13,6 +13,14 @@ public class Servo {
         this.module = module;
         this.servoData = servoData;
         this.currentPositionDegrees = currentPositionDegrees;
+        this.initServo();
+    }
+
+    private void initServo() {
+        this.move(0);
+        waitFor(300);
+        this.setRawPosition(0);
+        waitFor(100);
     }
 
     public ServoData getServoData() {
@@ -29,7 +37,7 @@ public class Servo {
 
     @Deprecated
     public void setRawPosition(float position) {
-        if (position >= 100 && position <= 650) {
+        if (position >= 100 && position <= 650 || position == 0) {
             module.setPWM(this.servoData.getLocalChannel(), 0, (int)position);
         }
     }
