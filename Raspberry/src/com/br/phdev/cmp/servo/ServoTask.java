@@ -46,8 +46,8 @@ public class ServoTask implements Task {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 this.currentPos = this.step * this.currentTime;
                 this.servo.move(this.currentPos);
-                this.currentTime += 100;
                 System.out.println("executando tarefa " + this.currentTime + " - " + this.currentPos);
+                this.currentTime += 100;
             }
         }
     }
@@ -60,7 +60,7 @@ public class ServoTask implements Task {
 
     @Override
     public boolean isTaskOver() {
-        if (this.currentTime >= this.timer.getTicksInMilliSeconds()) {
+        if (this.currentTime >= this.delay) {
             if (this.targetPos != this.currentPos)
                 this.servo.move(this.targetPos);
             return true;
