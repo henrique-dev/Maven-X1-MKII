@@ -28,7 +28,7 @@ public class ServoTask implements Task {
         this.step = (targetPos - this.currentPos) / delayInMilli;
         this.startTask = false;
         Log.w("nova tardefa");
-        Log.w("Posição atual: " + currentPos + " -> posição alvo: " + targetPos + " -> step: " + step);
+        //Log.w("Posição atual: " + currentPos + " -> posição alvo: " + targetPos + " -> step: " + step);
     }
 
     public ServoTask start() {
@@ -46,9 +46,9 @@ public class ServoTask implements Task {
         }
         if (!isTaskOver() && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
-                Log.w("executando tarefa " + this.currentTime + " - " + this.currentPos);
+                //Log.w("executando tarefa " + this.currentTime + " - " + this.currentPos);
                 this.currentPos = this.step * this.currentTime;
-                Log.w("Movendo servo para: " + (this.startPosition + this.currentPos));
+                //Log.w("Movendo servo para: " + (this.startPosition + this.currentPos));
                 this.servo.move(this.startPosition + this.currentPos);
                 this.currentTime += 100;
             }

@@ -357,7 +357,6 @@ public class Maven {
 													case '>':
 														if (!commandOpenFound)
 															throw new ScriptException("abertura antes de fechamento não achada");
-														commandCloseFound = true;
 														commandOpenFound = false;
 														ScriptCommand.ScriptPos scriptPos;
 														switch (currentPos.toString()) {
