@@ -2,19 +2,19 @@ package com.br.phdev.misc;
 
 public class Log {
 
-    public static void s(String msg) {
+    synchronized public static void s(String msg) {
         System.out.println(Color.ANSI_GREEN + msg + Color.ANSI_RESET);
     }
 
-    public static void e(String msg) {
+    synchronized public static void e(String msg) {
         System.out.println(Color.ANSI_RED + msg + Color.ANSI_RESET);
     }
 
-    public static void w(String msg) {
+    synchronized public static void w(String msg) {
         System.out.println(Color.ANSI_YELLOW + msg + Color.ANSI_RESET);
     }
 
-    public static void i(String msg) {
+    synchronized public static void i(String msg) {
         System.out.println(Color.ANSI_CYAN + msg + Color.ANSI_RESET);
     }
 

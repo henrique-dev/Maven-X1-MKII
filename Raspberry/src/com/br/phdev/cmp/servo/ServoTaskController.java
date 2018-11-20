@@ -64,9 +64,13 @@ public class ServoTaskController {
                         task.doTask();
                         if (task.isTaskOver()) {
                             ServoTaskController.this.taskList.remove(i);
+                            Log.w("Tarefa terminada e excluida");
                             i--;
-                            if (ServoTaskController.this.taskList.isEmpty())
+                            if (ServoTaskController.this.taskList.isEmpty()) {
+                                Log.w("Não há mais tarefas");
                                 break;
+                            } else
+                                Log.w("Ainda há tarefas");
                         }
                     }
                 }
