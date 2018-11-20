@@ -46,9 +46,10 @@ public class ServoTask implements Task {
         }
         if (!isTaskOver() && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
+                Log.w("executando tarefa " + this.currentTime + " - " + this.currentPos);
                 this.currentPos = this.step * this.currentTime;
+                Log.w("Movendo servo para: " + (this.startPosition + this.currentPos));
                 this.servo.move(this.startPosition + this.currentPos);
-                System.out.println("executando tarefa " + this.currentTime + " - " + this.currentPos);
                 this.currentTime += 100;
             }
         }
