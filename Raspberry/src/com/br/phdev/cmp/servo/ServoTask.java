@@ -60,9 +60,11 @@ public class ServoTask implements Task {
 
     @Override
     public boolean isTaskOver() {
-        if (step >= 0)
-            return this.currentPos >= this.targetPos;
-        else
-            return this.currentPos <= this.targetPos;
+        if (this.currentTime >= this.timer.getTicksInMilliSeconds()) {
+            if (this.targetPos != this.currentPos)
+                this.servo.move(this.targetPos);
+            return true;
+        }
+        return false;
     }
 }
