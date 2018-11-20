@@ -101,6 +101,7 @@ public class RobotSystem {
     }
 
     public void initLegsControl() {
+        Log.i("Iniciando controlador das pernas");
         this.servoTaskController = new ServoTaskController();
         this.servoTaskController.start();
     }

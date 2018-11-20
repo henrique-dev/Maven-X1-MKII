@@ -1,6 +1,7 @@
 package com.br.phdev.cmp.servo;
 
 import com.br.phdev.cmp.Task;
+import com.br.phdev.misc.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,8 @@ public class ServoTaskController {
         @Override
         public void run() {
             this.runningMainLoop = true;
+            Log.s("Controlador das pernas iniciado");
+            Log.s("Aguardando tarefas");
             while (this.runningMainLoop) {
                 synchronized (ServoTaskController.this.taskList) {
                     for (int i=0; i<ServoTaskController.this.taskList.size(); i++) {
