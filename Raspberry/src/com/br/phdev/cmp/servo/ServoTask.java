@@ -26,6 +26,7 @@ public class ServoTask implements Task {
         this.step = (targetPos - this.currentPos) / delayInMilli;
         this.startTask = false;
         Log.w("nova tardefa");
+        Log.w("Posição atual: " + currentPos + " -> posição alvo: " + targetPos + " -> step: " + step);
     }
 
     public ServoTask start() {
