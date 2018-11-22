@@ -30,7 +30,6 @@ public class ServoTask implements Task {
         this.delay = delayInMilli;
         this.currentTime = 0;
         this.timer = new Timer();
-        this.step = (targetPos - this.currentPos) / delayInMilli;
         this.startTask = false;
         this.taskOver = false;
         this.taskListener = taskListener;
@@ -47,6 +46,7 @@ public class ServoTask implements Task {
         if (this.servo.getTaskSlave() == -1 && !taskOver) {
             this.startPosition = servo.getCurrentPositionDegrees();
             this.currentPos = servo.getCurrentPositionDegrees();
+            this.step = (targetPos - this.currentPos) / this.delay;
             this.startTask = true;
             this.timer.start();
             this.servo.setTaskSlave(this.taskId);
