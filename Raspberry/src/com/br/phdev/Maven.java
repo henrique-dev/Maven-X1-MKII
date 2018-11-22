@@ -346,6 +346,7 @@ public class Maven {
 											StringBuilder currentTimer = new StringBuilder();
 											StringBuilder currentServoNum = new StringBuilder();
 											StringBuilder currentPos = new StringBuilder();
+											int scriptGroup = 0;
 											for (int i = 0; i < script.length(); i++) {
 												char c = script.charAt(i);
 												switch (c) {
@@ -374,7 +375,7 @@ public class Maven {
 														}
 														int servoNum = Integer.parseInt(currentServoNum.toString().trim());
 														long delay = Long.parseLong(currentTimer.toString().trim());
-														scriptCommandList.add(new ScriptCommand(servoNum, delay, scriptPos));
+														scriptCommandList.add(new ScriptCommand(servoNum, delay, scriptPos, scriptGroup));
 														currentTimer = new StringBuilder();
 														currentServoNum = new StringBuilder();
 														currentPos = new StringBuilder();
@@ -393,6 +394,10 @@ public class Maven {
 														timerFound = false;
 														posFound = false;
 														break;
+													case '@':
+														scriptGroup++;
+														break;
+
 													default: {
 														if (servoFound && !timerFound && !posFound) {
 															currentServoNum.append(c);
@@ -408,6 +413,21 @@ public class Maven {
 												}
 											}
 
+											int scriptGroups[] = new int[scriptGroup+1];
+											int currentGroupFound = 0;
+											for (ScriptCommand sc : scriptCommandList) {
+												if (sc.getScriptGroup() > currentGroupFound)
+													currentGroupFound++;
+												else
+													scriptGroups[currentGroupFound]++;
+											}
+
+											Log.w("Quantidade de grupos encontrados: " + scriptGroups.length);
+											Log.w("Quantidade de comandos por grupo: ");
+											for (int i=0; i<scriptGroups.length; i++) {
+												Log.w("Grupo " + i + ": " + scriptGroups[i]);
+											}
+/*
 											for (ScriptCommand sc : scriptCommandList) {
 												List<Task> taskList = new ArrayList<>();
 												switch (sc.getScriptPos()) {
@@ -415,25 +435,28 @@ public class Maven {
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
 																maven.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay(),
-																null));
+																null,
+																sc.getScriptGroup()));
 																break;
 													case MID:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
 																0, sc.getDelay(),
-																null));
+																null,
+																sc.getScriptGroup()));
 														break;
 													case DOWN:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
 																maven.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay(),
-																null));
+																null,
+																sc.getScriptGroup()));
 														break;
 												}
 												maven.getServoTaskController().addTasks(taskList);
 											}
 
-											scriptCommandList.clear();
+											scriptCommandList.clear();*/
 
 											break;
 									}

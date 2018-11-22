@@ -9,11 +9,13 @@ public class ScriptCommand {
     private final int servoNum;
     private final long delay;
     private final ScriptPos scriptPos;
+    private final int scriptGroup;
 
-    public ScriptCommand(int servoNum, long delay, ScriptPos scriptPos) {
+    public ScriptCommand(int servoNum, long delay, ScriptPos scriptPos, int scriptGroup) {
         this.servoNum = servoNum;
         this.delay = delay;
         this.scriptPos = scriptPos;
+        this.scriptGroup = scriptGroup;
     }
 
     public int getServoNum() {
@@ -26,6 +28,10 @@ public class ScriptCommand {
 
     public ScriptPos getScriptPos() {
         return scriptPos;
+    }
+
+    public int getScriptGroup() {
+        return scriptGroup;
     }
 
     @Override

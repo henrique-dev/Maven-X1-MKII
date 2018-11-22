@@ -1,7 +1,6 @@
 package com.br.phdev.cmp.servo;
 
-import com.br.phdev.cmp.Task;
-import com.br.phdev.misc.Log;
+import com.br.phdev.cmp.task.Task;
 
 import java.util.ArrayList;
 import java.util.List;
