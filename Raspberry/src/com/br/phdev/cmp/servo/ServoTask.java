@@ -104,10 +104,12 @@ public class ServoTask implements Task {
 
     @Override
     public void deleteTask() {
-        this.timer.stop();
-        this.timer = null;
+        if (!this.jusForDelay) {
+            this.timer.stop();
+            this.timer = null;
+            this.servo.setTaskSlave(-1);
+        }
         this.taskListener = null;
-        this.servo.setTaskSlave(-1);
     }
 
     @Override
