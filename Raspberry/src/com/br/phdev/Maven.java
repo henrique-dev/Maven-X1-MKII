@@ -415,11 +415,13 @@ public class Maven {
 
 											int scriptGroups[] = new int[scriptGroup+1];
 											int currentGroupFound = 0;
+											int currentTask = 0;
 											for (ScriptCommand sc : scriptCommandList) {
-												if (sc.getScriptGroup() > currentGroupFound)
+												if (sc.getScriptGroup() > currentGroupFound) {
 													currentGroupFound++;
-												else
-													scriptGroups[currentGroupFound]++;
+													currentTask = 0;
+												}
+												scriptGroups[currentGroupFound] = currentTask++;
 											}
 
 											Log.w("Quantidade de grupos encontrados: " + scriptGroups.length);
