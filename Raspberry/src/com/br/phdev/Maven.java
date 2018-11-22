@@ -65,6 +65,9 @@ public class Maven {
 						break;
 					case "reload-system":
 						break;
+					case "show-s":
+						showTHIS(maven.getLegs());
+						break;
 					case "reload-servos":
 						if (initSystem) {
 							maven.loadData(false);
