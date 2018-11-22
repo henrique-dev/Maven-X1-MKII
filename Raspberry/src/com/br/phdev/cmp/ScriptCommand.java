@@ -18,11 +18,13 @@ public class ScriptCommand {
         this.delay = delay;
         this.scriptPos = scriptPos;
         this.scriptGroup = scriptGroup;
+        this.justForDelay = false;
     }
 
     public ScriptCommand(int delayPause, int scriptGroup) {
         this.delay = delayPause;
         this.scriptGroup = scriptGroup;
+        this.justForDelay = true;
     }
 
     public int getServoNum() {
