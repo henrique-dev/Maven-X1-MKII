@@ -415,11 +415,11 @@ public class Maven {
 
 											int scriptGroups[] = new int[scriptGroup+1];
 											int currentGroupFound = 0;
-											int currentTask = 0;
+											int currentTask = 1;
 											for (ScriptCommand sc : scriptCommandList) {
 												if (sc.getScriptGroup() > currentGroupFound) {
 													currentGroupFound++;
-													currentTask = 0;
+													currentTask = 1;
 												}
 												scriptGroups[currentGroupFound] = currentTask++;
 											}
