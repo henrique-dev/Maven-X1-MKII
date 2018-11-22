@@ -2,6 +2,9 @@ package com.br.phdev;
 
 import com.br.phdev.cmp.*;
 import com.br.phdev.cmp.servo.ServoTask;
+import com.br.phdev.cmp.task.FlavorTaskGroup;
+import com.br.phdev.cmp.task.Task;
+import com.br.phdev.cmp.task.TaskGroup;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.ScriptException;
@@ -413,7 +416,7 @@ public class Maven {
 												}
 											}
 
-											int scriptGroups[] = new int[scriptGroup+1];
+											int taskGroups[] = new int[scriptGroup+1];
 											int currentGroupFound = 0;
 											int currentTask = 1;
 											for (ScriptCommand sc : scriptCommandList) {
@@ -421,15 +424,17 @@ public class Maven {
 													currentGroupFound++;
 													currentTask = 1;
 												}
-												scriptGroups[currentGroupFound] = currentTask++;
+												taskGroups[currentGroupFound] = currentTask++;
 											}
 
-											Log.w("Quantidade de grupos encontrados: " + scriptGroups.length);
+											Log.w("Quantidade de grupos encontrados: " + taskGroups.length);
 											Log.w("Quantidade de comandos por grupo: ");
-											for (int i=0; i<scriptGroups.length; i++) {
-												Log.w("Grupo " + i + ": " + scriptGroups[i]);
+											for (int i=0; i<taskGroups.length; i++) {
+												Log.w("Grupo " + i + ": " + taskGroups[i]);
 											}
-/*
+
+											TaskGroup taskGroup = new TaskGroup(taskGroups);
+
 											for (ScriptCommand sc : scriptCommandList) {
 												List<Task> taskList = new ArrayList<>();
 												switch (sc.getScriptPos()) {
@@ -438,26 +443,26 @@ public class Maven {
 																maven.getServos()[sc.getServoNum()],
 																maven.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay(),
 																null,
-																sc.getScriptGroup()));
+																new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
 																break;
 													case MID:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
 																0, sc.getDelay(),
 																null,
-																sc.getScriptGroup()));
+																new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
 														break;
 													case DOWN:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
 																maven.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay(),
 																null,
-																sc.getScriptGroup()));
+																new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
 														break;
 												}
 												maven.getServoTaskController().addTasks(taskList);
 											}
-*/
+
 											scriptCommandList.clear();
 
 											break;

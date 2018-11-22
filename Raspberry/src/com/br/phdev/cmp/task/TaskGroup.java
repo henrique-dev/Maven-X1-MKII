@@ -17,12 +17,12 @@ public class TaskGroup {
     }
 
     public void taskCompleted() {
+        Log.w("Executando o grupo " + this.currentTaskGroup);
         this.currentTaskGroupAmount--;
         if (this.currentTaskGroupAmount == 0) {
             this.currentTaskGroup++;
             if (this.currentTaskGroup < taskGroups.length) {
                 this.currentTaskGroupAmount = taskGroups[this.currentTaskGroup];
-                Log.w("Executando o grupo " + this.currentTaskGroup);
             }
         }
     }

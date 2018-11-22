@@ -1,6 +1,7 @@
 package com.br.phdev.cmp.servo;
 
 import com.br.phdev.cmp.task.Task;
+import com.br.phdev.misc.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +41,14 @@ public class ServoTaskController {
     public void addTask(Task task) {
         synchronized (this.taskList) {
             this.taskList.add(task);
+            Log.w("Tarefa adicionadas. Numero de tarefas atuais: " + this.taskList.size());
         }
     }
 
     public void addTasks(List<Task> taskList) {
         synchronized (this.taskList) {
             this.taskList.addAll(taskList);
+            Log.w("Tarefas adicionadas. Numero de tarefas atuais: " + this.taskList.size());
         }
     }
 
@@ -68,6 +71,7 @@ public class ServoTaskController {
                             task.deleteTask();
                             ServoTaskController.this.taskList.remove(i);
                             i--;
+                            Log.w("Tarefa removida. Numero de tarefas atuais: " + ServoTaskController.this.taskList.size());
                             if (ServoTaskController.this.taskList.isEmpty())
                                 break;
                         }
