@@ -458,8 +458,8 @@ public class Maven {
 												}
 												maven.getServoTaskController().addTasks(taskList);
 											}
-
-											scriptCommandList.clear();*/
+*/
+											scriptCommandList.clear();
 
 											break;
 									}
