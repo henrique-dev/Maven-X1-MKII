@@ -27,7 +27,6 @@ public class ServoTask implements Task {
     public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
-        this.currentPos = servo.getCurrentPositionDegrees();
         this.startPosition = servo.getCurrentPositionDegrees();
         this.delay = delayInMilli;
         this.currentTime = 100;
@@ -47,6 +46,7 @@ public class ServoTask implements Task {
     @Override
     public void startTask() {
         if (this.servo.getTaskSlave() == -1 && !taskOver) {
+            this.currentPos = servo.getCurrentPositionDegrees();
             this.startTask = true;
             this.timer.start();
             this.servo.setTaskSlave(this.taskId);
