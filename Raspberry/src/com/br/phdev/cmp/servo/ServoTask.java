@@ -51,7 +51,10 @@ public class ServoTask implements Task {
             if (this.flavorTaskGroup.isMyTurn()) {
                 this.startPosition = servo.getCurrentPositionDegrees();
                 this.currentPos = servo.getCurrentPositionDegrees();
-                this.step = (targetPos - this.currentPos) / this.delay;
+                if (this.delay > 0)
+                    this.step = (targetPos - this.currentPos) / this.delay;
+                else
+                    this.step = (targetPos - this.currentPos);
                 this.startTask = true;
                 this.timer.start();
                 this.servo.setTaskSlave(this.taskId);
@@ -63,8 +66,13 @@ public class ServoTask implements Task {
     public void doTask() {
         if (!this.taskOver && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
-                this.currentPos = this.step * this.currentTime;
-                this.servo.move(this.startPosition + this.currentPos);
+                if (this.delay > 0) {
+                    this.currentPos = this.step * this.currentTime;
+                    this.servo.move(this.startPosition + this.currentPos);
+                } else {
+                    this.servo.move(this.targetPos);
+                    this.currentPos = this.targetPos;
+                }
                 this.currentTime += 100;
                 if (this.currentTime > this.delay) {
                     if (this.targetPos != this.currentPos)
