@@ -414,17 +414,20 @@ public class Maven {
 													case UP:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
-																maven.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay()));
+																maven.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay(),
+																null));
 																break;
 													case MID:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
-																0, sc.getDelay()));
+																0, sc.getDelay(),
+																null));
 														break;
 													case DOWN:
 														taskList.add(new ServoTask(
 																maven.getServos()[sc.getServoNum()],
-																maven.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay()));
+																maven.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay(),
+																null));
 														break;
 												}
 												maven.getServoTaskController().addTasks(taskList);

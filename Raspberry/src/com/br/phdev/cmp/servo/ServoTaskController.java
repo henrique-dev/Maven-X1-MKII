@@ -61,16 +61,16 @@ public class ServoTaskController {
                 synchronized (ServoTaskController.this.taskList) {
                     for (int i=0; i<ServoTaskController.this.taskList.size(); i++) {
                         Task task = ServoTaskController.this.taskList.get(i);
+                        if (!task.isTaskStarted() && !task.isTaskOver()) {
+                            task.startTask();
+                        }
                         task.doTask();
                         if (task.isTaskOver()) {
+                            task.deleteTask();
                             ServoTaskController.this.taskList.remove(i);
-                            Log.w("Tarefa terminada e excluida");
                             i--;
-                            if (ServoTaskController.this.taskList.isEmpty()) {
-                                Log.w("Não há mais tarefas");
+                            if (ServoTaskController.this.taskList.isEmpty())
                                 break;
-                            } else
-                                Log.w("Ainda há tarefas");
                         }
                     }
                 }

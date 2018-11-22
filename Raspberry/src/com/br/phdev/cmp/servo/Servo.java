@@ -9,10 +9,13 @@ public class Servo {
     private final ServoData servoData;
     private float currentPositionDegrees;
 
+    private long taskSlave;
+
     public Servo(PCA9685 module, ServoData servoData, float currentPositionDegrees) {
         this.module = module;
         this.servoData = servoData;
         this.currentPositionDegrees = currentPositionDegrees;
+        this.taskSlave = -1;
         this.initServo();
     }
 
@@ -21,6 +24,14 @@ public class Servo {
         waitFor(300);
         this.setRawPosition(0);
         waitFor(100);
+    }
+
+    public long getTaskSlave() {
+        return taskSlave;
+    }
+
+    public void setTaskSlave(long taskSlave) {
+        this.taskSlave = taskSlave;
     }
 
     public ServoData getServoData() {

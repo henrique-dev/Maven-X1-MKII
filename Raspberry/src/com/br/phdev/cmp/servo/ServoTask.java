@@ -1,6 +1,7 @@
 package com.br.phdev.cmp.servo;
 
 import com.br.phdev.cmp.Task;
+import com.br.phdev.cmp.TaskListener;
 import com.br.phdev.cmp.Timer;
 import com.br.phdev.misc.Log;
 
@@ -16,8 +17,14 @@ public class ServoTask implements Task {
     private Timer timer;
 
     private boolean startTask;
+    private boolean taskOver;
 
-    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli) {
+    private TaskListener taskListener;
+
+    private static long currentTaskId = 0;
+    private final long taskId;
+
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.currentPos = servo.getCurrentPositionDegrees();
@@ -27,30 +34,40 @@ public class ServoTask implements Task {
         this.timer = new Timer();
         this.step = (targetPos - this.currentPos) / delayInMilli;
         this.startTask = false;
-        Log.w("nova tardefa");
-        //Log.w("Posição atual: " + currentPos + " -> posição alvo: " + targetPos + " -> step: " + step);
+        this.taskOver = false;
+        this.taskListener = taskListener;
+        this.taskId = currentTaskId++;
     }
 
-    public ServoTask start() {
-        this.startTask = true;
-        this.timer.start();
-        return this;
+    @Override
+    public long getTaskId() {
+        return this.taskId;
+    }
+
+    @Override
+    public void startTask() {
+        if (this.servo.getTaskSlave() == -1 && !taskOver) {
+            this.startTask = true;
+            this.timer.start();
+            this.servo.setTaskSlave(this.taskId);
+        }
     }
 
     @Override
     public void doTask() {
-        if (!this.startTask) {
-            this.startTask = true;
-            this.timer.start();
-            Log.w("a tarefa sera iniciada");
-        }
-        if (!isTaskOver() && this.startTask) {
+        if (!this.taskOver && this.startTask) {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
-                //Log.w("executando tarefa " + this.currentTime + " - " + this.currentPos);
                 this.currentPos = this.step * this.currentTime;
-                //Log.w("Movendo servo para: " + (this.startPosition + this.currentPos));
                 this.servo.move(this.startPosition + this.currentPos);
                 this.currentTime += 100;
+                if (this.currentTime > this.delay) {
+                    if (this.targetPos != this.currentPos)
+                        this.servo.move(this.targetPos);
+                    this.taskOver = true;
+                    this.startTask = false;
+                    if (this.taskListener != null)
+                        this.taskListener.onServoTaskComplete(this.targetPos);
+                }
             }
         }
     }
@@ -59,15 +76,17 @@ public class ServoTask implements Task {
     public void deleteTask() {
         this.timer.stop();
         this.timer = null;
+        this.taskListener = null;
+        this.servo.setTaskSlave(-1);
     }
 
     @Override
     public boolean isTaskOver() {
-        if (this.currentTime >= this.delay) {
-            if (this.targetPos != this.currentPos)
-                this.servo.move(this.targetPos);
-            return true;
-        }
-        return false;
+        return this.taskOver;
+    }
+
+    @Override
+    public boolean isTaskStarted() {
+        return this.startTask;
     }
 }
