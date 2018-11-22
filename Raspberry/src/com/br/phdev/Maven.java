@@ -421,7 +421,6 @@ public class Maven {
 													currentGroupFound++;
 													currentTask = 1;
 												}
-												Log.i(currentTask + "");
 												scriptGroups[currentGroupFound] = currentTask++;
 											}
 
