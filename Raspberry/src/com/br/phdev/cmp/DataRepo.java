@@ -111,8 +111,11 @@ public class DataRepo {
                 LegData legData = new LegData(
                         rs.getInt("leg_number"),
                         rs.getInt("base_servo"),
+                        rs.getFloat("base_length"),
                         rs.getInt("femur_servo"),
-                        rs.getInt("tarsus_servo")
+                        rs.getFloat("femur_length"),
+                        rs.getInt("tarsus_servo"),
+                        rs.getFloat("tarsus_length")
                 );
                 servoDataList.add(legData);
             }
@@ -120,6 +123,27 @@ public class DataRepo {
             throw new MavenDataException("Falha ao carregar as informações para as pernas", e);
         }
         return servoDataList;
+    }
+
+    public BodyData loadBodyData() throws MavenDataException {
+        BodyData bodyData = null;
+        try {
+            Connection connection = new ConnectionFactory().getConnection();
+            String sql = "select * from body_data";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                bodyData = new BodyData(
+                        rs.getFloat("body_length"),
+                        rs.getFloat("body_width"),
+                        rs.getFloat("body_height")
+                );
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            throw new MavenDataException("Falha ao carregar as informações para o corpo", e);
+        }
+        return bodyData;
     }
 
 

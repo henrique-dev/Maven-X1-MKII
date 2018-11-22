@@ -3,15 +3,24 @@ package com.br.phdev.cmp;
 public class LegData {
 
     private final int legNumber;
-    private final int baseServo;
-    private final int femurServo;
-    private final int tarsusServo;
 
-    public LegData(int legNumber, int baseServo, int femurServo, int tarsusServo) {
+    private final int baseServo;
+    private final float baseLength;
+
+    private final int femurServo;
+    private final float femurLength;
+
+    private final int tarsusServo;
+    private final float tarsusLength;
+
+    public LegData(int legNumber, int baseServo, float baseLength, int femurServo, float femurLength, int tarsusServo, float tarsusLength) {
         this.legNumber = legNumber;
         this.baseServo = baseServo;
+        this.baseLength = baseLength;
         this.femurServo = femurServo;
+        this.femurLength = femurLength;
         this.tarsusServo = tarsusServo;
+        this.tarsusLength = tarsusLength;
     }
 
     public int getLegNumber() {
@@ -22,12 +31,24 @@ public class LegData {
         return baseServo;
     }
 
+    public float getBaseLength() {
+        return baseLength;
+    }
+
     public int getFemurServo() {
         return femurServo;
     }
 
+    public float getFemurLength() {
+        return femurLength;
+    }
+
     public int getTarsusServo() {
         return tarsusServo;
+    }
+
+    public float getTarsusLength() {
+        return tarsusLength;
     }
 
     @Override

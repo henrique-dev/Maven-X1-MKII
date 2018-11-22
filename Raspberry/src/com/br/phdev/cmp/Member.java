@@ -4,9 +4,10 @@ import com.br.phdev.cmp.servo.Servo;
 
 public class Member {
 
+    protected float length;
     protected Servo servo;
 
-    public Member(Servo servo) {
+    Member(Servo servo) {
         this.servo = servo;
     }
 
