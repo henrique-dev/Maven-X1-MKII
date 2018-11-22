@@ -1,5 +1,6 @@
 package com.br.phdev.cmp.servo;
 
+import com.br.phdev.cmp.task.FlavorTaskGroup;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
 import com.br.phdev.cmp.Timer;
@@ -24,9 +25,9 @@ public class ServoTask implements Task {
     private static long currentTaskId = 0;
     private final long taskId;
 
-    private TaskGroup taskGroup;
+    private FlavorTaskGroup flavorTaskGroup;
 
-    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener, TaskGroup taskGroup) {
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener, FlavorTaskGroup flavorTaskGroup) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.delay = delayInMilli;
@@ -36,7 +37,7 @@ public class ServoTask implements Task {
         this.taskOver = false;
         this.taskListener = taskListener;
         this.taskId = currentTaskId++;
-        this.taskGroup = taskGroup;
+        this.flavorTaskGroup = flavorTaskGroup;
     }
 
     @Override
@@ -47,7 +48,7 @@ public class ServoTask implements Task {
     @Override
     public void startTask() {
         if (this.servo.getTaskSlave() == -1 && !taskOver) {
-            if (this.taskGroup.isMyTurn()) {
+            if (this.flavorTaskGroup.isMyTurn()) {
                 this.startPosition = servo.getCurrentPositionDegrees();
                 this.currentPos = servo.getCurrentPositionDegrees();
                 this.step = (targetPos - this.currentPos) / this.delay;
@@ -72,7 +73,7 @@ public class ServoTask implements Task {
                     this.startTask = false;
                     if (this.taskListener != null)
                         this.taskListener.onServoTaskComplete(this.targetPos);
-                    this.taskGroup.taskCompleted();
+                    this.flavorTaskGroup.taskCompleted();
                 }
             }
         }
