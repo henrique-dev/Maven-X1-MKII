@@ -27,6 +27,8 @@ public class ServoTask implements Task {
 
     private FlavorTaskGroup flavorTaskGroup;
 
+    private boolean jusForDelay;
+
     public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener, FlavorTaskGroup flavorTaskGroup) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
@@ -38,6 +40,14 @@ public class ServoTask implements Task {
         this.taskListener = taskListener;
         this.taskId = currentTaskId++;
         this.flavorTaskGroup = flavorTaskGroup;
+        this.jusForDelay = false;
+    }
+
+    public ServoTask(FlavorTaskGroup flavorTaskGroup, long delayInMilli) {
+        this.taskId = currentTaskId++;
+        this.delay = delayInMilli;
+        this.flavorTaskGroup = flavorTaskGroup;
+        this.jusForDelay = true;
     }
 
     @Override
@@ -49,15 +59,20 @@ public class ServoTask implements Task {
     public void startTask() {
         if (this.servo.getTaskSlave() == -1 && !taskOver) {
             if (this.flavorTaskGroup.isMyTurn()) {
-                this.startPosition = servo.getCurrentPositionDegrees();
-                this.currentPos = servo.getCurrentPositionDegrees();
-                if (this.delay > 0)
-                    this.step = (targetPos - this.currentPos) / this.delay;
-                else
-                    this.step = (targetPos - this.currentPos);
-                this.startTask = true;
-                this.timer.start();
-                this.servo.setTaskSlave(this.taskId);
+                if (!this.jusForDelay) {
+                    this.startPosition = servo.getCurrentPositionDegrees();
+                    this.currentPos = servo.getCurrentPositionDegrees();
+                    if (this.delay > 0)
+                        this.step = (targetPos - this.currentPos) / this.delay;
+                    else
+                        this.step = (targetPos - this.currentPos);
+                    this.startTask = true;
+                    this.timer.start();
+                    this.servo.setTaskSlave(this.taskId);
+                } else {
+                    waitFor(this.delay);
+                    this.taskOver = true;
+                }
             }
         }
     }
@@ -103,5 +118,13 @@ public class ServoTask implements Task {
     @Override
     public boolean isTaskStarted() {
         return this.startTask;
+    }
+
+    private static void waitFor(long howMuch) {
+        try {
+            Thread.sleep(howMuch);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 }

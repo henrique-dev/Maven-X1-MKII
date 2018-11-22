@@ -6,15 +6,22 @@ public class ScriptCommand {
         UP, MID, DOWN
     }
 
-    private final int servoNum;
-    private final long delay;
-    private final ScriptPos scriptPos;
-    private final int scriptGroup;
+    private int servoNum;
+    private long delay;
+    private ScriptPos scriptPos;
+    private int scriptGroup;
+
+    private boolean justForDelay;
 
     public ScriptCommand(int servoNum, long delay, ScriptPos scriptPos, int scriptGroup) {
         this.servoNum = servoNum;
         this.delay = delay;
         this.scriptPos = scriptPos;
+        this.scriptGroup = scriptGroup;
+    }
+
+    public ScriptCommand(int delayPause, int scriptGroup) {
+        this.delay = delayPause;
         this.scriptGroup = scriptGroup;
     }
 
@@ -28,6 +35,10 @@ public class ScriptCommand {
 
     public ScriptPos getScriptPos() {
         return scriptPos;
+    }
+
+    public boolean isJustForDelay() {
+        return justForDelay;
     }
 
     public int getScriptGroup() {
