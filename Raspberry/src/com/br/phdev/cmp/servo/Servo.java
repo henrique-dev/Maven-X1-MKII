@@ -27,7 +27,7 @@ public class Servo {
     }
 
     public long getTaskSlave() {
-        return taskSlave;
+        return this.taskSlave;
     }
 
     public void setTaskSlave(long taskSlave) {
@@ -39,7 +39,7 @@ public class Servo {
     }
 
     public float getCurrentPositionDegrees() {
-        return currentPositionDegrees;
+        return this.currentPositionDegrees;
     }
 
     public void setCurrentPositionDegrees(float currentPositionDegrees) {
