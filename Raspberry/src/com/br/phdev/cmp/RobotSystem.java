@@ -33,6 +33,7 @@ public class RobotSystem {
                     ((PCA9685) module).setPWMFreq(60);
             }
             this.injectData();
+            this.injectVectors();
         } else
             Log.e("Falha ao iniciar o sistema");
     }
@@ -63,7 +64,7 @@ public class RobotSystem {
             this.legs = new Leg[legDataList.size()];
             this.servos = new Servo[servoDataList.size()];
 
-            Log.i("Definindo os dados para todos os componentes...");
+            Log.i("Injetando os dados em todos os componentes...");
             for (int i=0; i<legDataList.size(); i++) {
                 Base base = null;
                 Femur femur = null;
@@ -99,29 +100,36 @@ public class RobotSystem {
                     throw new RuntimeException("Falha ao inicializar as pernas");
             }
             this.body = new Body(legs, bodyData);
-            Log.i("Dados de todos os componentes definidos com sucesso");
+            Log.s("Dados de todos os componentes injetados com sucesso");
         } catch (Exception e) {
-            Log.e("Falha ao inicializar as pernas. " + e.getMessage());
+            Log.e("Falha ao injetar os dados. " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     private void injectVectors() {
-        this.body.setWidth(new Vector2D(bodyData.getBodyWidth(), 0));
-        this.body.setHeight(new Vector2D(0, -bodyData.getBodyHeight()));
-        this.body.setLength(new Vector2D(0, bodyData.getBodyLength()));
+        try {Log.i("Injetando vetores em todos os componentes...");
 
-        this.legs[Body.LEG_FRONT_LEFT].setOriginVector(new Vector2D(0, bodyData.getBodyLength()));
+            this.body.setWidth(new Vector2D(bodyData.getBodyWidth(), 0));
+            this.body.setHeight(new Vector2D(0, -bodyData.getBodyHeight()));
+            this.body.setLength(new Vector2D(0, bodyData.getBodyLength()));
 
-        this.legs[Body.LEG_FRONT_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), bodyData.getBodyLength()));
+            this.legs[Body.LEG_FRONT_LEFT].setOriginVector(new Vector2D(0, bodyData.getBodyLength()));
 
-
-        this.legs[Body.LEG_MID_LEFT].setOriginVector(new Vector2D(0, 100.73));
-        this.legs[Body.LEG_MID_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 100.73));
+            this.legs[Body.LEG_FRONT_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), bodyData.getBodyLength()));
 
 
-        this.legs[Body.LEG_BACK_LEFT].setOriginVector(new Vector2D(0, 0));
-        this.legs[Body.LEG_BACK_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 0));
+            this.legs[Body.LEG_MID_LEFT].setOriginVector(new Vector2D(0, 100.73));
+            this.legs[Body.LEG_MID_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 100.73));
+
+
+            this.legs[Body.LEG_BACK_LEFT].setOriginVector(new Vector2D(0, 0));
+            this.legs[Body.LEG_BACK_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 0));
+            Log.s("Vetores injetados com sucesso");
+        } catch (Exception e) {
+            Log.e("Falha ao injetar os vetores. " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public void initServoTaskController() {
