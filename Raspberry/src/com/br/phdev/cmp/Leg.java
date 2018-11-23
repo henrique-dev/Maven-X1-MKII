@@ -44,22 +44,15 @@ public class Leg {
 
         this.base.setOriginVector(this.originVector);
 
-        Log.w("\n");
-
-        Vector2D vector2Dbase = Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getBaseLength());
-        Log.w("Vetor da base criado: " + vector2Dbase);
-
-        Log.w("sin: " + Math.sin(Math.toRadians(legData.getLegMidDegrees())));
-        Log.w("cos: " + Math.cos(Math.toRadians(legData.getLegMidDegrees())));
-
-
-        this.base.setLengthVector(vector2Dbase.addMe(this.originVector));
+        this.base.setLengthVector(Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(this.originVector));
 
         this.femur.setOriginVector(this.base.getLengthVector());
-        this.femur.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getFemurLength()).addMe(this.base.getLengthVector()));
+        this.femur.setLengthVector(Vector2D.createByMagAngle(legData.getFemurLength(), legData.getLegMidDegrees()).addMe(this.base.getLengthVector()));
 
         this.tarsus.setOriginVector(this.femur.getLengthVector());
-        this.tarsus.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getTarsusLength()).addMe(this.femur.getLengthVector()));
+        this.tarsus.setLengthVector(Vector2D.createByMagAngle(legData.getTarsusLength(), legData.getLegMidDegrees()).addMe(this.femur.getLengthVector()));
+
+        Log.w("\n");
 
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
         Log.w("perna origin: " + this.originVector);
