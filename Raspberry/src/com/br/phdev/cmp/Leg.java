@@ -43,13 +43,13 @@ public class Leg {
         this.originVector = originVector;
 
         this.base.setOriginVector(this.originVector);
-        this.base.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getBaseLength()).add(this.originVector));
+        this.base.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getBaseLength()).addMe(this.originVector));
 
         this.femur.setOriginVector(this.base.getLengthVector());
-        this.femur.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getFemurLength()).add(this.base.getLengthVector()));
+        this.femur.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getFemurLength()).addMe(this.base.getLengthVector()));
 
         this.tarsus.setOriginVector(this.femur.getLengthVector());
-        this.tarsus.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getTarsusLength()).add(this.femur.getLengthVector()));
+        this.tarsus.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getTarsusLength()).addMe(this.femur.getLengthVector()));
 
         Log.w("Vetores da perna " + legData.getLegNumber());
         Log.w("perna origin: " + this.originVector);
