@@ -25,12 +25,14 @@ public class RobotSystem {
     private Leg[] legs;
     private Servo[] servos;
 
-    public void initSystem() throws I2CFactory.UnsupportedBusNumberException {
+    public void initSystem(boolean startModules) throws I2CFactory.UnsupportedBusNumberException {
         if (this.loadData(true)) {
-            for (Module module : moduleList) {
-                module.init();
-                if (module instanceof PCA9685)
-                    ((PCA9685) module).setPWMFreq(60);
+            if (startModules) {
+                for (Module module : moduleList) {
+                    module.init();
+                    if (module instanceof PCA9685)
+                        ((PCA9685) module).setPWMFreq(60);
+                }
             }
             this.injectData();
             this.injectVectors();

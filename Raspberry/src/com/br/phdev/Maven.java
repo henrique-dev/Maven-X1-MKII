@@ -57,7 +57,14 @@ public class Maven {
 						break;
 					case "init-system":
 						if (!initSystem) {
-							maven.initSystem();
+							maven.initSystem(true);
+							initSystem = true;
+						} else
+							show(Warning.SYSTEM_ALL_READY_STARTED);
+						break;
+					case "init-system-d":
+						if (!initSystem) {
+							maven.initSystem(false);
 							initSystem = true;
 						} else
 							show(Warning.SYSTEM_ALL_READY_STARTED);
