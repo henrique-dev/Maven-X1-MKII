@@ -77,7 +77,7 @@ public class Maven {
 					case "reload-servos":
 						if (initSystem) {
 							maven.loadData(false);
-							maven.injectData();
+							maven.injectData(false);
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
@@ -264,7 +264,7 @@ public class Maven {
 																	break;
 																case "reload-servos":
 																	maven.loadData(false);
-																	maven.injectData();
+																	maven.injectData(false);
 																	break;
 																case "-min":
 																	maven.getServos()[globalChannel].moveToMin();
