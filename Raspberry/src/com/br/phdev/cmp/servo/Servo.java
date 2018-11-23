@@ -11,12 +11,13 @@ public class Servo {
 
     private long taskSlave;
 
-    public Servo(PCA9685 module, ServoData servoData, float currentPositionDegrees) {
+    public Servo(PCA9685 module, ServoData servoData, float currentPositionDegrees, boolean moveServoToMid) {
         this.module = module;
         this.servoData = servoData;
         this.currentPositionDegrees = currentPositionDegrees;
         this.taskSlave = -1;
-        this.initServo();
+        if (moveServoToMid)
+            this.initServo();
     }
 
     private void initServo() {

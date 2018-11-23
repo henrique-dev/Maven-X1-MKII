@@ -34,7 +34,7 @@ public class RobotSystem {
                         ((PCA9685) module).setPWMFreq(60);
                 }
             }
-            this.injectData();
+            this.injectData(startModules);
             this.injectVectors();
         } else
             Log.e("Falha ao iniciar o sistema");
@@ -61,7 +61,7 @@ public class RobotSystem {
         return true;
     }
 
-    public void injectData() {
+    public void injectData(boolean moveServos) {
         try {
             this.legs = new Leg[legDataList.size()];
             this.servos = new Servo[servoDataList.size()];
@@ -76,21 +76,21 @@ public class RobotSystem {
 
                     if (legDataList.get(i).getBaseServo() == servoData.getGlobalChannel()) {
 
-                        this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
+                        this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0, moveServos);
                         base = new Base(
                                 this.servos[servoData.getGlobalChannel()]
                         );
                         Log.s("Servo da base da perna " + i + " carregado");
                     }
                     if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
-                        this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
+                        this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0, moveServos);
                         femur = new Femur(
                                 this.servos[servoData.getGlobalChannel()]
                         );
                         Log.s("Servo do femur da perna " + i + " carregado");
                     }
                     if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
-                        this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0);
+                        this.servos[servoData.getGlobalChannel()] = new Servo((PCA9685) Module.getModule(this.moduleList, servoData.getModuleAddress()), servoData, 0, moveServos);
                         tarsus = new Tarsus(
                                 this.servos[servoData.getGlobalChannel()]
                         );
