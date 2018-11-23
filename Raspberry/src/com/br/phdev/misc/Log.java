@@ -6,16 +6,32 @@ public class Log {
         System.out.println(Color.ANSI_GREEN + msg + Color.ANSI_RESET);
     }
 
+    synchronized public static void s(Object obj) {
+        System.out.println(Color.ANSI_GREEN + obj.toString() + Color.ANSI_RESET);
+    }
+
     synchronized public static void e(String msg) {
         System.out.println(Color.ANSI_RED + msg + Color.ANSI_RESET);
+    }
+
+    synchronized public static void e(Object obj) {
+        System.out.println(Color.ANSI_RED + obj.toString() + Color.ANSI_RESET);
     }
 
     synchronized public static void w(String msg) {
         System.out.println(Color.ANSI_YELLOW + msg + Color.ANSI_RESET);
     }
 
+    synchronized public static void w(Object obj) {
+        System.out.println(Color.ANSI_YELLOW + obj.toString() + Color.ANSI_RESET);
+    }
+
     synchronized public static void i(String msg) {
         System.out.println(Color.ANSI_CYAN + msg + Color.ANSI_RESET);
+    }
+
+    synchronized public static void i(Object obj) {
+        System.out.println(Color.ANSI_CYAN + obj.toString() + Color.ANSI_RESET);
     }
 
 

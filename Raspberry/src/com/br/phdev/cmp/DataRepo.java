@@ -115,7 +115,8 @@ public class DataRepo {
                         rs.getInt("femur_servo"),
                         rs.getFloat("femur_length"),
                         rs.getInt("tarsus_servo"),
-                        rs.getFloat("tarsus_length")
+                        rs.getFloat("tarsus_length"),
+                        rs.getFloat("mid_degrees")
                 );
                 servoDataList.add(legData);
             }

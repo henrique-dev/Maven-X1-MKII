@@ -13,7 +13,9 @@ public class LegData {
     private final int tarsusServo;
     private final float tarsusLength;
 
-    public LegData(int legNumber, int baseServo, float baseLength, int femurServo, float femurLength, int tarsusServo, float tarsusLength) {
+    private final float legMidDegrees;
+
+    public LegData(int legNumber, int baseServo, float baseLength, int femurServo, float femurLength, int tarsusServo, float tarsusLength, float legMidDegrees) {
         this.legNumber = legNumber;
         this.baseServo = baseServo;
         this.baseLength = baseLength;
@@ -21,6 +23,7 @@ public class LegData {
         this.femurLength = femurLength;
         this.tarsusServo = tarsusServo;
         this.tarsusLength = tarsusLength;
+        this.legMidDegrees = legMidDegrees;
     }
 
     public int getLegNumber() {
@@ -49,6 +52,10 @@ public class LegData {
 
     public float getTarsusLength() {
         return tarsusLength;
+    }
+
+    public float getLegMidDegrees() {
+        return legMidDegrees;
     }
 
     @Override

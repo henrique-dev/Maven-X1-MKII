@@ -1,5 +1,6 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
 public class Leg {
@@ -40,9 +41,29 @@ public class Leg {
 
     public void setOriginVector(Vector2D originVector) {
         this.originVector = originVector;
+
         this.base.setOriginVector(this.originVector);
-        this.base.setLengthVector(Vector2D.createByMagAngle(15, 45));
-        System.out.println(this.base.getLengthVector());
+        this.base.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getBaseLength()).add(this.originVector));
+
+        this.femur.setOriginVector(this.base.getLengthVector());
+        this.femur.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getFemurLength()).add(this.base.getLengthVector()));
+
+        this.tarsus.setOriginVector(this.femur.getLengthVector());
+        this.tarsus.setLengthVector(Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getTarsusLength()).add(this.femur.getLengthVector()));
+
+        Log.w("Vetores da perna " + legData.getLegNumber());
+        Log.w("perna origin: " + this.originVector);
+
+        Log.w("Base origin: " + this.base.getOriginVector());
+        Log.w("Base length: " + this.base.getLengthVector());
+
+        Log.w("Femur origin: " + this.femur.getOriginVector());
+        Log.w("Femur length: " + this.femur.getLengthVector());
+
+        Log.w("Tarso origin: " + this.tarsus.getOriginVector());
+        Log.w("Tarso length: " + this.tarsus.getLengthVector());
+
+        Log.w("Comprimento total da pena: " + (this.tarsus.getLengthVector().getSize()));
     }
 
 }
