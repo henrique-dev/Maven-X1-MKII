@@ -45,7 +45,11 @@ public class Leg {
         this.base.setOriginVector(this.originVector);
         Vector2D vector2Dbase = Vector2D.createByMagAngle(legData.getLegMidDegrees(), legData.getBaseLength());
         Log.w("Vetor da base criado: " + vector2Dbase);
-        
+
+        Log.w("asin: " + Math.asin(legData.getLegMidDegrees()));
+        Log.w("sin: " + Math.sin(legData.getLegMidDegrees()));
+        Log.w("sinh: " + Math.sinh(legData.getLegMidDegrees()));
+
         this.base.setLengthVector(vector2Dbase.addMe(this.originVector));
 
         this.femur.setOriginVector(this.base.getLengthVector());
