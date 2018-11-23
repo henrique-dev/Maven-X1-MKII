@@ -1,23 +1,31 @@
 package com.br.phdev.cmp;
 
 import com.br.phdev.cmp.servo.Servo;
+import com.br.phdev.misc.Vector2D;
 
 public class Tarsus extends Member {
 
-    private float groundPositionDegrees;
+    private Vector2D originVector;
+    private Vector2D lengthVector;
 
     public Tarsus(Servo servo) {
         super(servo);
     }
 
-    public float getGroundPositionDegrees() {
-        return groundPositionDegrees;
+    public Vector2D getOriginVector() {
+        return originVector;
     }
 
-    public void setGroundPositionDegrees(float groundPositionDegrees) {
-        if (super.getServo().move(groundPositionDegrees))
-            this.groundPositionDegrees = groundPositionDegrees;
-        else
-            this.groundPositionDegrees = super.getServo().getCurrentPositionDegrees();
+    public void setOriginVector(Vector2D originVector) {
+        this.originVector = originVector;
     }
+
+    public Vector2D getLengthVector() {
+        return lengthVector;
+    }
+
+    public void setLengthVector(Vector2D lengthVector) {
+        this.lengthVector = lengthVector;
+    }
+
 }

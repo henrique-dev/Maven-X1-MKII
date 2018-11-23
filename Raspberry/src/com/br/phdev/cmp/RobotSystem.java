@@ -7,6 +7,7 @@ import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.MavenDataException;
 import com.br.phdev.misc.Log;
+import com.br.phdev.misc.Vector2D;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;
@@ -16,9 +17,11 @@ public class RobotSystem {
     private ServoTaskController servoTaskController;
 
     private List<Module> moduleList;
-    private List<ServoData> servoDataList;
+    private BodyData bodyData;
     private List<LegData> legDataList;
+    private List<ServoData> servoDataList;
 
+    private Body body;
     private Leg[] legs;
     private Servo[] servos;
 
@@ -29,7 +32,7 @@ public class RobotSystem {
                 if (module instanceof PCA9685)
                     ((PCA9685) module).setPWMFreq(60);
             }
-            this.initLegs();
+            this.injectData();
         } else
             Log.e("Falha ao iniciar o sistema");
     }
@@ -45,6 +48,8 @@ public class RobotSystem {
             this.servoDataList = dataRepo.loadServosData();
             Log.i("Carregando informações para as pernas...");
             this.legDataList = dataRepo.loadLegsData();
+            Log.i("Carregando informações para o corpo...");
+            this.bodyData = dataRepo.loadBodyData();
         } catch (MavenDataException e) {
             Log.e("Falha ao carregar as informações. " + e.getMessage());
             return false;
@@ -53,7 +58,7 @@ public class RobotSystem {
         return true;
     }
 
-    public void initLegs() {
+    public void injectData() {
         try {
             this.legs = new Leg[legDataList.size()];
             this.servos = new Servo[servoDataList.size()];
@@ -93,11 +98,30 @@ public class RobotSystem {
                 if (base == null || femur == null || tarsus == null)
                     throw new RuntimeException("Falha ao inicializar as pernas");
             }
+            this.body = new Body(legs, bodyData);
             Log.i("Dados de todos os componentes definidos com sucesso");
         } catch (Exception e) {
             Log.e("Falha ao inicializar as pernas. " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void injectVectors() {
+        this.body.setWidth(new Vector2D(bodyData.getBodyWidth(), 0));
+        this.body.setHeight(new Vector2D(0, -bodyData.getBodyHeight()));
+        this.body.setLength(new Vector2D(0, bodyData.getBodyLength()));
+
+        this.legs[Body.LEG_FRONT_LEFT].setOriginVector(new Vector2D(0, bodyData.getBodyLength()));
+
+        this.legs[Body.LEG_FRONT_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), bodyData.getBodyLength()));
+
+
+        this.legs[Body.LEG_MID_LEFT].setOriginVector(new Vector2D(0, 100.73));
+        this.legs[Body.LEG_MID_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 100.73));
+
+
+        this.legs[Body.LEG_BACK_LEFT].setOriginVector(new Vector2D(0, 0));
+        this.legs[Body.LEG_BACK_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 0));
     }
 
     public void initServoTaskController() {
