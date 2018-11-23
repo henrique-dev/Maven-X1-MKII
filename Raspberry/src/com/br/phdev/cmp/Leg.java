@@ -66,7 +66,7 @@ public class Leg {
         Log.w("Tarso origin: " + this.tarsus.getOriginVector());
         Log.w("Tarso length: " + this.tarsus.getLengthVector());
 
-        Log.w("Comprimento total da pena: " + (this.tarsus.getLengthVector().subtract(this.base.getOriginVector())));
+        Log.w("Comprimento total da pena: " + (this.tarsus.getLengthVector().subtract(this.base.getOriginVector())).getSize());
     }
 
 }
