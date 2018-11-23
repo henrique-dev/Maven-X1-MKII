@@ -42,7 +42,7 @@ public class Leg {
         this.originVector = originVector;
         this.base.setOriginVector(this.originVector);
         this.base.setLengthVector(Vector2D.createByMagAngle(15, 45));
-        System.out.println(this.base.getLengthVector());
+        //System.out.println(this.base.getLengthVector());
     }
 
 }
