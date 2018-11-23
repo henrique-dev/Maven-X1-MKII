@@ -55,7 +55,7 @@ public class Leg {
         this.tarsus.setLength(legData.getTarsusLength());
         this.tarsus.setOriginVector(this.femur.getLengthVector());
         this.tarsus.setLengthVector(Vector2D.createByMagAngle(
-                Math.cos(Math.toRadians(tarsus.getServo().getCurrentPositionDegrees())) * tarsus.getLength(),
+                Math.sin(Math.toRadians(tarsus.getServo().getCurrentPositionDegrees())) * tarsus.getLength(),
                 legData.getLegMidDegrees()).addMe(this.femur.getLengthVector()));
 
         Log.w("\n");
