@@ -42,15 +42,21 @@ public class Leg {
     public void setOriginVector(Vector2D originVector) {
         this.originVector = originVector;
 
+        this.base.setLength(legData.getBaseLength());
         this.base.setOriginVector(this.originVector);
-
         this.base.setLengthVector(Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(this.originVector));
 
+        this.femur.setLength(legData.getFemurLength());
         this.femur.setOriginVector(this.base.getLengthVector());
-        this.femur.setLengthVector(Vector2D.createByMagAngle(legData.getFemurLength(), legData.getLegMidDegrees()).addMe(this.base.getLengthVector()));
+        this.femur.setLengthVector(Vector2D.createByMagAngle(
+                Math.cos(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength(),
+                legData.getLegMidDegrees()).addMe(this.base.getLengthVector()));
 
+        this.tarsus.setLength(legData.getTarsusLength());
         this.tarsus.setOriginVector(this.femur.getLengthVector());
-        this.tarsus.setLengthVector(Vector2D.createByMagAngle(legData.getTarsusLength(), legData.getLegMidDegrees()).addMe(this.femur.getLengthVector()));
+        this.tarsus.setLengthVector(Vector2D.createByMagAngle(
+                Math.cos(Math.toRadians(tarsus.getServo().getCurrentPositionDegrees())) * tarsus.getLength(),
+                legData.getLegMidDegrees()).addMe(this.femur.getLengthVector()));
 
         Log.w("\n");
 
@@ -67,6 +73,7 @@ public class Leg {
         Log.w("Tarso length: " + this.tarsus.getLengthVector());
 
         Log.w("Comprimento total da pena: " + (this.tarsus.getLengthVector().subtract(this.base.getOriginVector())).getSize());
+
     }
 
 }

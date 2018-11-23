@@ -48,4 +48,12 @@ public class Body {
     public void setHeight(Vector2D height) {
         this.height = height;
     }
+
+    public double getLegHeigth(int legNumber) {
+        return 0;
+    }
+
+    public double getLegLength(int legNumber) {
+        return 0;
+    }
 }

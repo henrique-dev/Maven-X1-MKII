@@ -30,4 +30,12 @@ public class Member {
     public Servo getServo() {
         return servo;
     }
+
+    public float getLength() {
+        return length;
+    }
+
+    public void setLength(float length) {
+        this.length = length;
+    }
 }
