@@ -129,7 +129,7 @@ public class DataRepo {
         BodyData bodyData = null;
         try {
             Connection connection = new ConnectionFactory().getConnection();
-            String sql = "select * from body_data";
+            String sql = "select * from robot_data";
             PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
