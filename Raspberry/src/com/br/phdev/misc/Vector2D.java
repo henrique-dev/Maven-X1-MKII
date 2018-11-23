@@ -16,10 +16,9 @@ public class Vector2D implements Cloneable {
         this.y = y;
     }
 
-    public static Vector2D createByMagAngle(double mag, double angle) {
-        Log.w("cos: " + Math.cos(angle));
-        Log.w("sen: " + Math.sin(angle));
-        return new Vector2D(Math.cos(angle) * mag, Math.sin(angle) * mag);
+    public static Vector2D createByMagAngle(double mag, double angleInDegrees) {
+        double radians = Math.toRadians(angleInDegrees);
+        return new Vector2D(Math.cos(radians) * mag, Math.sin(radians) * mag);
     }
 
     public Vector2D set(double newX, double newY) {
