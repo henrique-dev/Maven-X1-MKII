@@ -1,7 +1,10 @@
 package com.br.phdev.cmp;
 
 import com.br.phdev.cmp.servo.Servo;
-import com.br.phdev.cmp.servo.ServoData;
+import com.br.phdev.data.BodyData;
+import com.br.phdev.data.DataRepo;
+import com.br.phdev.data.LegData;
+import com.br.phdev.data.ServoData;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
@@ -15,6 +18,7 @@ import java.util.List;
 public class RobotSystem {
 
     private ServoTaskController servoTaskController;
+    private MovementSystem movementSystem;
 
     private List<Module> moduleList;
     private BodyData bodyData;
@@ -115,6 +119,7 @@ public class RobotSystem {
             this.body.setWidth(new Vector2D(bodyData.getBodyWidth(), 0));
             this.body.setHeight(new Vector2D(0, -bodyData.getBodyHeight()));
             this.body.setLength(new Vector2D(0, bodyData.getBodyLength()));
+            this.body.setAltitude(legs[0].getTarsus().getLength());
 
             this.legs[Body.LEG_FRONT_LEFT].setOriginVector(new Vector2D(0, bodyData.getBodyLength()));
 
@@ -123,7 +128,6 @@ public class RobotSystem {
 
             this.legs[Body.LEG_MID_LEFT].setOriginVector(new Vector2D(0, 100.73));
             this.legs[Body.LEG_MID_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 100.73));
-
 
             this.legs[Body.LEG_BACK_LEFT].setOriginVector(new Vector2D(0, 0));
             this.legs[Body.LEG_BACK_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 0));
@@ -147,6 +151,10 @@ public class RobotSystem {
             this.servoTaskController.stop();
     }
 
+    public void initMovementSystem() {
+        this.movementSystem = new MovementSystem(body);
+    }
+
     public boolean findServo(int globalChannel) {
         for (Servo servo : this.servos) {
             if (globalChannel == servo.getServoData().getGlobalChannel())
@@ -157,6 +165,10 @@ public class RobotSystem {
 
     public ServoTaskController getServoTaskController() {
         return this.servoTaskController;
+    }
+
+    public MovementSystem getMovementSystem() {
+        return movementSystem;
     }
 
     public List<Module> getModuleList() {

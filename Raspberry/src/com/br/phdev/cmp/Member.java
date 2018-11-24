@@ -2,29 +2,13 @@ package com.br.phdev.cmp;
 
 import com.br.phdev.cmp.servo.Servo;
 
-public class Member {
+public class Member implements Motion {
 
     protected float length;
     protected Servo servo;
 
     Member(Servo servo) {
         this.servo = servo;
-    }
-
-    public boolean move(float degrees) {
-        return this.servo.move(degrees);
-    }
-
-    public void moveToMin() {
-        this.servo.moveToMin();
-    }
-
-    public void moveToMid() {
-        this.servo.moveToMid();
-    }
-
-    public void moveToMax() {
-        this.servo.moveToMax();
     }
 
     public Servo getServo() {
@@ -37,5 +21,25 @@ public class Member {
 
     public void setLength(float length) {
         this.length = length;
+    }
+
+    @Override
+    public void moveX(float x) {
+
+    }
+
+    @Override
+    public void moveY(float y) {
+
+    }
+
+    @Override
+    public void moveZ(float z) {
+
+    }
+
+    @Override
+    public void rotate(float degrees) {
+
     }
 }

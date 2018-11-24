@@ -1,4 +1,4 @@
-package com.br.phdev.cmp.servo;
+package com.br.phdev.data;
 
 public class ServoData {
 

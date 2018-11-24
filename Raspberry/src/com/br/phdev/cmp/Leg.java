@@ -1,9 +1,12 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.data.LegData;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
-public class Leg {
+public class Leg implements Motion {
+
+    private boolean onGround;
 
     private final LegData legData;
     private final Base base;
@@ -17,6 +20,7 @@ public class Leg {
         this.base = base;
         this.femur = femur;
         this.tarsus = tarsus;
+        this.onGround = true;
     }
 
     public LegData getLegData() {
@@ -73,6 +77,35 @@ public class Leg {
         Log.w("Tarso length: " + this.tarsus.getLengthVector());
 
         Log.w("Comprimento total da pena: " + (this.tarsus.getLengthVector().subtract(this.base.getOriginVector())).getSize());
+
+    }
+
+    public boolean isOnGround() {
+        return onGround;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
+    }
+
+    @Override
+    public void moveX(float x) {
+
+    }
+
+    @Override
+    public void moveY(float y) {
+
+    }
+
+    @Override
+    public void moveZ(float z) {
+        double currentHeight = this.tarsus.getLengthVector().subtract(base.getOriginVector()).getSize();
+        Log.w("Altura atuak: " + currentHeight);
+    }
+
+    @Override
+    public void rotate(float degrees) {
 
     }
 

@@ -5,6 +5,7 @@ import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.task.FlavorTaskGroup;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskGroup;
+import com.br.phdev.data.DataRepo;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.ScriptException;
@@ -491,6 +492,9 @@ public class Maven {
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "init-task-system":
+						maven.initServoTaskController();
+						break;
+					case "init-move-system":
 						maven.initServoTaskController();
 						break;
 					case "":

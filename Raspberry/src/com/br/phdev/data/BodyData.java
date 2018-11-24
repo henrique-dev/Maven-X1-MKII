@@ -1,4 +1,4 @@
-package com.br.phdev.cmp;
+package com.br.phdev.data;
 
 public class BodyData {
 

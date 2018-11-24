@@ -1,5 +1,6 @@
 package com.br.phdev.cmp.servo;
 
+import com.br.phdev.data.ServoData;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.misc.Log;
 
