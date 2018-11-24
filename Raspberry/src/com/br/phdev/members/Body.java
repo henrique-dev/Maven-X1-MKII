@@ -45,7 +45,10 @@ public class Body implements Motion {
 
     @Override
     public void moveZ(float z) {
-
+        for (Leg leg : legs) {
+            if (leg.isOnGround())
+                leg.moveZ(z);
+        }
     }
 
     @Override
