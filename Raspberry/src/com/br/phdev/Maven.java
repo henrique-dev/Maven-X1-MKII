@@ -497,7 +497,7 @@ public class Maven {
 						maven.initServoTaskController();
 						break;
 					case "init-move-system":
-						maven.initServoTaskController();
+						maven.initMovementSystem();
 						moveSystem = true;
 						break;
 					case "move-system":
