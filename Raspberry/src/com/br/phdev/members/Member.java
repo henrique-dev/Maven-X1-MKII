@@ -57,7 +57,7 @@ public class Member implements Motion {
 
     @Override
     public void moveZ(float z) {
-
+        this.servo.move(z);
     }
 
     @Override

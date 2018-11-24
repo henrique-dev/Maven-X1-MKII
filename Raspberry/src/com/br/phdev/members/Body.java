@@ -46,9 +46,7 @@ public class Body implements Motion {
 
     @Override
     public void moveZ(float z) {
-        Log.w("MV BODY");
         for (Leg leg : legs) {
-            Log.w("MV LEG FOR");
             if (leg.isOnGround()) {
                 leg.moveZ(z);
             }

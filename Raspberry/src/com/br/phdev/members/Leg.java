@@ -142,24 +142,10 @@ public class Leg implements Motion {
 
     @Override
     public void moveZ(float z) {
-
-        Log.w("MV LEG");
-
-        double yi = origin.z;
-        double xTF = tarsus.getFinalVector().subtract(this.base.getOriginVector()).getSize();
-        double sinF = z / femur.getLength();
-        double femurDegrees = Math.asin(sinF);
-        double xF = Math.cos(Math.toRadians(femurDegrees)) * femur.getLength();
-        double xT = (xTF - base.getLength()) - xF;
-        double sinT = xT / tarsus.getLength();
-        double tarsusDegrees = Math.asin(sinT);
-
-        Log.w("O femur sofreu rotação de " + femurDegrees + ".\n" +
-                "e o tarso sofreu rotação de " + tarsusDegrees);
-        Log.w("O cumprimento total da perna desconsiderando a base, agora é " + (xT + xF));
-        Log.w("O comprimento do femur aplicada a rotação é de : " + xF);
-        Log.w("O comprimento do tarso aplicada a rotação é de : " + xT);
-        Log.w("");
+        if (legData.getLegNumber() == 1) {
+            femur.moveZ(z);
+            tarsus.moveZ(-z);
+        }
     }
 
     @Override

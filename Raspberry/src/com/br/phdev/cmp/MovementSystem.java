@@ -2,6 +2,7 @@ package com.br.phdev.cmp;
 
 import com.br.phdev.members.Body;
 import com.br.phdev.misc.Log;
+import com.br.phdev.misc.Vector2D;
 
 public class MovementSystem implements Motion {
 
@@ -12,8 +13,11 @@ public class MovementSystem implements Motion {
     }
 
     public void changeHeight(float desiredHeigth) {
-        Log.w("MV SYSTEM");
         this.body.moveZ(desiredHeigth);
+    }
+
+    public void centerGravity() {
+
     }
 
 
@@ -36,4 +40,13 @@ public class MovementSystem implements Motion {
     public void rotate(float degrees) {
 
     }
+
+    class CenterGravity {
+
+        Vector2D point1;
+        Vector2D point2;
+        Vector2D point3;
+
+    }
+
 }
