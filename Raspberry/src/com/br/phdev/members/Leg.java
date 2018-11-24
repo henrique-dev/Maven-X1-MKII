@@ -64,9 +64,9 @@ public class Leg implements Motion {
                 legData.getLegMidDegrees()).addMe(femur.getFinalVector().getVector2D());
         tarsus.setFinalVector(new Vector3D(tarsusXY.x, tarsusXY.y, tarsus.length));
 
-
+        Log.w("");
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
-        Log.w("perna originVector: " + origin.getVector2D());
+        Log.w("Perna originVector: " + origin.getVector2D());
 
         Log.w("Base originVector xyz: " + this.base.getOriginVector());
         Log.w("Base length xyz: " + this.base.getFinalVector());
