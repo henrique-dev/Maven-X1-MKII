@@ -47,7 +47,7 @@ public class Leg implements Motion {
 
     public void setOrigin(Vector3D origin) {
         this.origin = origin;
-
+/*
         base.setLength(legData.getBaseLength());
         base.setOriginVector(origin);
         Vector2D baseXY = Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(origin.getVector2D());
@@ -78,7 +78,7 @@ public class Leg implements Motion {
         Log.w("Tarso originVector: " + this.tarsus.getOriginVector());
         Log.w("Tarso length: " + this.tarsus.getFinalVector());
 
-        Log.w("Comprimento total da perna: " + (this.tarsus.getFinalVector().subtract(this.base.getFinalVector())).getSize());
+        Log.w("Comprimento total da perna: " + (this.tarsus.getFinalVector().subtract(this.base.getFinalVector())).getSize());*/
 
     }
 
