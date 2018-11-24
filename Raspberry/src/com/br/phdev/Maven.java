@@ -510,19 +510,21 @@ public class Maven {
 								System.out.print(currentPath + "> ");
 								command = in.nextLine();
 								switch (command) {
-									case "up":
-									case "down":
-									case "front":
-									case "back":
-										if (command.startsWith("up"))
-											robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(2).trim()));
-										else if (command.startsWith("down"))
-											robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(4).trim()));
 										break;
                                     case "exit":
                                         runningMoveSystem = false;
                                         break;
 									case "":
+										break;
+									default:
+										try {
+											if (command.startsWith("up"))
+												robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(2).trim()));
+											else if (command.startsWith("down"))
+												robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(4).trim()));
+										} catch (Exception e) {
+											show(Error.INVALID_INPUT);
+										}
 										break;
 								}
 							}
