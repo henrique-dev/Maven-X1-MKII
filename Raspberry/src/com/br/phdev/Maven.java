@@ -510,7 +510,6 @@ public class Maven {
 								System.out.print(currentPath + "> ");
 								command = in.nextLine();
 								switch (command) {
-										break;
                                     case "exit":
                                         runningMoveSystem = false;
                                         break;
