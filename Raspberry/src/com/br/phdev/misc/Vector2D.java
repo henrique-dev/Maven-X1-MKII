@@ -4,8 +4,8 @@ import java.lang.Math;
 
 public class Vector2D implements Cloneable {
 
-    private double x;
-    private double y;
+    public double x;
+    public double y;
 
     public Vector2D() {
         x = y = 0;

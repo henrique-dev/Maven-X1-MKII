@@ -1,10 +1,16 @@
-package com.br.phdev.cmp;
+package com.br.phdev.members;
 
+import com.br.phdev.cmp.Motion;
 import com.br.phdev.cmp.servo.Servo;
+import com.br.phdev.misc.Vector3D;
 
 public class Member implements Motion {
 
     protected float length;
+
+    protected Vector3D origin;
+    protected Vector3D area;
+
     protected Servo servo;
 
     Member(Servo servo) {
@@ -21,6 +27,22 @@ public class Member implements Motion {
 
     public void setLength(float length) {
         this.length = length;
+    }
+
+    public Vector3D getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Vector3D origin) {
+        this.origin = origin;
+    }
+
+    public Vector3D get() {
+        return area;
+    }
+
+    public void set(Vector3D area) {
+        this.area = area;
     }
 
     @Override

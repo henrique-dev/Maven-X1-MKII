@@ -9,6 +9,7 @@ import com.br.phdev.data.DataRepo;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.ScriptException;
+import com.br.phdev.members.Leg;
 import com.br.phdev.misc.*;
 import com.pi4j.io.i2c.I2CFactory;
 

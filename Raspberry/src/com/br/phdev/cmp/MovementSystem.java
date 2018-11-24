@@ -1,5 +1,7 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.members.Body;
+
 public class MovementSystem implements Motion {
 
     private Body body;

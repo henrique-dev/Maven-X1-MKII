@@ -9,8 +9,10 @@ import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.driver.Module;
 import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.MavenDataException;
+import com.br.phdev.members.*;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
+import com.br.phdev.misc.Vector3D;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;
@@ -116,21 +118,19 @@ public class RobotSystem {
     private void injectVectors() {
         try {Log.i("Injetando vetores em todos os componentes...");
 
-            this.body.setWidth(new Vector2D(bodyData.getBodyWidth(), 0));
-            this.body.setHeight(new Vector2D(0, -bodyData.getBodyHeight()));
-            this.body.setLength(new Vector2D(0, bodyData.getBodyLength()));
-            this.body.setAltitude(legs[0].getTarsus().getLength());
+            this.body.setArea(new Vector3D(bodyData.getBodyWidth(), bodyData.getBodyLength(), legDataList.get(0).getTarsusLength()));
 
-            this.legs[Body.LEG_FRONT_LEFT].setOriginVector(new Vector2D(0, bodyData.getBodyLength()));
+            this.legs[Body.LEG_FRONT_LEFT].setOrigin(new Vector3D(0, bodyData.getBodyLength(), body.getArea().z));
 
-            this.legs[Body.LEG_FRONT_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), bodyData.getBodyLength()));
+            this.legs[Body.LEG_FRONT_RIGHT].setOrigin(new Vector3D(bodyData.getBodyWidth(), bodyData.getBodyLength(), body.getArea().z));
 
 
-            this.legs[Body.LEG_MID_LEFT].setOriginVector(new Vector2D(0, 100.73));
-            this.legs[Body.LEG_MID_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 100.73));
+            this.legs[Body.LEG_MID_LEFT].setOrigin(new Vector3D(0, 100.73, body.getArea().z));
+            this.legs[Body.LEG_MID_RIGHT].setOrigin(new Vector3D(bodyData.getBodyWidth(), 100.73, body.getArea().z));
 
-            this.legs[Body.LEG_BACK_LEFT].setOriginVector(new Vector2D(0, 0));
-            this.legs[Body.LEG_BACK_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 0));
+            this.legs[Body.LEG_BACK_LEFT].setOrigin(new Vector3D(0, 0, body.getArea().z));
+            this.legs[Body.LEG_BACK_RIGHT].setOrigin(new Vector3D(bodyData.getBodyWidth(), 0, body.getArea().z));
+
             Log.s("Vetores injetados com sucesso");
         } catch (Exception e) {
             Log.e("Falha ao injetar os vetores. " + e.getMessage());
