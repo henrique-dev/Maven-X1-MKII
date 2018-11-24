@@ -511,14 +511,13 @@ public class Maven {
 								command = in.nextLine();
 								switch (command) {
 									case "up":
-										robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(2).trim()));
-										break;
 									case "down":
-										robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(4).trim()));
-										break;
 									case "front":
-										break;
 									case "back":
+										if (command.startsWith("up"))
+											robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(2).trim()));
+										else if (command.startsWith("down"))
+											robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(4).trim()));
 										break;
                                     case "exit":
                                         runningMoveSystem = false;
