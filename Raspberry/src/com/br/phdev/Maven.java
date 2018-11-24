@@ -44,6 +44,8 @@ public class Maven {
 
 			boolean runningProgram = true;
 			boolean initSystem = false;
+			boolean moveSystem = false;
+			boolean taskSystem = false;
 			while (runningProgram) {
 
 				String currentPath = "";
@@ -496,6 +498,28 @@ public class Maven {
 						break;
 					case "init-move-system":
 						maven.initServoTaskController();
+						moveSystem = true;
+						break;
+					case "move-system":
+						boolean runningMoveSystem = true;
+						if (moveSystem) {
+							while (runningMoveSystem) {
+								command = in.nextLine();
+								switch (command) {
+									case "up":
+										break;
+									case "down":
+										maven.getMovementSystem().moveZ(-20);
+										break;
+									case "front":
+										break;
+									case "back":
+										break;
+									case "":
+										break;
+								}
+							}
+						}
 						break;
 					case "":
 						break;
