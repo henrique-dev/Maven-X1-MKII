@@ -157,6 +157,9 @@ public class Leg implements Motion {
         Log.w("O femur sofreu rotação de " + femurDegrees + ".\n" +
                 "e o tarso sofreu rotação de " + tarsusDegrees);
         Log.w("O cumprimento total da perna desconsiderando a base, agora é " + (xT + xF));
+        Log.w("O comprimento do femur aplicada a rotação é de : " + xF);
+        Log.w("O comprimento do tarso aplicada a rotação é de : " + xT);
+        Log.w("");
     }
 
     @Override
