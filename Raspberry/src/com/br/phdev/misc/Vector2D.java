@@ -1,7 +1,5 @@
 package com.br.phdev.misc;
 
-import java.lang.Math;
-
 public class Vector2D implements Cloneable {
 
     public double x;
