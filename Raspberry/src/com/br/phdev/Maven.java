@@ -509,7 +509,7 @@ public class Maven {
 									case "up":
 										break;
 									case "down":
-										maven.getMovementSystem().moveZ(-20);
+										maven.getMovementSystem().changeHeight(-50);
 										break;
 									case "front":
 										break;
