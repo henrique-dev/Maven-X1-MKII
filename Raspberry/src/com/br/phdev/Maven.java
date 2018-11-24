@@ -518,6 +518,9 @@ public class Maven {
 										break;
 									case "back":
 										break;
+                                    case "exit":
+                                        runningMoveSystem = false;
+                                        break;
 									case "":
 										break;
 								}

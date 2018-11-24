@@ -69,8 +69,8 @@ public class Leg implements Motion {
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
         Log.w("perna origin: " + origin.getVector2D());
 
-        Log.w("Base origin: " + this.base.getOrigin());
-        Log.w("Base length: " + this.base.get());
+        Log.w("Base origin xyz: " + this.base.getOrigin());
+        Log.w("Base length xyz: " + this.base.get());
 
         Log.w("Femur origin: " + this.femur.getOrigin());
         Log.w("Femur length: " + this.femur.get());
@@ -78,7 +78,7 @@ public class Leg implements Motion {
         Log.w("Tarso origin: " + this.tarsus.getOrigin());
         Log.w("Tarso length: " + this.tarsus.get());
 
-        Log.w("Comprimento total da pena: " + (this.tarsus.get().subtract(this.base.get())).getSize());
+        Log.w("Comprimento total da perna: " + (this.tarsus.get().subtract(this.base.get())).getSize());
 
     }
 
