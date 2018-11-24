@@ -3,7 +3,7 @@ package com.br.phdev.misc;
 import java.lang.Math;
 
 public class Vector3D implements Cloneable {
-
+/*
     public double x, y, z;
 
     public Vector3D() {
@@ -339,5 +339,5 @@ public class Vector3D implements Cloneable {
         return String.format("x: " + numberFormat
                 + " y: " + numberFormat
                 + " z: " + numberFormat, x, y, z);
-    }
+    }*/
 }
