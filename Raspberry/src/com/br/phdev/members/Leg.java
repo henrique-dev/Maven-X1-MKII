@@ -2,6 +2,8 @@ package com.br.phdev.members;
 
 import com.br.phdev.cmp.Motion;
 import com.br.phdev.data.LegData;
+import com.br.phdev.misc.Log;
+import com.br.phdev.misc.Vector2D;
 import com.br.phdev.misc.Vector3D;
 
 public class Leg implements Motion {
@@ -45,7 +47,6 @@ public class Leg implements Motion {
 
     public void setOrigin(Vector3D origin) {
         this.origin = origin;
-/*
         base.setLength(legData.getBaseLength());
         base.setOriginVector(origin);
         Vector2D baseXY = Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(origin.getVector2D());
@@ -76,7 +77,7 @@ public class Leg implements Motion {
         Log.w("Tarso originVector: " + this.tarsus.getOriginVector());
         Log.w("Tarso length: " + this.tarsus.getFinalVector());
 
-        Log.w("Comprimento total da perna: " + (this.tarsus.getFinalVector().subtract(this.base.getFinalVector())).getSize());*/
+        Log.w("Comprimento total da perna: " + (this.tarsus.getFinalVector().subtract(this.base.getFinalVector())).getSize());
 
     }
 

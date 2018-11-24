@@ -11,6 +11,7 @@ import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.MavenDataException;
 import com.br.phdev.members.*;
 import com.br.phdev.misc.Log;
+import com.br.phdev.misc.Vector3D;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;
@@ -115,7 +116,7 @@ public class RobotSystem {
 
     private void injectVectors() {
         try {Log.i("Injetando vetores em todos os componentes...");
-/*
+
             this.body.setArea(new Vector3D(bodyData.getBodyWidth(), bodyData.getBodyLength(), legDataList.get(0).getTarsusLength()));
 
             this.legs[Body.LEG_FRONT_LEFT].setOrigin(new Vector3D(0, bodyData.getBodyLength(), body.getArea().z));
@@ -128,7 +129,7 @@ public class RobotSystem {
 
             this.legs[Body.LEG_BACK_LEFT].setOrigin(new Vector3D(0, 0, body.getArea().z));
             this.legs[Body.LEG_BACK_RIGHT].setOrigin(new Vector3D(bodyData.getBodyWidth(), 0, body.getArea().z));
-*/
+
             Log.s("Vetores injetados com sucesso");
         } catch (Exception e) {
             Log.e("Falha ao injetar os vetores. " + e.getMessage());
