@@ -1,6 +1,8 @@
 package com.br.phdev.misc;
 
-public final class Vector3D {
+import java.lang.Math;
+
+public class Vector3D implements Cloneable {
 
     public double x, y, z;
 
