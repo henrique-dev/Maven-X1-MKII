@@ -1,6 +1,7 @@
 package com.br.phdev.cmp;
 
 import com.br.phdev.members.Body;
+import com.br.phdev.misc.Log;
 
 public class MovementSystem implements Motion {
 
@@ -11,6 +12,7 @@ public class MovementSystem implements Motion {
     }
 
     public void changeHeight(float desiredHeigth) {
+        Log.w("MV SYSTEM");
         this.body.moveZ(desiredHeigth);
     }
 

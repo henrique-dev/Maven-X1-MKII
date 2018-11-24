@@ -513,7 +513,7 @@ public class Maven {
 									case "up":
 										break;
 									case "down":
-										robotSystem.getMovementSystem().changeHeight(-50);
+										robotSystem.getMovementSystem().changeHeight(20);
 										break;
 									case "front":
 										break;

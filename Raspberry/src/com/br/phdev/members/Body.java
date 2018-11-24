@@ -2,6 +2,7 @@ package com.br.phdev.members;
 
 import com.br.phdev.cmp.Motion;
 import com.br.phdev.data.BodyData;
+import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector3D;
 
 public class Body implements Motion {
@@ -45,9 +46,12 @@ public class Body implements Motion {
 
     @Override
     public void moveZ(float z) {
+        Log.w("MV BODY");
         for (Leg leg : legs) {
-            if (leg.isOnGround())
+            Log.w("MV LEG FOR");
+            if (leg.isOnGround()) {
                 leg.moveZ(z);
+            }
         }
     }
 

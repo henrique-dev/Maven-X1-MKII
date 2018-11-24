@@ -142,6 +142,9 @@ public class Leg implements Motion {
 
     @Override
     public void moveZ(float z) {
+
+        Log.w("MV LEG");
+
         double yi = origin.z;
         double xTF = tarsus.getFinalVector().subtract(this.base.getOriginVector()).getSize();
         double sinF = z / femur.getLength();
