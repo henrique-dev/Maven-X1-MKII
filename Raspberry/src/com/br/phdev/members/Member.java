@@ -8,8 +8,8 @@ public class Member implements Motion {
 
     protected float length;
 
-    protected Vector3D origin;
-    protected Vector3D area;
+    protected Vector3D originVector;
+    protected Vector3D finalVector;
 
     protected Servo servo;
 
@@ -29,20 +29,20 @@ public class Member implements Motion {
         this.length = length;
     }
 
-    public Vector3D getOrigin() {
-        return origin;
+    public Vector3D getOriginVector() {
+        return originVector;
     }
 
-    public void setOrigin(Vector3D origin) {
-        this.origin = origin;
+    public void setOriginVector(Vector3D originVector) {
+        this.originVector = originVector;
     }
 
-    public Vector3D get() {
-        return area;
+    public Vector3D getFinalVector() {
+        return finalVector;
     }
 
-    public void set(Vector3D area) {
-        this.area = area;
+    public void setFinalVector(Vector3D area) {
+        this.finalVector = area;
     }
 
     @Override

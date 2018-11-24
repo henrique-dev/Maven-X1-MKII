@@ -49,36 +49,36 @@ public class Leg implements Motion {
         this.origin = origin;
 
         base.setLength(legData.getBaseLength());
-        base.setOrigin(origin);
+        base.setOriginVector(origin);
         Vector2D baseXY = Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(origin.getVector2D());
-        base.set(new Vector3D(baseXY.x, baseXY.y, origin.z));
+        base.setFinalVector(new Vector3D(baseXY.x, baseXY.y, origin.z));
 
         femur.setLength(legData.getFemurLength());
-        femur.setOrigin(base.get());
+        femur.setOriginVector(base.getFinalVector());
         Vector2D femurXY = Vector2D.createByMagAngle(Math.cos(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength(),
-                legData.getLegMidDegrees()).addMe(base.get().getVector2D());
-        femur.set(new Vector3D(femurXY.x, femurXY.y, Math.sin(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength()));
+                legData.getLegMidDegrees()).addMe(base.getFinalVector().getVector2D());
+        femur.setFinalVector(new Vector3D(femurXY.x, femurXY.y, Math.sin(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength()));
 
         tarsus.setLength(legData.getTarsusLength());
-        tarsus.setOrigin(femur.get());
+        tarsus.setOriginVector(femur.getFinalVector());
         Vector2D tarsusXY = Vector2D.createByMagAngle(Math.sin(Math.toRadians(tarsus.getServo().getCurrentPositionDegrees())) * tarsus.getLength(),
-                legData.getLegMidDegrees()).addMe(femur.get().getVector2D());
-        tarsus.set(new Vector3D(tarsusXY.x, tarsusXY.y, tarsus.length));
+                legData.getLegMidDegrees()).addMe(femur.getFinalVector().getVector2D());
+        tarsus.setFinalVector(new Vector3D(tarsusXY.x, tarsusXY.y, tarsus.length));
 
 
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
-        Log.w("perna origin: " + origin.getVector2D());
+        Log.w("perna originVector: " + origin.getVector2D());
 
-        Log.w("Base origin xyz: " + this.base.getOrigin());
-        Log.w("Base length xyz: " + this.base.get());
+        Log.w("Base originVector xyz: " + this.base.getOriginVector());
+        Log.w("Base length xyz: " + this.base.getFinalVector());
 
-        Log.w("Femur origin: " + this.femur.getOrigin());
-        Log.w("Femur length: " + this.femur.get());
+        Log.w("Femur originVector: " + this.femur.getOriginVector());
+        Log.w("Femur length: " + this.femur.getFinalVector());
 
-        Log.w("Tarso origin: " + this.tarsus.getOrigin());
-        Log.w("Tarso length: " + this.tarsus.get());
+        Log.w("Tarso originVector: " + this.tarsus.getOriginVector());
+        Log.w("Tarso length: " + this.tarsus.getFinalVector());
 
-        Log.w("Comprimento total da perna: " + (this.tarsus.get().subtract(this.base.get())).getSize());
+        Log.w("Comprimento total da perna: " + (this.tarsus.getFinalVector().subtract(this.base.getFinalVector())).getSize());
 
     }
 
@@ -105,15 +105,15 @@ public class Leg implements Motion {
         Log.w("\n");
 
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
-        Log.w("perna origin: " + this.originVector);
+        Log.w("perna originVector: " + this.originVector);
 
-        Log.w("Base origin: " + this.base.getOriginVector());
+        Log.w("Base originVector: " + this.base.getOriginVector());
         Log.w("Base length: " + this.base.getLengthVector());
 
-        Log.w("Femur origin: " + this.femur.getOriginVector());
+        Log.w("Femur originVector: " + this.femur.getOriginVector());
         Log.w("Femur length: " + this.femur.getLengthVector());
 
-        Log.w("Tarso origin: " + this.tarsus.getOriginVector());
+        Log.w("Tarso originVector: " + this.tarsus.getOriginVector());
         Log.w("Tarso length: " + this.tarsus.getLengthVector());
 
         Log.w("Comprimento total da pena: " + (this.tarsus.getLengthVector().subtract(this.base.getOriginVector())).getSize());
