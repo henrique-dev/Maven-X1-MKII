@@ -77,7 +77,10 @@ public class Leg implements Motion {
         Log.w("Tarso originVector: " + this.tarsus.getOriginVector());
         Log.w("Tarso length: " + this.tarsus.getFinalVector());
 
-        Log.w("Comprimento total da perna: " + (this.tarsus.getFinalVector().subtract(this.base.getFinalVector())).getSize());
+        Log.w("Comprimento da perna em relação a origem da base: " +
+                (this.tarsus.getFinalVector().getVector2D().subtract(this.base.getFinalVector().getVector2D())).getSize());
+
+        Log.w("Altura da perna em relação a origem da base: " + (this.origin.z));
 
     }
 
