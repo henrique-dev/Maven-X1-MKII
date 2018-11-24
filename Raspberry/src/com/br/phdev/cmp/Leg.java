@@ -100,8 +100,8 @@ public class Leg implements Motion {
 
     @Override
     public void moveZ(float z) {
-        double currentHeight = this.tarsus.getLengthVector().subtract(base.getOriginVector()).getSize();
-        Log.w("Altura atuak: " + currentHeight);
+        double currentHeight = this.tarsus.getLengthVector().subtract(femur.getOriginVector()).getSize();
+        Log.w("Altura atual: " + currentHeight);
     }
 
     @Override

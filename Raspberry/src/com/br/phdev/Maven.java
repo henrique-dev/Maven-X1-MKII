@@ -504,6 +504,8 @@ public class Maven {
 						boolean runningMoveSystem = true;
 						if (moveSystem) {
 							while (runningMoveSystem) {
+								currentPath = "move-system ";
+								System.out.print(currentPath + "> ");
 								command = in.nextLine();
 								switch (command) {
 									case "up":
