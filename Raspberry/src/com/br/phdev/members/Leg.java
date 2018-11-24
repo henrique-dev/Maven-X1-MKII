@@ -2,8 +2,6 @@ package com.br.phdev.members;
 
 import com.br.phdev.cmp.Motion;
 import com.br.phdev.data.LegData;
-import com.br.phdev.misc.Log;
-import com.br.phdev.misc.Vector2D;
 import com.br.phdev.misc.Vector3D;
 
 public class Leg implements Motion {

@@ -11,8 +11,6 @@ import com.br.phdev.driver.PCA9685;
 import com.br.phdev.exceptions.MavenDataException;
 import com.br.phdev.members.*;
 import com.br.phdev.misc.Log;
-import com.br.phdev.misc.Vector2D;
-import com.br.phdev.misc.Vector3D;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.util.List;

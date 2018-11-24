@@ -1,6 +1,7 @@
 package com.br.phdev;
 
-import com.br.phdev.cmp.*;
+import com.br.phdev.cmp.RobotSystem;
+import com.br.phdev.cmp.ScriptCommand;
 import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.task.FlavorTaskGroup;
 import com.br.phdev.cmp.task.Task;
@@ -39,7 +40,7 @@ public class Maven {
 
 	public static void main(String[] args) {
 		try {
-			RobotSystem maven = new RobotSystem();
+			RobotSystem robotSystem = new RobotSystem();
 
 			Scanner in = new Scanner(System.in);
 
@@ -57,18 +58,18 @@ public class Maven {
 					case "exit":
 						runningProgram = false;
 						if (initSystem)
-							maven.stopLegsControl();
+							robotSystem.stopLegsControl();
 						break;
 					case "init-system":
 						if (!initSystem) {
-							maven.initSystem(true);
+							robotSystem.initSystem(true);
 							initSystem = true;
 						} else
 							show(Warning.SYSTEM_ALL_READY_STARTED);
 						break;
 					case "init-system-d":
 						if (!initSystem) {
-							maven.initSystem(false);
+							robotSystem.initSystem(false);
 							initSystem = true;
 						} else
 							show(Warning.SYSTEM_ALL_READY_STARTED);
@@ -76,12 +77,12 @@ public class Maven {
 					case "reload-system":
 						break;
 					case "show-s":
-						showTHIS(maven.getLegs());
+						showTHIS(robotSystem.getLegs());
 						break;
 					case "reload-servos":
 						if (initSystem) {
-							maven.loadData(false);
-							maven.injectData(false);
+							robotSystem.loadData(false);
+							robotSystem.injectData(false);
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
@@ -106,7 +107,7 @@ public class Maven {
 										runningAllServosConfig = false;
 										break;
 									case "show-s":
-										showTHIS(maven.getLegs());
+										showTHIS(robotSystem.getLegs());
 										break;
 									default: {
 										try {
@@ -114,23 +115,23 @@ public class Maven {
 											if (parameter.startsWith("servo ")) {
 												int indexOfMark = parameter.indexOf("-");
 												globalChannel = Integer.parseInt(parameter.substring(6, indexOfMark != -1 ? indexOfMark -1 : parameter.length()));
-												if (maven.findServo(globalChannel)) {
+												if (robotSystem.findServo(globalChannel)) {
 													if (parameter.endsWith(" -show")) {
-														Log.i(maven.getServos()[globalChannel].getServoData().toString());
+														Log.i(robotSystem.getServos()[globalChannel].getServoData().toString());
 													} else if (parameter.endsWith(" -min")) {
-														maven.getServos()[globalChannel].moveToMin();
+														robotSystem.getServos()[globalChannel].moveToMin();
 													} else if (parameter.endsWith(" -mid")) {
-														maven.getServos()[globalChannel].moveToMid();
+														robotSystem.getServos()[globalChannel].moveToMid();
 													} else if (parameter.endsWith(" -max")) {
-														maven.getServos()[globalChannel].moveToMax();
+														robotSystem.getServos()[globalChannel].moveToMax();
 													} else if (parameter.endsWith(" -limit-max")) {
-														maven.getServos()[globalChannel].moveToLimitMax();
+														robotSystem.getServos()[globalChannel].moveToLimitMax();
 													} else if (parameter.endsWith(" -limit-min")) {
-														maven.getServos()[globalChannel].moveToLimitMin();
+														robotSystem.getServos()[globalChannel].moveToLimitMin();
 													} else if (parameter.endsWith(" -max-up")) {
-														maven.getServos()[globalChannel].moveMaxUp();
+														robotSystem.getServos()[globalChannel].moveMaxUp();
 													} else if (parameter.endsWith(" -max-down")) {
-														maven.getServos()[globalChannel].moveMaxDown();
+														robotSystem.getServos()[globalChannel].moveMaxDown();
 													} else {
 														boolean runningServoConfig = true;
 														while (runningServoConfig) {
@@ -154,16 +155,16 @@ public class Maven {
 																						DataRepo dataRepo = new DataRepo();
 																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, valueForServo);
 																						switch (currentServoConfigName) {
-																							case "min": maven.getServos()[globalChannel].getServoData().setMinPosition(valueForServo); break;
-																							case "mid": maven.getServos()[globalChannel].getServoData().setMidPosition(valueForServo); break;
-																							case "max": maven.getServos()[globalChannel].getServoData().setMaxPosition(valueForServo); break;
-																							case "limit-min": maven.getServos()[globalChannel].getServoData().setLimitMin((int)valueForServo); break;
-																							case "limit-max": maven.getServos()[globalChannel].getServoData().setLimitMax((int)valueForServo); break;
+																							case "min": robotSystem.getServos()[globalChannel].getServoData().setMinPosition(valueForServo); break;
+																							case "mid": robotSystem.getServos()[globalChannel].getServoData().setMidPosition(valueForServo); break;
+																							case "max": robotSystem.getServos()[globalChannel].getServoData().setMaxPosition(valueForServo); break;
+																							case "limit-min": robotSystem.getServos()[globalChannel].getServoData().setLimitMin((int)valueForServo); break;
+																							case "limit-max": robotSystem.getServos()[globalChannel].getServoData().setLimitMax((int)valueForServo); break;
 																							case "opening":
-																								maven.getServos()[globalChannel].getServoData().setDegreesOpening((int)valueForServo);
-																								maven.getServos()[globalChannel].getServoData().setStep();
+																								robotSystem.getServos()[globalChannel].getServoData().setDegreesOpening((int)valueForServo);
+																								robotSystem.getServos()[globalChannel].getServoData().setStep();
 																								break;
-																							case "inverted": maven.getServos()[globalChannel].getServoData().setInverted(valueForServo == 1);
+																							case "inverted": robotSystem.getServos()[globalChannel].getServoData().setInverted(valueForServo == 1);
 																						}
 																						Log.s("A configuração foi salva");
 																					} else
@@ -184,25 +185,25 @@ public class Maven {
 																					runningServoConfig = false;
 																					runningServoPosConfig = false;
 																				case "-min":
-																					maven.getServos()[globalChannel].moveToMin();
+																					robotSystem.getServos()[globalChannel].moveToMin();
 																					break;
 																				case "-mid":
-																					maven.getServos()[globalChannel].moveToMid();
+																					robotSystem.getServos()[globalChannel].moveToMid();
 																					break;
 																				case "-max":
-																					maven.getServos()[globalChannel].moveToMax();
+																					robotSystem.getServos()[globalChannel].moveToMax();
 																					break;
 																				case "-limit-min":
-																					maven.getServos()[globalChannel].moveToLimitMin();
+																					robotSystem.getServos()[globalChannel].moveToLimitMin();
 																					break;
 																				case "-limit-max":
-																					maven.getServos()[globalChannel].moveToLimitMax();
+																					robotSystem.getServos()[globalChannel].moveToLimitMax();
 																					break;
 																				case "-max-down":
-																					maven.getServos()[globalChannel].moveMaxDown();
+																					robotSystem.getServos()[globalChannel].moveMaxDown();
 																					break;
 																				case "-max-up":
-																					maven.getServos()[globalChannel].moveMaxUp();
+																					robotSystem.getServos()[globalChannel].moveMaxUp();
 																					break;
 																				case "":
 																					break;
@@ -213,24 +214,24 @@ public class Maven {
 																							case "min": case "mid": case "max":
 																								valueForServo = Float.parseFloat(parameter);
 																								if (valueForServo >= 100 && valueForServo <= 650 || valueForServo == 0)
-																									maven.getServos()[globalChannel].setRawPosition(valueForServo);
+																									robotSystem.getServos()[globalChannel].setRawPosition(valueForServo);
 																								else
 																									valueForServo = -1;
 																								break;
 																							case "limit-min": case "limit-max":
 																								valueForServo = Integer.parseInt(parameter);
-																								float step = maven.getServos()[globalChannel].getServoData().getStep();
-																								float max = maven.getServos()[globalChannel].getServoData().getMaxPosition();
-																								float mid = maven.getServos()[globalChannel].getServoData().getMidPosition();
-																								float min = maven.getServos()[globalChannel].getServoData().getMinPosition();
+																								float step = robotSystem.getServos()[globalChannel].getServoData().getStep();
+																								float max = robotSystem.getServos()[globalChannel].getServoData().getMaxPosition();
+																								float mid = robotSystem.getServos()[globalChannel].getServoData().getMidPosition();
+																								float min = robotSystem.getServos()[globalChannel].getServoData().getMinPosition();
 																								float servoPos = valueForServo * step;
-																								boolean inverted = maven.getServos()[globalChannel].getServoData().isInverted();
+																								boolean inverted = robotSystem.getServos()[globalChannel].getServoData().isInverted();
 																								float newServoPos = inverted ? mid - servoPos : mid + servoPos;
 
 																								if (newServoPos >= min && newServoPos <= max) {
 																									Log.w("DENTRO DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
-																									maven.getServos()[globalChannel].setRawPosition(newServoPos);
+																									robotSystem.getServos()[globalChannel].setRawPosition(newServoPos);
 																								} else {
 																									Log.e("FORA DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
@@ -239,7 +240,7 @@ public class Maven {
 																								break;
 																							case "move":
 																								valueForServo = Float.parseFloat(parameter);
-																								maven.getServos()[globalChannel].move(valueForServo);
+																								robotSystem.getServos()[globalChannel].move(valueForServo);
 																								break;
 																							case "opening":
 																								valueForServo = Integer.parseInt(parameter);
@@ -264,32 +265,32 @@ public class Maven {
 																	System.out.println(currentPath + "> ");
 																	break;
 																case "show":
-																	Log.i(maven.getServos()[globalChannel].getServoData().toString());
+																	Log.i(robotSystem.getServos()[globalChannel].getServoData().toString());
 																	break;
 																case "reload-servos":
-																	maven.loadData(false);
-																	maven.injectData(false);
+																	robotSystem.loadData(false);
+																	robotSystem.injectData(false);
 																	break;
 																case "-min":
-																	maven.getServos()[globalChannel].moveToMin();
+																	robotSystem.getServos()[globalChannel].moveToMin();
 																	break;
 																case "-mid":
-																	maven.getServos()[globalChannel].moveToMid();
+																	robotSystem.getServos()[globalChannel].moveToMid();
 																	break;
 																case "-max":
-																	maven.getServos()[globalChannel].moveToMax();
+																	robotSystem.getServos()[globalChannel].moveToMax();
 																	break;
 																case "-limit-min":
-																	maven.getServos()[globalChannel].moveToLimitMin();
+																	robotSystem.getServos()[globalChannel].moveToLimitMin();
 																	break;
 																case "-limit-max":
-																	maven.getServos()[globalChannel].moveToLimitMax();
+																	robotSystem.getServos()[globalChannel].moveToLimitMax();
 																	break;
 																case "-max-down":
-																	maven.getServos()[globalChannel].moveMaxDown();
+																	robotSystem.getServos()[globalChannel].moveMaxDown();
 																	break;
 																case "-max-up":
-																	maven.getServos()[globalChannel].moveMaxUp();
+																	robotSystem.getServos()[globalChannel].moveMaxUp();
 																	break;
 																case "exit":
 																	runningServoConfig = false;
@@ -329,7 +330,7 @@ public class Maven {
 					}
 					case "system-restart-modules":
 						if (initSystem) {
-							for (Module module : maven.getModuleList()) {
+							for (Module module : robotSystem.getModuleList()) {
 								if (module instanceof PCA9685)
 									module.restartDriver();
 							}
@@ -456,22 +457,22 @@ public class Maven {
 													switch (sc.getScriptPos()) {
 														case UP:
 															taskList.add(new ServoTask(
-																	maven.getServos()[sc.getServoNum()],
-																	maven.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay(),
+																	robotSystem.getServos()[sc.getServoNum()],
+																	robotSystem.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay(),
 																	null,
 																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
 															break;
 														case MID:
 															taskList.add(new ServoTask(
-																	maven.getServos()[sc.getServoNum()],
+																	robotSystem.getServos()[sc.getServoNum()],
 																	0, sc.getDelay(),
 																	null,
 																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
 															break;
 														case DOWN:
 															taskList.add(new ServoTask(
-																	maven.getServos()[sc.getServoNum()],
-																	maven.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay(),
+																	robotSystem.getServos()[sc.getServoNum()],
+																	robotSystem.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay(),
 																	null,
 																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
 															break;
@@ -479,7 +480,7 @@ public class Maven {
 												} else {
 													taskList.add(new ServoTask(new FlavorTaskGroup(sc.getScriptGroup(), taskGroup), 500));
 												}
-												maven.getServoTaskController().addTasks(taskList);
+												robotSystem.getServoTaskController().addTasks(taskList);
 											}
 
 											scriptCommandList.clear();
@@ -495,10 +496,10 @@ public class Maven {
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
 					case "init-task-system":
-						maven.initServoTaskController();
+						robotSystem.initServoTaskController();
 						break;
 					case "init-move-system":
-						maven.initMovementSystem();
+						robotSystem.initMovementSystem();
 						moveSystem = true;
 						break;
 					case "move-system":
@@ -512,7 +513,7 @@ public class Maven {
 									case "up":
 										break;
 									case "down":
-										maven.getMovementSystem().changeHeight(-50);
+										robotSystem.getMovementSystem().changeHeight(-50);
 										break;
 									case "front":
 										break;
@@ -578,9 +579,6 @@ public class Maven {
 
 
 	private static void showTHIS(Leg[] legs) {
-		int l1t = legs[0].getTarsus().getServo().getServoData().getGlobalChannel();
-		String l1f = legs[0].getFemur().getServo().getServoData().getGlobalChannel() + "";
-		String l1b = legs[0].getBase().getServo().getServoData().getGlobalChannel() + "";
 		System.out.println();
 		System.out.println();
 		System.out.println("                           FRONT                    ");
