@@ -532,20 +532,23 @@ public class Maven {
 					case "":
 						break;
 					default:
-					    if (command.startsWith("init-gravity-system")) {
-					        String values = command.substring(20);
-					        int index = values.indexOf(" ");
-					        String value = values.substring(0, index);
-					        double width = Double.parseDouble(value);
-					        values = values.substring(index+1);
-					        index = values.indexOf(" ");
-					        value = values.substring(0, index);
-					        double height = Double.parseDouble(value);
-					        value = values.substring(index+1);
-					        double precision = Double.parseDouble(value);
-                            System.out.println(width + height + precision);
-                            //Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm");
-                            //robotSystem.initGravitySystem(430, 430);
+                        if (command.startsWith("init-gravity-system")) {
+                            Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
+                            if (command.endsWith("init-gravity-system")) {
+                                robotSystem.initGravitySystem(430, 430, 0.5);
+                            } else {
+                                String values = command.substring(20);
+                                int index = values.indexOf(" ");
+                                String value = values.substring(0, index);
+                                double width = Double.parseDouble(value);
+                                values = values.substring(index+1);
+                                index = values.indexOf(" ");
+                                value = values.substring(0, index);
+                                double height = Double.parseDouble(value);
+                                value = values.substring(index+1);
+                                double precision = Double.parseDouble(value);
+                                robotSystem.initGravitySystem(width, height, precision);
+                            }
                         } else
 						    show(Error.INVALID_COMMAND);
 						break;
