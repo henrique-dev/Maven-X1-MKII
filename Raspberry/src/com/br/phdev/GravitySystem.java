@@ -64,7 +64,7 @@ public class GravitySystem {
             double degrees = Math.toDegrees(Math.asin(sin));
 
             System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (degrees - 45));
+            System.out.println("Angulo a ser aplicado: " + (top.leg.getLegData().getLegMidDegrees() - degrees));
             System.out.println();
         }
 
