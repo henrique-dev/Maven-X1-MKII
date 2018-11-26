@@ -539,6 +539,7 @@ public class Maven {
 					        double width = Double.parseDouble(value);
                             System.out.println(width);
 					        values = values.substring(index);
+                            System.out.println(values);
 					        index = values.indexOf(" ");
 					        value = values.substring(0, index);
 					        double height = Double.parseDouble(value);
