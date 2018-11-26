@@ -135,8 +135,12 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void move(double angle, double finalLength) {
+    public void move(double angle, double finalLength, double precision) {
         this.base.move(angle);
+        double xft = finalLength;
+        double wf = this.femur.getLength();
+        double wt = this.tarsus.getLength();
+        double precision
     }
 
 

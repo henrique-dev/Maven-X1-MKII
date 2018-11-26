@@ -7,6 +7,8 @@ import com.br.phdev.misc.Vector2D;
 
 public class GravitySystem {
 
+    private double precision;
+
     private double width;
     private double height;
     private Vector2D center;
@@ -14,7 +16,8 @@ public class GravitySystem {
     private GravityCell leftGravityCell;
     private GravityCell rightGravityCell;
 
-    public GravitySystem(Body body, double width, double height) {
+    public GravitySystem(Body body, double width, double height, double precision) {
+        this.precision = precision;
         this.width = width;
         this.height = height;
         double cx = body.getArea().x / 2;
@@ -60,16 +63,15 @@ public class GravitySystem {
         void reposition() {
             double cw;
             double ch;
+            double hip;
             double sin;
             double degrees;
 
             cw = top.vertex.x - top.leg.getOriginVector().x;
             ch = top.vertex.y - top.leg.getOriginVector().y;
-
-            sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
-
-            //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
 
             System.out.println("1) TOP VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
@@ -77,14 +79,15 @@ public class GravitySystem {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
+            top.leg.move(45 - degrees, hip, precision);
+
+
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
             ch = mid.vertex.y - mid.leg.getOriginVector().y;
-
-            sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
-
-            //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
 
             System.out.println("2) MID VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
@@ -92,19 +95,23 @@ public class GravitySystem {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
+            mid.leg.move(degrees, hip, precision);
+
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
             ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
-
-            sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
 
-            //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
-
             System.out.println("3) BOTTOM VERTEX");
-            System.out.println("Angulo a ser aplicado: " + (45 + degrees));
+            System.out.println("Angulo a ser aplicado: " + (-45 - degrees));
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
+
+            bottom.leg.move(-45 - degrees, hip, precision);
+
+
         }
 
         @Override

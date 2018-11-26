@@ -154,9 +154,9 @@ public class RobotSystem {
         this.movementSystem = new MovementSystem(body);
     }
 
-    public void initGravitySystem(double width, double height) {
+    public void initGravitySystem(double width, double height, double precision) {
         Log.i("Iniciando sistema de centro de gravidade");
-        this.gravitySystem = new GravitySystem(this.body, width, height);
+        this.gravitySystem = new GravitySystem(this.body, width, height, precision);
         Log.s("Sistema de centro de gravidade iniciado");
     }
 
