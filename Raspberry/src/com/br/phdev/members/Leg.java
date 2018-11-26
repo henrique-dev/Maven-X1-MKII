@@ -136,15 +136,14 @@ public class Leg {
     }
 
     public void move(double angle, double finalLength, double precision) {
-        this.base.move(angle);
-        double xft = finalLength;
+        //this.base.move(angle);
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double cxft = 0;
         double cteta = 0;
-        while (cxft < xft) {
+        while (cxft < finalLength) {
             cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
-            if (cxft >= xft)
+            if (cxft >= finalLength)
                 break;
             else
                 cteta += precision;
