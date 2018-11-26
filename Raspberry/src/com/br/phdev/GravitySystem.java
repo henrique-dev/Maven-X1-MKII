@@ -62,6 +62,7 @@ public class GravitySystem {
             double ch = top.vertex.y - top.leg.getLengthVector().y;
 
             double sin = ch / top.vertex.subtract(top.leg.getLengthVector()).getSize();
+            System.out.println("hipot: " + top.vertex.subtract(top.leg.getLengthVector()).getSize());
             double degrees = Math.toDegrees(Math.asin(sin));
 
             System.out.println("Angulo encontrado: " + degrees);
