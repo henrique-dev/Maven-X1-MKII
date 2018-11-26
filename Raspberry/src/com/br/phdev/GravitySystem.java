@@ -37,15 +37,12 @@ public class GravitySystem {
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
 
-        System.out.println("Angle sign: " + Math.toDegrees(rightGravityCell.top.vertex.angleBetween(rightGravityCell.top.leg.getLengthVector())));
-        System.out.println("Angle sign: " + Math.toDegrees(rightGravityCell.top.leg.getLengthVector().angleBetween(rightGravityCell.top.vertex)));
-
-        System.out.println("Angle sign: " + Math.toDegrees(leftGravityCell.top.vertex.angleBetween(leftGravityCell.top.leg.getLengthVector())));
-        System.out.println("Angle sign: " + Math.toDegrees(leftGravityCell.top.leg.getLengthVector().angleBetween(leftGravityCell.top.vertex)));
+        reposition();
     }
 
     public void reposition() {
-
+        leftGravityCell.reposition();
+        rightGravityCell.reposition();
     }
 
     private class GravityCell {
@@ -58,6 +55,15 @@ public class GravitySystem {
             this.top = top;
             this.mid = mid;
             this.bottom = bottom;
+        }
+
+        void reposition() {
+            if (top.vertex.x > center.x) {
+                double cw = top.leg.getLengthVector().x - top.vertex.x;
+                double ch = top.leg.getLengthVector().y - top.vertex.y;
+                double tan = ch / cw;
+                double degrees = Math.toDegrees(Math.atan(tan));
+            }
         }
 
         @Override
