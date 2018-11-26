@@ -5,7 +5,7 @@ import com.br.phdev.data.LegData;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
-public class Leg implements Motion {
+public class Leg {
 
     private boolean onGround;
 
@@ -135,27 +135,10 @@ public class Leg implements Motion {
         this.onGround = onGround;
     }
 
-    @Override
-    public void moveX(float x) {
-
+    public void move(double angle, double finalLength) {
+        this.base.move(angle);
     }
 
-    @Override
-    public void moveY(float y) {
 
-    }
-
-    @Override
-    public void moveZ(float z) {
-        if (legData.getLegNumber() == 1) {
-            femur.moveZ(z);
-            tarsus.moveZ(-z);
-        }
-    }
-
-    @Override
-    public void rotate(float degrees) {
-
-    }
 
 }

@@ -39,6 +39,9 @@ public class GravitySystem {
 
         System.out.println("Angle sign: " + Math.toDegrees(rightGravityCell.top.vertex.angleBetween(rightGravityCell.top.leg.getLengthVector())));
         System.out.println("Angle sign: " + Math.toDegrees(rightGravityCell.top.leg.getLengthVector().angleBetween(rightGravityCell.top.vertex)));
+
+        System.out.println("Angle sign: " + Math.toDegrees(leftGravityCell.top.vertex.angleBetween(leftGravityCell.top.leg.getLengthVector())));
+        System.out.println("Angle sign: " + Math.toDegrees(leftGravityCell.top.leg.getLengthVector().angleBetween(leftGravityCell.top.vertex)));
     }
 
     public void reposition() {

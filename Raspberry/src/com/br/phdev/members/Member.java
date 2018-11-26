@@ -4,7 +4,7 @@ import com.br.phdev.cmp.Motion;
 import com.br.phdev.cmp.servo.Servo;
 import com.br.phdev.misc.Vector2D;
 
-public class Member implements Motion {
+public class Member {
 
     protected float length;
 
@@ -49,23 +49,8 @@ public class Member implements Motion {
         this.finalVector = area;
     }
 
-    @Override
-    public void moveX(float x) {
-
+    public void move(double angle) {
+        this.servo.move(angle);
     }
 
-    @Override
-    public void moveY(float y) {
-
-    }
-
-    @Override
-    public void moveZ(float z) {
-        this.servo.move(z);
-    }
-
-    @Override
-    public void rotate(float degrees) {
-
-    }
 }

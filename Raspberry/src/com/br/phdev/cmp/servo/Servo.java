@@ -8,7 +8,7 @@ public class Servo {
 
     private final PCA9685 module;
     private final ServoData servoData;
-    private float currentPositionDegrees;
+    private double currentPositionDegrees;
 
     private long taskSlave;
 
@@ -40,7 +40,7 @@ public class Servo {
         return servoData;
     }
 
-    public float getCurrentPositionDegrees() {
+    public double getCurrentPositionDegrees() {
         return this.currentPositionDegrees;
     }
 
@@ -55,7 +55,7 @@ public class Servo {
         }
     }
 
-    public boolean move(float degrees) {
+    public boolean move(double degrees) {
         if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
             if (this.servoData.isInverted()) {
                 this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - (this.servoData.getStep() * degrees)));
