@@ -9,10 +9,10 @@ import com.br.phdev.cmp.task.TaskGroup;
 public class ServoTask implements Task {
 
     private Servo servo;
-    private float startPosition;
-    private float currentPos;
+    private double startPosition;
+    private double currentPos;
     private int targetPos;
-    private float step;
+    private double step;
     private long delay;
     private long currentTime;
     private Timer timer;
