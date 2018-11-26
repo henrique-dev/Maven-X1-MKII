@@ -61,7 +61,7 @@ public class GravitySystem {
             double cw = top.leg.getLengthVector().x - top.vertex.x;
             double ch = top.vertex.y - top.leg.getLengthVector().y;
 
-            double sin = ch / top.vertex.subtract(top.leg.getLengthVector()).getSize();
+            double sin = ch / top.vertex.subtract(top.leg.getOriginVector()).getSize();
             System.out.println("hipot: " + top.vertex.subtract(top.leg.getOriginVector()).getSize());
             double degrees = Math.toDegrees(Math.asin(sin));
 
