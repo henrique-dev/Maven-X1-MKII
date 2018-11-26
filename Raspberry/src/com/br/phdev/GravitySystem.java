@@ -22,7 +22,7 @@ public class GravitySystem {
         this.center = new Vector2D(cx, cy);
 
         this.leftGravityCell = new GravityCell(
-                new Vertex(new Vector2D(cx - width/2, cy - height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
+                new Vertex(new Vector2D(cx - width/2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
                 new Vertex(new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT)),
                 new Vertex(new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT))
         );
