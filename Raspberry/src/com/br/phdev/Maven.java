@@ -533,8 +533,8 @@ public class Maven {
 						break;
 					default:
                         if (command.startsWith("init-gravity-system")) {
-                            Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
                             if (command.endsWith("init-gravity-system")) {
+                                Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
                                 robotSystem.initGravitySystem(430, 430, 0.5);
                             } else {
                                 String values = command.substring(20);
@@ -547,6 +547,8 @@ public class Maven {
                                 double height = Double.parseDouble(value);
                                 value = values.substring(index+1);
                                 double precision = Double.parseDouble(value);
+                                Log.w("Iniciando sistema de centro de gravidade com medida padrão " + width +
+                                        "mmx" + height + "mm e precisão de " + precision + "mm");
                                 robotSystem.initGravitySystem(width, height, precision);
                             }
                         } else
