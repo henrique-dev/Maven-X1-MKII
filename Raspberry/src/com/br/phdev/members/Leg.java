@@ -117,6 +117,9 @@ public class Leg {
         System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
         System.out.println();
 
+        this.femur.move(cteta / 3);
+        this.tarsus.move(cteta);
+
     }
 
 
