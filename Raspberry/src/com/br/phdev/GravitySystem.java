@@ -36,6 +36,13 @@ public class GravitySystem {
         Log.w("Centro de gravidade em (" + cx + "," + cy + ")");
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
+
+        System.out.println("Angle sign: " + rightGravityCell.top.vertex.angleSign(rightGravityCell.top.leg.getLengthVector()));
+        System.out.println("Angle sign: " + rightGravityCell.top.leg.getLengthVector().angleSign(rightGravityCell.top.vertex));
+    }
+
+    public void reposition() {
+
     }
 
     private class GravityCell {

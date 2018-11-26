@@ -41,6 +41,10 @@ public class Member implements Motion {
         return finalVector;
     }
 
+    public double getCurrentAngle() {
+        return this.servo.getCurrentPositionDegrees();
+    }
+
     public void setFinalVector(Vector2D area) {
         this.finalVector = area;
     }
