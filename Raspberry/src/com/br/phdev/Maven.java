@@ -537,11 +537,11 @@ public class Maven {
 					        int index = values.indexOf(" ");
 					        String value = values.substring(index);
 					        double width = Double.parseDouble(value);
-					        values = values.substring(index);
+					        values = values.substring(index+1);
 					        index = values.indexOf(" ");
 					        value = values.substring(index);
 					        double height = Double.parseDouble(value);
-					        value = values.substring(index);
+					        value = values.substring(index+1);
 					        double precision = Double.parseDouble(value);
                             System.out.println(width + height + precision);
                             //Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm");
