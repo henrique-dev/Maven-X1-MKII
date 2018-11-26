@@ -535,13 +535,15 @@ public class Maven {
 					    if (command.startsWith("init-gravity-system")) {
 					        String values = command.substring(20);
 					        int index = values.indexOf(" ");
+                            System.out.println(values + " " + index);
 					        String value = values.substring(index);
 					        double width = Double.parseDouble(value);
-					        values = values.substring(index+1);
+					        values = values.substring(index);
 					        index = values.indexOf(" ");
+                            System.out.println(values + " " + index);
 					        value = values.substring(index);
 					        double height = Double.parseDouble(value);
-					        value = values.substring(index+1);
+					        value = values.substring(index);
 					        double precision = Double.parseDouble(value);
                             System.out.println(width + height + precision);
                             //Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm");
