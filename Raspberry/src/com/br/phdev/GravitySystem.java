@@ -58,12 +58,48 @@ public class GravitySystem {
         }
 
         void reposition() {
-            double cw = top.vertex.x - top.leg.getOriginVector().x;
-            double ch = top.vertex.y - top.leg.getOriginVector().y;
+            double cw;
+            double ch;
+            double sin;
+            double degrees;
 
-            double sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
-            double degrees = Math.toDegrees(Math.asin(sin));
+            cw = top.vertex.x - top.leg.getOriginVector().x;
+            ch = top.vertex.y - top.leg.getOriginVector().y;
 
+            sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            degrees = Math.toDegrees(Math.asin(sin));
+
+            //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
+
+            System.out.println("TOP VERTEX");
+            System.out.println("Angulo encontrado: " + degrees);
+            System.out.println("Angulo a ser aplicado: " + (45 - degrees));
+            System.out.println();
+
+
+            cw = mid.vertex.x - mid.leg.getOriginVector().x;
+            ch = mid.vertex.y - mid.leg.getOriginVector().y;
+
+            sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            degrees = Math.toDegrees(Math.asin(sin));
+
+            //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
+
+            System.out.println("MID VERTEX");
+            System.out.println("Angulo encontrado: " + degrees);
+            System.out.println("Angulo a ser aplicado: " + (45 - degrees));
+            System.out.println();
+
+
+            cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
+            ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
+
+            sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
+            degrees = Math.toDegrees(Math.asin(sin));
+
+            //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
+
+            System.out.println("BOTTOM VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
             System.out.println("Angulo a ser aplicado: " + (45 - degrees));
             System.out.println();
