@@ -59,16 +59,13 @@ public class GravitySystem {
 
         void reposition() {
             double cw = top.leg.getLengthVector().x - top.vertex.x;
-            double ch = top.leg.getLengthVector().y - top.vertex.y;
-
-            if (ch < 0)
-                ch *= -1;
+            double ch = top.vertex.y - top.leg.getLengthVector().y;
 
             double sin = ch / top.vertex.subtract(top.leg.getLengthVector()).getSize();
             double degrees = Math.toDegrees(Math.asin(sin));
 
             System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (45 + degrees));
+            System.out.println("Angulo a ser aplicado: " + (45 - degrees));
             System.out.println();
         }
 
