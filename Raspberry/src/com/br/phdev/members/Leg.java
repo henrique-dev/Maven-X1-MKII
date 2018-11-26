@@ -153,6 +153,7 @@ public class Leg {
 
         System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
         System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
+        System.out.println();
 
     }
 

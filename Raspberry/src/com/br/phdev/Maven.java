@@ -517,10 +517,31 @@ public class Maven {
 										break;
 									default:
 										try {
-											if (command.startsWith("up"))
-												robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(2).trim()));
-											else if (command.startsWith("down"))
-												robotSystem.getMovementSystem().changeHeight(Float.parseFloat(command.substring(4).trim()));
+											if (command.startsWith("up")) {
+
+                                            } else if (command.startsWith("down")) {
+
+                                            } else if (command.startsWith("init-gravity-system")) {
+                                                if (command.endsWith("init-gravity-system")) {
+                                                    Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
+                                                    robotSystem.getMovementSystem().initGravitySystem(430, 430, 0.5);
+                                                } else {
+                                                    String values = command.substring(20);
+                                                    int index = values.indexOf(" ");
+                                                    String value = values.substring(0, index);
+                                                    double width = Double.parseDouble(value);
+                                                    values = values.substring(index+1);
+                                                    index = values.indexOf(" ");
+                                                    value = values.substring(0, index);
+                                                    double height = Double.parseDouble(value);
+                                                    value = values.substring(index+1);
+                                                    double precision = Double.parseDouble(value);
+                                                    Log.w("Iniciando sistema de centro de gravidade com medida padrão " + width +
+                                                            "mmx" + height + "mm e precisão de " + precision + "mm");
+                                                    robotSystem.getMovementSystem().initGravitySystem(width, height, precision);
+                                                }
+                                            } else
+                                                show(Error.INVALID_COMMAND);
 										} catch (Exception e) {
 											show(Error.INVALID_INPUT);
 										}
@@ -532,27 +553,7 @@ public class Maven {
 					case "":
 						break;
 					default:
-                        if (command.startsWith("init-gravity-system")) {
-                            if (command.endsWith("init-gravity-system")) {
-                                Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
-                                robotSystem.initGravitySystem(430, 430, 0.5);
-                            } else {
-                                String values = command.substring(20);
-                                int index = values.indexOf(" ");
-                                String value = values.substring(0, index);
-                                double width = Double.parseDouble(value);
-                                values = values.substring(index+1);
-                                index = values.indexOf(" ");
-                                value = values.substring(0, index);
-                                double height = Double.parseDouble(value);
-                                value = values.substring(index+1);
-                                double precision = Double.parseDouble(value);
-                                Log.w("Iniciando sistema de centro de gravidade com medida padrão " + width +
-                                        "mmx" + height + "mm e precisão de " + precision + "mm");
-                                robotSystem.initGravitySystem(width, height, precision);
-                            }
-                        } else
-						    show(Error.INVALID_COMMAND);
+					    show(Error.INVALID_COMMAND);
 						break;
 				}
 			}
