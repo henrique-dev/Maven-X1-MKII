@@ -150,7 +150,9 @@ public class RobotSystem {
     }
 
     public void initMovementSystem() {
+        Log.i("Iniciando sistema de movimento");
         this.movementSystem = new MovementSystem(body);
+        Log.s("Sistema de movimento iniciado");
     }
 
     public boolean findServo(int globalChannel) {

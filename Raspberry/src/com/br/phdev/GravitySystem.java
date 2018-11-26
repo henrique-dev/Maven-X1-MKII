@@ -5,6 +5,8 @@ import com.br.phdev.members.Leg;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
+import java.util.Scanner;
+
 public class GravitySystem {
 
     private double precision;
@@ -61,6 +63,7 @@ public class GravitySystem {
         }
 
         void reposition() {
+
             double cw;
             double ch;
             double hip;
@@ -80,7 +83,6 @@ public class GravitySystem {
             System.out.println();
 
             top.leg.move(45 - degrees, hip, precision);
-
 
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
