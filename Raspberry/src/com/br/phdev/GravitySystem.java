@@ -61,8 +61,10 @@ public class GravitySystem {
             if (top.vertex.x > center.x) {
                 double cw = top.leg.getLengthVector().x - top.vertex.x;
                 double ch = top.leg.getLengthVector().y - top.vertex.y;
-                double tan = ch / cw;
-                double degrees = Math.toDegrees(Math.atan(tan));
+                double sin = ch / top.vertex.subtract(top.leg.getLengthVector()).getSize();
+                double degrees = Math.toDegrees(Math.asin(sin));
+
+                System.out.println("Angulo encontrado: " + degrees);
             }
         }
 
