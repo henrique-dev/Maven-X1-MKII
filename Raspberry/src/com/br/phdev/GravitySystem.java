@@ -61,7 +61,7 @@ public class GravitySystem {
             double cw = top.vertex.x - top.leg.getOriginVector().x;
             double ch = top.vertex.y - top.leg.getOriginVector().y;
 
-            double sin = ch / top.vertex.subtract(top.leg.getOriginVector()).getSize();
+            double sin = ch / Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             double degrees = Math.toDegrees(Math.asin(sin));
 
             System.out.println("Angulo encontrado: " + degrees);
