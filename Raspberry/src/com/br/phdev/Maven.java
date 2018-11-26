@@ -337,6 +337,11 @@ public class Maven {
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
+                    case "restart-pwm":
+                        if (initSystem) {
+                            robotSystem.clearPWM();
+                        }
+                        break;
 					case "run-script":
 						if (initSystem) {
 							boolean runningScript = true;

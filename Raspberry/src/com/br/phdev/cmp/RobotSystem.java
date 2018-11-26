@@ -163,6 +163,12 @@ public class RobotSystem {
         return false;
     }
 
+    public void clearPWM() {
+        for (int i=0; i<servos.length; i++) {
+            servos[i].setRawPosition(0);
+        }
+    }
+
     public ServoTaskController getServoTaskController() {
         return this.servoTaskController;
     }
