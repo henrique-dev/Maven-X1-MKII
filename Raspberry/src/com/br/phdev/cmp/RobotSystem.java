@@ -1,5 +1,6 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.GravitySystem;
 import com.br.phdev.cmp.servo.Servo;
 import com.br.phdev.data.BodyData;
 import com.br.phdev.data.DataRepo;
@@ -20,6 +21,7 @@ public class RobotSystem {
 
     private ServoTaskController servoTaskController;
     private MovementSystem movementSystem;
+    private GravitySystem gravitySystem;
 
     private List<Module> moduleList;
     private BodyData bodyData;
@@ -138,10 +140,10 @@ public class RobotSystem {
     }
 
     public void initServoTaskController() {
-        Log.i("Iniciando controlador das pernas");
+        Log.i("Iniciando sistema controlador das pernas");
         this.servoTaskController = new ServoTaskController();
         this.servoTaskController.start();
-        Log.s("Controlador das pernas iniciado");
+        Log.s("Sistema controlador das pernas iniciado");
         Log.s("Aguardando tarefas");
     }
 
@@ -152,6 +154,12 @@ public class RobotSystem {
 
     public void initMovementSystem() {
         this.movementSystem = new MovementSystem(body);
+    }
+
+    public void initGravitySystem(double width, double height) {
+        Log.i("Iniciando sistema de centro de gravidade");
+        this.gravitySystem = new GravitySystem(this.body, width, height);
+        Log.s("Sistema de centro de gravidade iniciado");
     }
 
     public boolean findServo(int globalChannel) {

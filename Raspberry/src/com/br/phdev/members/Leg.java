@@ -4,7 +4,6 @@ import com.br.phdev.cmp.Motion;
 import com.br.phdev.data.LegData;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
-import com.br.phdev.misc.Vector3D;
 
 public class Leg implements Motion {
 
@@ -15,7 +14,7 @@ public class Leg implements Motion {
     private final Femur femur;
     private final Tarsus tarsus;
 
-    private Vector3D origin;
+    private Vector2D origin;
 
     public Leg(LegData legData, Base base, Femur femur, Tarsus tarsus) {
         this.legData = legData;
@@ -41,32 +40,32 @@ public class Leg implements Motion {
         return tarsus;
     }
 
-    public Vector3D getOrigin() {
+    public Vector2D getOrigin() {
         return origin;
     }
 
-    public void setOrigin(Vector3D origin) {
+    public void setOrigin(Vector2D origin) {
         this.origin = origin;
         base.setLength(legData.getBaseLength());
         base.setOriginVector(origin);
-        Vector2D baseXY = Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(origin.getVector2D());
-        base.setFinalVector(new Vector3D(baseXY.x, baseXY.y, origin.z));
+        Vector2D baseXY = Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(origin);
+        base.setFinalVector(new Vector2D(baseXY.x, baseXY.y));
 
         femur.setLength(legData.getFemurLength());
         femur.setOriginVector(base.getFinalVector());
         Vector2D femurXY = Vector2D.createByMagAngle(Math.cos(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength(),
-                legData.getLegMidDegrees()).addMe(base.getFinalVector().getVector2D());
-        femur.setFinalVector(new Vector3D(femurXY.x, femurXY.y, Math.sin(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength()));
+                legData.getLegMidDegrees()).addMe(base.getFinalVector());
+        femur.setFinalVector(new Vector2D(femurXY.x, femurXY.y));
 
         tarsus.setLength(legData.getTarsusLength());
         tarsus.setOriginVector(femur.getFinalVector());
         Vector2D tarsusXY = Vector2D.createByMagAngle(Math.sin(Math.toRadians(tarsus.getServo().getCurrentPositionDegrees())) * tarsus.getLength(),
-                legData.getLegMidDegrees()).addMe(femur.getFinalVector().getVector2D());
-        tarsus.setFinalVector(new Vector3D(tarsusXY.x, tarsusXY.y, tarsus.length));
+                legData.getLegMidDegrees()).addMe(femur.getFinalVector());
+        tarsus.setFinalVector(new Vector2D(tarsusXY.x, tarsusXY.y));
 
         Log.w("");
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
-        Log.w("Perna originVector: " + origin.getVector2D());
+        Log.w("Perna originVector: " + origin);
 
         Log.w("Base originVector xyz: " + this.base.getOriginVector());
         Log.w("Base length xyz: " + this.base.getFinalVector());
@@ -79,8 +78,6 @@ public class Leg implements Motion {
 
         Log.w("Comprimento da perna em relação a origem da base: " +
                 (this.tarsus.getFinalVector().subtract(this.base.getOriginVector())).getSize());
-
-        Log.w("Altura da perna em relação a origem da base: " + (this.origin.z));
 
     }
 

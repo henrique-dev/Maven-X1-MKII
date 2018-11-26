@@ -3,7 +3,7 @@ package com.br.phdev.members;
 import com.br.phdev.cmp.Motion;
 import com.br.phdev.data.BodyData;
 import com.br.phdev.misc.Log;
-import com.br.phdev.misc.Vector3D;
+import com.br.phdev.misc.Vector2D;
 
 public class Body implements Motion {
 
@@ -15,7 +15,7 @@ public class Body implements Motion {
     public static final int LEG_MID_LEFT = 3;
     public static final int LEG_BACK_RIGHT = 5;
 
-    private Vector3D area;
+    private Vector2D area;
 
     private BodyData bodyData;
 
@@ -26,12 +26,24 @@ public class Body implements Motion {
         this.bodyData = bodyData;
     }
 
-    public Vector3D getArea() {
+    public Vector2D getArea() {
         return area;
     }
 
-    public void setArea(Vector3D area) {
+    public void setArea(Vector2D area) {
         this.area = area;
+    }
+
+    public Leg getLeg(int legId) {
+        return this.legs[legId];
+    }
+
+    public Leg[] getLegs() {
+        return legs;
+    }
+
+    public void setLegs(Leg[] legs) {
+        this.legs = legs;
     }
 
     @Override

@@ -529,6 +529,10 @@ public class Maven {
 							}
 						}
 						break;
+					case "init-gravity-system":
+						Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm");
+						robotSystem.initGravitySystem(430, 430);
+						break;
 					case "":
 						break;
 					default:
