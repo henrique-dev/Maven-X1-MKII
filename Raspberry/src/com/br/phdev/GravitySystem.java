@@ -5,8 +5,6 @@ import com.br.phdev.members.Leg;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
-import java.util.Scanner;
-
 public class GravitySystem {
 
     private double precision;
@@ -42,12 +40,20 @@ public class GravitySystem {
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
 
-        reposition();
+        init();
     }
 
-    public void reposition() {
-        leftGravityCell.reposition();
-        rightGravityCell.reposition();
+    private static void waitFor(long howMuch) {
+        try {
+            Thread.sleep(howMuch);
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
+    public void init() {
+        leftGravityCell.initCell();
+        rightGravityCell.initCell();
     }
 
     private class GravityCell {
@@ -62,7 +68,7 @@ public class GravitySystem {
             this.bottom = bottom;
         }
 
-        void reposition() {
+        void initCell() {
 
             double cw;
             double ch;
@@ -83,7 +89,7 @@ public class GravitySystem {
             System.out.println();
 
             top.leg.move(45 - degrees, hip, precision);
-
+            waitFor(1000);
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
             ch = mid.vertex.y - mid.leg.getOriginVector().y;
@@ -98,7 +104,7 @@ public class GravitySystem {
             System.out.println();
 
             mid.leg.move(degrees, hip, precision);
-
+            waitFor(1000);
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
             ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
@@ -112,6 +118,7 @@ public class GravitySystem {
             System.out.println();
 
             bottom.leg.move(-45 - degrees, hip, precision);
+            waitFor(1000);
 
 
         }
