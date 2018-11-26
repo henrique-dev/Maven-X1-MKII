@@ -87,7 +87,7 @@ public class GravitySystem {
 
             System.out.println("MID VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (45 - degrees));
+            System.out.println("Angulo a ser aplicado: " + (degrees));
             System.out.println();
 
 
@@ -101,7 +101,7 @@ public class GravitySystem {
 
             System.out.println("BOTTOM VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (45 - degrees));
+            System.out.println("Angulo a ser aplicado: " + (degrees - 45));
             System.out.println();
         }
 
