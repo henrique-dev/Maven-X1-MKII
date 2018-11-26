@@ -140,7 +140,21 @@ public class Leg {
         double xft = finalLength;
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
-        double precision
+        double cxft = 0;
+        double cteta = 0;
+        while (cxft < xft) {
+            cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
+            if (cxft >= xft)
+                break;
+            else
+                cteta += precision;
+            if (cteta > 45)
+                break;
+        }
+
+        System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
+        System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
+
     }
 
 
