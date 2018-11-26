@@ -535,13 +535,11 @@ public class Maven {
 					    if (command.startsWith("init-gravity-system")) {
 					        String values = command.substring(20);
 					        int index = values.indexOf(" ");
-                            System.out.println(values + " " + index);
-					        String value = values.substring(index-1);
+					        String value = values.substring(0, index);
 					        double width = Double.parseDouble(value);
 					        values = values.substring(index);
 					        index = values.indexOf(" ");
-                            System.out.println(values + " " + index);
-					        value = values.substring(index-1);
+					        value = values.substring(0, index);
 					        double height = Double.parseDouble(value);
 					        value = values.substring(index);
 					        double precision = Double.parseDouble(value);
