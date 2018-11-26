@@ -34,8 +34,8 @@ public class GravitySystem {
         );
 
         Log.w("Centro de gravidade em (" + cx + "," + cy + ")");
-        Log.w("Celula esquerda: " + this.leftGravityCell.toString());
-        Log.w("Celula direita: " + this.rightGravityCell.toString());
+        Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
+        Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
     private class GravityCell {
