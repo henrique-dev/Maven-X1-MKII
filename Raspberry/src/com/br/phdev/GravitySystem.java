@@ -71,9 +71,10 @@ public class GravitySystem {
 
             //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
 
-            System.out.println("TOP VERTEX");
+            System.out.println("1) TOP VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
             System.out.println("Angulo a ser aplicado: " + (45 - degrees));
+            System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
 
@@ -85,9 +86,10 @@ public class GravitySystem {
 
             //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
 
-            System.out.println("MID VERTEX");
+            System.out.println("2) MID VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
             System.out.println("Angulo a ser aplicado: " + (degrees));
+            System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
 
@@ -99,9 +101,9 @@ public class GravitySystem {
 
             //System.out.println("Movendo perna " + top.leg.getLegData().getLegNumber() + " para " + );
 
-            System.out.println("BOTTOM VERTEX");
-            System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (degrees - 45));
+            System.out.println("3) BOTTOM VERTEX");
+            System.out.println("Angulo a ser aplicado: " + (45 + degrees));
+            System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
         }
 
