@@ -58,13 +58,10 @@ public class GravitySystem {
         }
 
         void reposition() {
-            double cw = top.leg.getLengthVector().x - top.vertex.x;
-            double ch = top.vertex.y - top.leg.getLengthVector().y;
+            double cw = top.vertex.x - top.leg.getOriginVector().x;
+            double ch = top.vertex.y - top.leg.getOriginVector().y;
 
             double sin = ch / top.vertex.subtract(top.leg.getOriginVector()).getSize();
-            System.out.println("hipot: " + top.vertex.subtract(top.leg.getOriginVector()).getSize());
-            System.out.println(ch);
-            System.out.println(sin);
             double degrees = Math.toDegrees(Math.asin(sin));
 
             System.out.println("Angulo encontrado: " + degrees);
