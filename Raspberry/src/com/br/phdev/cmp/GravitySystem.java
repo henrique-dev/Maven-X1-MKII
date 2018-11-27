@@ -1,6 +1,5 @@
 package com.br.phdev.cmp;
 
-import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
@@ -24,6 +23,8 @@ public class GravitySystem  {
 
     private GravityCell leftGravityCell;
     private GravityCell rightGravityCell;
+
+    private boolean lock;
 
     public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision) {
         this.servoTaskController = servoTaskController;
@@ -53,9 +54,11 @@ public class GravitySystem  {
         init();
     }
 
-    private static void waitFor(long howMuch) {
+    private void waitFor(long howMuch) {
         try {
-            Thread.sleep(howMuch);
+            synchronized (this) {
+                wait(howMuch);
+            }
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }
@@ -157,7 +160,7 @@ public class GravitySystem  {
         @Override
         public void onServoTaskComplete(float currentPos) {
             synchronized (GravityCell.this) {
-                this.notify();
+                notify();
                 Log.i("Tarefas acabaram. Acordando");
             }
         }
@@ -167,15 +170,6 @@ public class GravitySystem  {
             return "Top vertex-> " + top.toString() + "\n" +
                     "Mid vertex-> " + mid.toString() + "\n" +
                     "Bottom vertex-> " + bottom.toString();
-        }
-
-        private void sleep () {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                Log.i("Entrando em pausa");
-                e.printStackTrace();
-            }
         }
 
     }
