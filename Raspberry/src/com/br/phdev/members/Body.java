@@ -1,8 +1,6 @@
 package com.br.phdev.members;
 
-import com.br.phdev.cmp.Motion;
 import com.br.phdev.data.BodyData;
-import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
 public class Body {

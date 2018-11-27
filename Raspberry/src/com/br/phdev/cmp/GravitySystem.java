@@ -83,7 +83,6 @@ public class GravitySystem {
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
             angle = degrees < 45 ? degrees - 45 : 45 - degrees;
-            angle = 100;
 
             System.out.println("1) TOP VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
@@ -114,11 +113,11 @@ public class GravitySystem {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin)) * -1;
-            angle = degrees < 45 ? degrees - 45 : 45 - degrees;
+            angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
 
             System.out.println("3) BOTTOM VERTEX");
             System.out.println("Angulo encontrado: " + angle);
-            System.out.println("Angulo a ser aplicado: " + (-45 - degrees));
+            System.out.println("Angulo a ser aplicado: " + angle);
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
