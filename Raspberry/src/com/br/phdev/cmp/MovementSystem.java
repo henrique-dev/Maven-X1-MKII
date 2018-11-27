@@ -13,6 +13,7 @@ public class MovementSystem {
     MovementSystem(ServoTaskController servoTaskController, Body body) {
         this.servoTaskController = servoTaskController;
         this.body = body;
+        this.body.stay();
     }
 
     public void initGravitySystem(double width, double height, double precision) {

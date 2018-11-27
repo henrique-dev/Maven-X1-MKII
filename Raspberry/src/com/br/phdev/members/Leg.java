@@ -161,6 +161,11 @@ public class Leg {
 
     }
 
+    public void stay() {
+        this.femur.move(femur.getCurrentAngle());
+        this.tarsus.move(tarsus.getCurrentAngle());
+    }
+
 
 
 }

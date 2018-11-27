@@ -43,4 +43,9 @@ public class Body {
     public void setLegs(Leg[] legs) {
         this.legs = legs;
     }
+
+    public void stay() {
+        for (Leg leg : legs)
+            leg.stay();
+    }
 }
