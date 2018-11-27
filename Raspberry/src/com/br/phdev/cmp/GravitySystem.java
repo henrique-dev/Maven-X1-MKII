@@ -10,8 +10,14 @@ import com.br.phdev.misc.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class GravitySystem  {
+
+    private final Lock lock = new ReentrantLock();
+    private final Condition movingLeg = lock.newCondition();
 
     private ServoTaskController servoTaskController;
 
@@ -23,8 +29,6 @@ public class GravitySystem  {
 
     private GravityCell leftGravityCell;
     private GravityCell rightGravityCell;
-
-    private boolean lock;
 
     public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision) {
         this.servoTaskController = servoTaskController;
@@ -54,11 +58,9 @@ public class GravitySystem  {
         init();
     }
 
-    private void waitFor(long howMuch) {
+    private void waitFor() {
         try {
-            synchronized (servoTaskController.getMainThread()) {
-                wait(howMuch);
-            }
+            movingLeg.await();
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }
@@ -71,7 +73,6 @@ public class GravitySystem  {
 
     private class GravityCell implements TaskListener {
 
-        boolean movingLeg;
         boolean moving;
         boolean active;
 
@@ -95,8 +96,9 @@ public class GravitySystem  {
             double angle;
 
             TaskListener taskListener = currentPos -> {
-                movingLeg = false;
-                notifyAll();
+                lock.lock();
+                movingLeg.signal();
+                lock.unlock();
             };
 
             cw = top.vertex.x - top.leg.getOriginVector().x;
@@ -118,8 +120,10 @@ public class GravitySystem  {
             //waitFor(1000);
             top.leg.move(angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
-            movingLeg = true;
-            while (movingLeg) waitFor(20000);
+
+            lock.lock();
+            waitFor();
+            lock.unlock();
             servoTaskList.clear();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
@@ -138,8 +142,9 @@ public class GravitySystem  {
             //waitFor(1000);
             mid.leg.move(angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
-            movingLeg = true;
-            while (movingLeg) waitFor(20000);
+            lock.lock();
+            waitFor();
+            lock.unlock();
             servoTaskList.clear();
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
@@ -159,8 +164,9 @@ public class GravitySystem  {
             //waitFor(1000);
             bottom.leg.move(angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
-            movingLeg = true;
-            while (movingLeg) waitFor(20000);
+            lock.lock();
+            waitFor();
+            lock.unlock();
             servoTaskList.clear();
 
 
