@@ -1,3 +1,0 @@
-echo "EXECUTANDO CONFIGURADOR MAVEN"
-
-sudo java -cp .:classes:../lib/* com/br/phdev/Ajustar
