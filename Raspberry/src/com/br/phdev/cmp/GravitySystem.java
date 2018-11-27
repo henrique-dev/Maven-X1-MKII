@@ -1,11 +1,20 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.cmp.servo.ServoTask;
+import com.br.phdev.cmp.servo.ServoTaskController;
+import com.br.phdev.cmp.task.Task;
+import com.br.phdev.cmp.task.TaskListener;
 import com.br.phdev.members.Body;
 import com.br.phdev.members.Leg;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
-public class GravitySystem {
+import java.util.ArrayList;
+import java.util.List;
+
+public class GravitySystem  {
+
+    private ServoTaskController servoTaskController;
 
     private double precision;
 
@@ -16,7 +25,8 @@ public class GravitySystem {
     private GravityCell leftGravityCell;
     private GravityCell rightGravityCell;
 
-    public GravitySystem(Body body, double width, double height, double precision) {
+    public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision) {
+        this.servoTaskController = servoTaskController;
         this.precision = precision;
         this.width = width;
         this.height = height;
@@ -56,7 +66,10 @@ public class GravitySystem {
         rightGravityCell.initCell();
     }
 
-    private class GravityCell {
+    private class GravityCell implements TaskListener {
+
+        boolean moving;
+        boolean active;
 
         Vertex top;
         Vertex mid;
@@ -90,8 +103,14 @@ public class GravitySystem {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
+            List<Task> servoTaskList = new ArrayList<>();
+
             //top.leg.move(angle, hip, precision);
-            waitFor(1000);
+            //waitFor(1000);
+            top.leg.move(angle, hip, precision, servoTaskList, this);
+            servoTaskController.addTasks(servoTaskList);
+            sleep();
+            servoTaskList.clear();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
             ch = mid.vertex.y - mid.leg.getOriginVector().y;
@@ -106,7 +125,11 @@ public class GravitySystem {
             System.out.println();
 
             //mid.leg.move(degrees, hip, precision);
-            waitFor(1000);
+            //waitFor(1000);
+            mid.leg.move(angle, hip, precision, servoTaskList, this);
+            servoTaskController.addTasks(servoTaskList);
+            sleep();
+            servoTaskList.clear();
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
             ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
@@ -122,9 +145,20 @@ public class GravitySystem {
             System.out.println();
 
             //bottom.leg.move(-45 - degrees, hip, precision);
-            waitFor(1000);
+            //waitFor(1000);
+            bottom.leg.move(angle, hip, precision, servoTaskList, this);
+            servoTaskController.addTasks(servoTaskList);
+            sleep();
+            servoTaskList.clear();
 
 
+        }
+
+        @Override
+        public void onServoTaskComplete(float currentPos) {
+            synchronized (GravityCell.this) {
+                this.notify();
+            }
         }
 
         @Override
@@ -132,6 +166,14 @@ public class GravitySystem {
             return "Top vertex-> " + top.toString() + "\n" +
                     "Mid vertex-> " + mid.toString() + "\n" +
                     "Bottom vertex-> " + bottom.toString();
+        }
+
+        private void sleep () {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

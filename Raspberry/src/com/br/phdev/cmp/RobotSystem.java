@@ -150,7 +150,7 @@ public class RobotSystem {
 
     public void initMovementSystem() {
         Log.i("Iniciando sistema de movimento");
-        this.movementSystem = new MovementSystem(body);
+        this.movementSystem = new MovementSystem(this.servoTaskController, this.body);
         Log.s("Sistema de movimento iniciado");
     }
 

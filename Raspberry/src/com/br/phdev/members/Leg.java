@@ -1,8 +1,15 @@
 package com.br.phdev.members;
 
+import com.br.phdev.cmp.servo.ServoTask;
+import com.br.phdev.cmp.task.FlavorTaskGroup;
+import com.br.phdev.cmp.task.Task;
+import com.br.phdev.cmp.task.TaskGroup;
+import com.br.phdev.cmp.task.TaskListener;
 import com.br.phdev.data.LegData;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
+
+import java.util.List;
 
 public class Leg {
 
@@ -94,6 +101,39 @@ public class Leg {
 
     public void setOnGround(boolean onGround) {
         this.onGround = onGround;
+    }
+
+    public void move(double angle, double finalLength, double precision, List<Task> servoTaskList, TaskListener taskListener) {
+
+        TaskGroup taskGroups = new TaskGroup(new int[]{1, 4});
+
+        servoTaskList.add(new ServoTask(this.femur.getServo(), 20, 1000, null, new FlavorTaskGroup(1, taskGroups)));
+
+        servoTaskList.add(new ServoTask(this.base.getServo(), (int) angle, 800, null, new FlavorTaskGroup(2, taskGroups)));
+
+
+        double wf = this.femur.getLength();
+        double wt = this.tarsus.getLength();
+        double cxft = 0;
+        double cteta = 0;
+        while (cxft < finalLength) {
+            cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
+            if (cxft >= finalLength)
+                break;
+            else
+                cteta += precision;
+            if (cteta > 45)
+                break;
+        }
+
+        System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
+        System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
+        System.out.println();
+
+        //this.femur.move(cteta / 3);
+        servoTaskList.add(new ServoTask(this.femur.getServo(), (int) (cteta / 3), 800, null, new FlavorTaskGroup(2, taskGroups)));
+        //this.tarsus.move(cteta);
+        servoTaskList.add(new ServoTask(this.tarsus.getServo(), (int) cteta, 800, taskListener, new FlavorTaskGroup(2, taskGroups)));
     }
 
     public void move(double angle, double finalLength, double precision) {
