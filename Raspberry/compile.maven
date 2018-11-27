@@ -2,4 +2,5 @@
 
 echo "COMPILANDO"
 
+sudo find build -type f -name '*.class' -delete
 sudo javac -cp .:classes:lib/* -d build -sourcepath src src/com/br/phdev/*.java
