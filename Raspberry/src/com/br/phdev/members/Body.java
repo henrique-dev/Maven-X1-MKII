@@ -5,7 +5,7 @@ import com.br.phdev.data.BodyData;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
-public class Body implements Motion {
+public class Body {
 
     public static final int LEG_FRONT_LEFT = 0;
     public static final int LEG_MID_RIGHT = 2;
@@ -44,29 +44,5 @@ public class Body implements Motion {
 
     public void setLegs(Leg[] legs) {
         this.legs = legs;
-    }
-
-    @Override
-    public void moveX(float x) {
-
-    }
-
-    @Override
-    public void moveY(float y) {
-
-    }
-
-    @Override
-    public void moveZ(float z) {
-        for (Leg leg : legs) {
-            if (leg.isOnGround()) {
-                leg.moveZ(z);
-            }
-        }
-    }
-
-    @Override
-    public void rotate(float degrees) {
-
     }
 }
