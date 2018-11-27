@@ -107,7 +107,7 @@ public class Leg {
 
         TaskGroup taskGroups = new TaskGroup(new int[]{1, 4});
 
-        servoTaskList.add(new ServoTask(this.femur.getServo(), 20, 1000, null, new FlavorTaskGroup(0, taskGroups)));
+        servoTaskList.add(new ServoTask(this.femur.getServo(), 40, 1000, null, new FlavorTaskGroup(0, taskGroups)));
 
         servoTaskList.add(new ServoTask(this.base.getServo(), (int) angle, 800, null, new FlavorTaskGroup(1, taskGroups)));
 
