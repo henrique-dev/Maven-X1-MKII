@@ -159,8 +159,10 @@ public class GravitySystem  {
 
         @Override
         public void onServoTaskComplete(float currentPos) {
-            notify();
-            Log.i("Tarefas acabaram. Acordando");
+            synchronized (this) {
+                notify();
+                Log.i("Tarefas acabaram. Acordando");
+            }
         }
 
         @Override
