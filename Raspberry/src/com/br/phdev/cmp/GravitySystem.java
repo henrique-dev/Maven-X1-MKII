@@ -109,7 +109,7 @@ public class GravitySystem  {
             //waitFor(1000);
             top.leg.move(angle, hip, precision, servoTaskList, this);
             servoTaskController.addTasks(servoTaskList);
-            //sleep();
+            sleep();
             //servoTaskList.clear();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
