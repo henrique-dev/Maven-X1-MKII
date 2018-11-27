@@ -1,3 +1,0 @@
-clear
-echo "EXECUTANDO PROGRAMA PRINCIPAL DO MAVEN"
-sudo java -cp .:classes:../lib/* com/br/phdev/Maven

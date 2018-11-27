@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "COMPILANDO"
+
+sudo javac -cp .:classes:lib/* -d build -sourcepath src src/com/br/phdev/*.java

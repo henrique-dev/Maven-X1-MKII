@@ -1,5 +1,0 @@
-#!/bin/bash
-
-echo "COMPILANDO"
-
-sudo javac -cp .:classes:../lib/* com/br/phdev/*.java
