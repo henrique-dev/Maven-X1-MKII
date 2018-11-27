@@ -52,6 +52,10 @@ public class ServoTaskController {
         }
     }
 
+    public MainThread getMainThread() {
+        return mainThread;
+    }
+
     private class MainThread extends Thread {
 
         private boolean runningMainLoop;

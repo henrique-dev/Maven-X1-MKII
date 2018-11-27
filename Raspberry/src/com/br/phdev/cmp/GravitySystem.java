@@ -56,7 +56,7 @@ public class GravitySystem  {
 
     private void waitFor(long howMuch) {
         try {
-            synchronized (this) {
+            synchronized (servoTaskController.getMainThread()) {
                 wait(howMuch);
             }
         } catch (InterruptedException ie) {
@@ -159,10 +159,8 @@ public class GravitySystem  {
 
         @Override
         public void onServoTaskComplete(float currentPos) {
-            synchronized (GravityCell.this) {
-                notify();
-                Log.i("Tarefas acabaram. Acordando");
-            }
+            notify();
+            Log.i("Tarefas acabaram. Acordando");
         }
 
         @Override
