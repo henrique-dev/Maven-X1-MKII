@@ -83,6 +83,7 @@ public class GravitySystem {
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
             angle = degrees < 45 ? degrees - 45 : 45 - degrees;
+            angle = 100;
 
             System.out.println("1) TOP VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
