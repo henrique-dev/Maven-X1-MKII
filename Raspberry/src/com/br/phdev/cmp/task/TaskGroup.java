@@ -13,11 +13,11 @@ public class TaskGroup {
         this.currentTaskGroup = 0;
         if (taskGroups.length > 1)
             this.currentTaskGroupAmount = taskGroups[0];
-        Log.w("Total de grupos: " + taskGroups.length);
+        //Log.w("Total de grupos: " + taskGroups.length);
     }
 
     public void taskCompleted() {
-        Log.w("Executando o grupo " + this.currentTaskGroup);
+        //Log.w("Executando o grupo " + this.currentTaskGroup);
         this.currentTaskGroupAmount--;
         if (this.currentTaskGroupAmount == 0) {
             this.currentTaskGroup++;
