@@ -337,7 +337,7 @@ public class Maven {
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
 						break;
-                    case "restart-pwm":
+                    case "reset-pwm":
                         if (initSystem) {
                             robotSystem.clearPWM();
                         }

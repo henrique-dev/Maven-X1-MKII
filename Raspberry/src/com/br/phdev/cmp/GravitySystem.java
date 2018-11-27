@@ -1,4 +1,4 @@
-package com.br.phdev;
+package com.br.phdev.cmp;
 
 import com.br.phdev.members.Body;
 import com.br.phdev.members.Leg;
@@ -75,20 +75,22 @@ public class GravitySystem {
             double hip;
             double sin;
             double degrees;
+            double angle;
 
             cw = top.vertex.x - top.leg.getOriginVector().x;
             ch = top.vertex.y - top.leg.getOriginVector().y;
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
+            angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
 
             System.out.println("1) TOP VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (45 - degrees));
+            System.out.println("Angulo a ser aplicado: " + angle);
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            top.leg.move(45 - degrees, hip, precision);
+            //top.leg.move(angle, hip, precision);
             waitFor(1000);
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
@@ -103,7 +105,7 @@ public class GravitySystem {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            mid.leg.move(degrees, hip, precision);
+            //mid.leg.move(degrees, hip, precision);
             waitFor(1000);
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
@@ -111,13 +113,15 @@ public class GravitySystem {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
+            angle = degrees < 45 ? degrees - 45 : 45 - degrees;
 
             System.out.println("3) BOTTOM VERTEX");
+            System.out.println("Angulo encontrado: " + angle);
             System.out.println("Angulo a ser aplicado: " + (-45 - degrees));
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            bottom.leg.move(-45 - degrees, hip, precision);
+            //bottom.leg.move(-45 - degrees, hip, precision);
             waitFor(1000);
 
 

@@ -1,6 +1,5 @@
 package com.br.phdev.cmp;
 
-import com.br.phdev.GravitySystem;
 import com.br.phdev.members.Body;
 import com.br.phdev.misc.Log;
 
