@@ -107,9 +107,9 @@ public class Leg {
 
         TaskGroup taskGroups = new TaskGroup(new int[]{1, 4});
 
-        servoTaskList.add(new ServoTask(this.femur.getServo(), 20, 1000, null, new FlavorTaskGroup(1, taskGroups)));
+        servoTaskList.add(new ServoTask(this.femur.getServo(), 20, 1000, null, new FlavorTaskGroup(0, taskGroups)));
 
-        servoTaskList.add(new ServoTask(this.base.getServo(), (int) angle, 800, null, new FlavorTaskGroup(2, taskGroups)));
+        servoTaskList.add(new ServoTask(this.base.getServo(), (int) angle, 800, null, new FlavorTaskGroup(1, taskGroups)));
 
 
         double wf = this.femur.getLength();
@@ -131,9 +131,9 @@ public class Leg {
         System.out.println();
 
         //this.femur.move(cteta / 3);
-        servoTaskList.add(new ServoTask(this.femur.getServo(), (int) (cteta / 3), 800, null, new FlavorTaskGroup(2, taskGroups)));
+        servoTaskList.add(new ServoTask(this.femur.getServo(), (int) (cteta / 3), 800, null, new FlavorTaskGroup(1, taskGroups)));
         //this.tarsus.move(cteta);
-        servoTaskList.add(new ServoTask(this.tarsus.getServo(), (int) cteta, 800, taskListener, new FlavorTaskGroup(2, taskGroups)));
+        servoTaskList.add(new ServoTask(this.tarsus.getServo(), (int) cteta, 800, taskListener, new FlavorTaskGroup(1, taskGroups)));
     }
 
     public void move(double angle, double finalLength, double precision) {
