@@ -1,6 +1,5 @@
 package com.br.phdev.members;
 
-import com.br.phdev.cmp.Motion;
 import com.br.phdev.cmp.servo.Servo;
 import com.br.phdev.misc.Vector2D;
 

@@ -8,7 +8,7 @@ public class ConnectionFactory {
 
     public Connection getConnection() {
         try {
-            return DriverManager.getConnection("jdbc:sqlite:../db_files/maven.db");
+            return DriverManager.getConnection("jdbc:sqlite:db_files/maven.db");
         } catch (SQLException e) {
             e.printStackTrace();
         }
