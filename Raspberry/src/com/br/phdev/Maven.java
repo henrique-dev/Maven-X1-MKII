@@ -23,7 +23,7 @@ import java.util.Scanner;
 public class Maven {
 
 	private enum Error {
-		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT, SERVO_NOT_FOUND, COMMAND_DISABLED, ERROR_ON_SCRIPT, MISSING_DEP
+		SYSTEM_NOT_STARTED, ERROR_ON_LOAD_DATA, INVALID_COMMAND, INVALID_INPUT , SERVO_NOT_FOUND, COMMAND_DISABLED, ERROR_ON_SCRIPT, MISSING_DEP
 	}
 
 	private enum Warning {
@@ -250,12 +250,12 @@ public class Maven {
 																								break;
 																						}
 																					} catch (Exception e) {
-																						show(Error.INVALID_INPUT);
+																						show(Error.INVALID_INPUT + "\n" + e.getMessage());
 																					}
 																					break;
 																			}
 																		} catch (Exception e) {
-																			show(Error.INVALID_INPUT);
+																			show(Error.INVALID_INPUT + "\n" + e.getMessage());
 																		}
 																	}
 																	break;
@@ -318,7 +318,7 @@ public class Maven {
 											} else
 												show(Error.INVALID_COMMAND);
 										} catch (Exception e) {
-											show(Error.INVALID_INPUT);
+											show(Error.INVALID_INPUT + "\n" + e.getMessage());
 										}
 										break;
 									}
@@ -549,7 +549,7 @@ public class Maven {
                                             } else
                                                 show(Error.INVALID_COMMAND);
 										} catch (Exception e) {
-											show(Error.INVALID_INPUT);
+											show(Error.INVALID_INPUT + "\n" + e.getMessage());
 										}
 										break;
 								}
