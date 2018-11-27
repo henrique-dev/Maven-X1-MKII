@@ -82,7 +82,7 @@ public class GravitySystem {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
-            angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
+            angle = degrees < 45 ? degrees - 45 : 45 - degrees;
 
             System.out.println("1) TOP VERTEX");
             System.out.println("Angulo encontrado: " + degrees);
@@ -113,7 +113,7 @@ public class GravitySystem {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
-            angle = degrees < 45 ? degrees - 45 : 45 - degrees;
+            angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
 
             System.out.println("3) BOTTOM VERTEX");
             System.out.println("Angulo encontrado: " + angle);
