@@ -109,8 +109,8 @@ public class GravitySystem  {
             //waitFor(1000);
             top.leg.move(angle, hip, precision, servoTaskList, this);
             servoTaskController.addTasks(servoTaskList);
-            waitFor(5000);
-            //servoTaskList.clear();
+            waitFor(20000);
+            servoTaskList.clear();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
             ch = mid.vertex.y - mid.leg.getOriginVector().y;
@@ -126,10 +126,10 @@ public class GravitySystem  {
 
             //mid.leg.move(degrees, hip, precision);
             //waitFor(1000);
-            //mid.leg.move(angle, hip, precision, servoTaskList, this);
-            //servoTaskController.addTasks(servoTaskList);
-            //sleep();
-            //servoTaskList.clear();
+            mid.leg.move(angle, hip, precision, servoTaskList, this);
+            servoTaskController.addTasks(servoTaskList);
+            waitFor(20000);
+            servoTaskList.clear();
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
             ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
@@ -146,10 +146,10 @@ public class GravitySystem  {
 
             //bottom.leg.move(-45 - degrees, hip, precision);
             //waitFor(1000);
-            //bottom.leg.move(angle, hip, precision, servoTaskList, this);
-            //servoTaskController.addTasks(servoTaskList);
-            //sleep();
-            //servoTaskList.clear();
+            bottom.leg.move(angle, hip, precision, servoTaskList, this);
+            servoTaskController.addTasks(servoTaskList);
+            waitFor(20000);
+            servoTaskList.clear();
 
 
         }
