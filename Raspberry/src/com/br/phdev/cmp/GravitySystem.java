@@ -71,6 +71,7 @@ public class GravitySystem  {
 
     private class GravityCell implements TaskListener {
 
+        boolean movingLeg;
         boolean moving;
         boolean active;
 
@@ -93,6 +94,11 @@ public class GravitySystem  {
             double degrees;
             double angle;
 
+            TaskListener taskListener = currentPos -> {
+                movingLeg = false;
+                notifyAll();
+            };
+
             cw = top.vertex.x - top.leg.getOriginVector().x;
             ch = top.vertex.y - top.leg.getOriginVector().y;
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
@@ -110,9 +116,10 @@ public class GravitySystem  {
 
             //top.leg.move(angle, hip, precision);
             //waitFor(1000);
-            top.leg.move(angle, hip, precision, servoTaskList, this);
+            top.leg.move(angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
-            waitFor(20000);
+            movingLeg = true;
+            while (movingLeg) waitFor(20000);
             servoTaskList.clear();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
@@ -129,9 +136,10 @@ public class GravitySystem  {
 
             //mid.leg.move(degrees, hip, precision);
             //waitFor(1000);
-            mid.leg.move(angle, hip, precision, servoTaskList, this);
+            mid.leg.move(angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
-            waitFor(20000);
+            movingLeg = true;
+            while (movingLeg) waitFor(20000);
             servoTaskList.clear();
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
@@ -149,9 +157,10 @@ public class GravitySystem  {
 
             //bottom.leg.move(-45 - degrees, hip, precision);
             //waitFor(1000);
-            bottom.leg.move(angle, hip, precision, servoTaskList, this);
+            bottom.leg.move(angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
-            waitFor(20000);
+            movingLeg = true;
+            while (movingLeg) waitFor(20000);
             servoTaskList.clear();
 
 
@@ -159,10 +168,7 @@ public class GravitySystem  {
 
         @Override
         public void onServoTaskComplete(float currentPos) {
-            synchronized (this) {
-                notify();
-                Log.i("Tarefas acabaram. Acordando");
-            }
+            notifyAll();
         }
 
         @Override
