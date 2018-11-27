@@ -158,6 +158,7 @@ public class GravitySystem  {
         public void onServoTaskComplete(float currentPos) {
             synchronized (GravityCell.this) {
                 this.notify();
+                Log.i("Tarefas acabaram. Acordando");
             }
         }
 
@@ -172,6 +173,7 @@ public class GravitySystem  {
             try {
                 wait();
             } catch (InterruptedException e) {
+                Log.i("Entrando em pausa");
                 e.printStackTrace();
             }
         }
