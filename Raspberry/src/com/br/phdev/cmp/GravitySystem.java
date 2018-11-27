@@ -116,7 +116,7 @@ public class GravitySystem {
             angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
 
             System.out.println("3) BOTTOM VERTEX");
-            System.out.println("Angulo encontrado: " + angle);
+            System.out.println("Angulo encontrado: " + degrees);
             System.out.println("Angulo a ser aplicado: " + angle);
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
