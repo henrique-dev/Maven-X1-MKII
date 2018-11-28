@@ -124,7 +124,7 @@ public class GravitySystem  {
             ch = mid.vertex.y - mid.leg.getOriginVector().y;
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
-            degrees = Math.toDegrees(Math.asin(sin));
+            angle = degrees = Math.toDegrees(Math.asin(sin));
 
             Log.m(String.format("2) MID VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
