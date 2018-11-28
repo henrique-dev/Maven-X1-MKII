@@ -271,8 +271,8 @@ public class GravitySystem  {
 
             System.out.println(Math.toDegrees(vertex.getAngle()));
             System.out.println(Math.toDegrees(leg.getLengthVector().getAngle()));
-            System.out.println(vertex.angleBetween(leg.getLengthVector()));
-            System.out.println(vertex.angleBetween(leg.getBase().getFinalVector()));
+            System.out.println(Math.toDegrees(vertex.angleBetween(leg.getLengthVector())));
+            System.out.println(Math.toDegrees(vertex.angleBetween(leg.getBase().getFinalVector())));
             System.out.println();
         }
 
