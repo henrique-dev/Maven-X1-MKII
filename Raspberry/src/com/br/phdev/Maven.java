@@ -52,7 +52,7 @@ public class Maven {
 
 				String currentPath = "";
 				System.out.print(currentPath + "> ");
-				String command = "";
+				String command;
 				if (args != null)
 					command = args[0];
 				else
@@ -567,6 +567,7 @@ public class Maven {
 					    show(Error.INVALID_COMMAND);
 						break;
 				}
+				args = null;
 			}
 
 		} catch (I2CFactory.UnsupportedBusNumberException e) {
