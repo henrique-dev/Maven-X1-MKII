@@ -130,7 +130,7 @@ public class GravitySystem  {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             angle = degrees = Math.toDegrees(Math.asin(sin));
-            if (top.vertex.angleSign(top.leg.getTarsus().getFinalVector()) > 0)
+            if (mid.vertex.angleSign(mid.leg.getTarsus().getFinalVector()) > 0)
                 Log.e("SUBINDO " + (45 - module(degrees)));
             else
                 Log.e("DESCENDO " + (45 - module(degrees)));
@@ -160,7 +160,7 @@ public class GravitySystem  {
 
             degrees = Math.toDegrees(Math.asin(sin)) * -1;
             angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
-            if (top.vertex.angleSign(top.leg.getTarsus().getFinalVector()) > 0)
+            if (bottom.vertex.angleSign(bottom.leg.getTarsus().getFinalVector()) > 0)
                 Log.e("SUBINDO " + (45 - module(degrees)));
             else
                 Log.e("DESCENDO " + (45 - module(degrees)));
