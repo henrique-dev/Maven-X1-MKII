@@ -141,7 +141,7 @@ public class Leg {
                         Log.i("Final vector: " + base.getFinalVector());
                         double x = Math.cos(Math.toRadians(currentPos)) * base.getLength();
                         double y = Math.sin(Math.toRadians(currentPos)) * base.getLength();
-                        //base.getFinalVector().set(x, y);
+                        base.getFinalVector().set(x, y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());
@@ -163,7 +163,7 @@ public class Leg {
                         Log.i("Final vector: " + femur.getFinalVector());
                         double x = Math.cos(Math.toRadians(currentPos)) * femur.getLength();
                         double y = Math.sin(Math.toRadians(currentPos)) * femur.getLength();
-                        //femur.getFinalVector().set(x, y);
+                        femur.getFinalVector().set(x, y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
                         Log.i("Final vector: " + femur.getFinalVector());
@@ -184,7 +184,7 @@ public class Leg {
                         Log.i("Final vector: " + tarsus.getFinalVector());
                         double x = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
                         double y = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
-                        //tarsus.getFinalVector().set(x, y);
+                        tarsus.getFinalVector().set(x, y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
