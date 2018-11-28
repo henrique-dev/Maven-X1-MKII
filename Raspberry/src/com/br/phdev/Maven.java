@@ -42,9 +42,6 @@ public class Maven {
 		try {
 			RobotSystem robotSystem = new RobotSystem();
 
-			for (String s : args)
-				System.out.println(s);
-
 			Scanner in = new Scanner(System.in);
 
 			boolean runningProgram = true;
@@ -55,7 +52,11 @@ public class Maven {
 
 				String currentPath = "";
 				System.out.print(currentPath + "> ");
-				String command = in.nextLine();
+				String command = "";
+				if (args != null)
+					command = args[0];
+				else
+					command = in.nextLine();
 				switch (command.trim()) {
 					case "exit-f":
 					case "exit":
