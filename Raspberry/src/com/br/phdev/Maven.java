@@ -40,7 +40,11 @@ public class Maven {
 		try {
 			RobotSystem robotSystem = new RobotSystem();
 
+			for (String s : args)
+				System.out.println(s);
+
 			LinkedList<String> argsList = new LinkedList<>(Arrays.asList(args));
+
 
 			Scanner in = new Scanner(System.in);
 
