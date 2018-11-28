@@ -167,7 +167,7 @@ public class GravitySystem  {
         }
 
         @Override
-        public void onServoTaskComplete(float currentPos) {
+        public void onServoTaskComplete(double currentPos) {
             notifyAll();
         }
 
