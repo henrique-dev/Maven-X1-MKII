@@ -112,11 +112,10 @@ public class GravitySystem  {
             degrees = Math.toDegrees(Math.asin(sin));
             angle = degrees < 45 ? degrees - 45 : 45 - degrees;
 
-            System.out.println("1) TOP VERTEX");
-            System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + angle);
-            System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize() + top.leg.getBase().getLength()));
-            System.out.println();
+            Log.m("1) TOP VERTEX");
+            Log.m(String.format("Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+                    degrees, angle,
+                    new Vector2D(cw, ch).getSize() + top.leg.getBase().getLength()));
 
             showVertexrInfo("Antigos vetores TOP", top);
             Log.s("Comprimento atual da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
@@ -139,11 +138,10 @@ public class GravitySystem  {
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
 
-            System.out.println("2) MID VERTEX");
-            System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + (degrees));
-            System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize() + top.leg.getBase().getLength()));
-            System.out.println();
+            Log.m("1) MID VERTEX");
+            Log.m(String.format("Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+                    degrees, angle,
+                    new Vector2D(cw, ch).getSize() + mid.leg.getBase().getLength()));
 
             showVertexrInfo("Antigos vetores MID", mid);
             Log.s("Comprimento atual da perna: " + mid.leg.getTarsus().getFinalVector().subtract(mid.leg.getBase().getOriginVector()).getSize());
@@ -166,11 +164,10 @@ public class GravitySystem  {
             degrees = Math.toDegrees(Math.asin(sin)) * -1;
             angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
 
-            System.out.println("3) BOTTOM VERTEX");
-            System.out.println("Angulo encontrado: " + degrees);
-            System.out.println("Angulo a ser aplicado: " + angle);
-            System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize() + top.leg.getBase().getLength()));
-            System.out.println();
+            Log.m("1) BOTTOM VERTEX");
+            Log.m(String.format("Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+                    degrees, angle,
+                    new Vector2D(cw, ch).getSize() + bottom.leg.getBase().getLength()));
 
             showVertexrInfo("Antigos vetores MID", bottom);
             Log.s("Comprimento atual da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());

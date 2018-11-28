@@ -527,6 +527,10 @@ public class Maven {
                                     case "exit":
                                         runningMoveSystem = false;
                                         break;
+									case "exit-f":
+										runningMoveSystem = false;
+										runningProgram = false;
+										break;
 									case "":
 										break;
 									default:

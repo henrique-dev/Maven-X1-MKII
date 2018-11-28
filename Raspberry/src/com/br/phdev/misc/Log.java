@@ -34,6 +34,14 @@ public class Log {
         System.out.println(Color.ANSI_CYAN + obj.toString() + Color.ANSI_RESET);
     }
 
+    synchronized public static void m(String msg) {
+        System.out.println(msg);
+    }
+
+    synchronized public static void m(Object obj) {
+        System.out.println(obj.toString());
+    }
+
 
     private class Color {
 
