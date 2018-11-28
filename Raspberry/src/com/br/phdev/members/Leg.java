@@ -148,6 +148,8 @@ public class Leg {
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());
+
+                        Log.s("Comprimento atual da base: " + base.getFinalVector().subtract(base.getOriginVector()).getSize());
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
@@ -172,6 +174,8 @@ public class Leg {
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
                         Log.i("Final vector: " + femur.getFinalVector());
+
+                        Log.s("Comprimento atual do femur: " + femur.getFinalVector().subtract(femur.getOriginVector()).getSize());
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
@@ -187,8 +191,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
-                        double x = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * tarsus.getLength();
-                        double y = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * tarsus.getLength();
+                        double x = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
+                        double y = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
@@ -196,6 +200,7 @@ public class Leg {
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
 
+                        Log.s("Comprimento atual do tarso: " + tarsus.getFinalVector().subtract(tarsus.getOriginVector()).getSize());
                         Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getOriginVector()).getSize());
                     }
                 }},
