@@ -1,3 +1,3 @@
 #!/bin/bash
 echo "EXECUTANDO PROGRAMA PRINCIPAL DO MAVEN"
-sudo java -cp .:classes:lib/*:build com/br/phdev/Maven $1
+sudo java -cp .:classes:lib/*:build com/br/phdev/Maven $1 $2 $3 $4 $5 $6
