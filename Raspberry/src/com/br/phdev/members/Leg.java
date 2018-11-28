@@ -139,8 +139,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());
-                        double x = Math.cos(Math.toRadians(currentPos)) * base.getLength();
-                        double y = Math.sin(Math.toRadians(currentPos)) * base.getLength();
+                        double x = Math.sin(Math.toRadians(currentPos)) * base.getLength();
+                        double y = Math.cos(Math.toRadians(currentPos)) * base.getLength();
                         base.getFinalVector().set(x, y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + base.getOriginVector());
