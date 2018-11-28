@@ -191,8 +191,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
-                        double x = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
-                        double y = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                        double x = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                        double y = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
