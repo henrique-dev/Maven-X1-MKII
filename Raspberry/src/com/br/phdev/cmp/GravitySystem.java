@@ -122,7 +122,7 @@ public class GravitySystem  {
             servoTaskList.clear();
 
             showVertexrInfo("Novos vetores TOP", top);
-            Log.s("compirmento novo da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
+            Log.s("Comprimento novo da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
             System.out.println();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
@@ -131,9 +131,9 @@ public class GravitySystem  {
             sin = ch / hip;
             angle = degrees = Math.toDegrees(Math.asin(sin));
             if (mid.vertex.angleSign(mid.leg.getTarsus().getFinalVector()) > 0)
-                Log.e("SUBINDO " + (45 - module(500)));
+                Log.e("SUBINDO " + (45 - module(degrees)));
             else
-                Log.e("DESCENDO " + (45 - module(500)));
+                Log.e("DESCENDO " + (45 - module(degrees)));
 
             Log.m(String.format("2) MID VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
