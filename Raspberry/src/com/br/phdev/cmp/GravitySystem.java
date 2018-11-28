@@ -99,6 +99,11 @@ public class GravitySystem  {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
+            if (top.vertex.angleSign(top.leg.getTarsus().getFinalVector()) > 0)
+                Log.e("SUBINDO " + (45 - module(degrees)));
+            else
+                Log.e("DESCENDO " + (45 - module(degrees)));
+
             angle = degrees < 45 ? degrees - 45 : 45 - degrees;
 
             Log.m(String.format("1) TOP VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
@@ -125,6 +130,10 @@ public class GravitySystem  {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             angle = degrees = Math.toDegrees(Math.asin(sin));
+            if (top.vertex.angleSign(top.leg.getTarsus().getFinalVector()) > 0)
+                Log.e("SUBINDO " + (45 - module(degrees)));
+            else
+                Log.e("DESCENDO " + (45 - module(degrees)));
 
             Log.m(String.format("2) MID VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
@@ -151,8 +160,10 @@ public class GravitySystem  {
 
             degrees = Math.toDegrees(Math.asin(sin)) * -1;
             angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
-            //degrees = Math.toDegrees(Math.asin(sin));
-            //angle = degrees < 45 ? degrees - 45 : 45 - degrees;
+            if (top.vertex.angleSign(top.leg.getTarsus().getFinalVector()) > 0)
+                Log.e("SUBINDO " + (45 - module(degrees)));
+            else
+                Log.e("DESCENDO " + (45 - module(degrees)));
 
             Log.m(String.format("3) BOTTOM VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
@@ -177,6 +188,12 @@ public class GravitySystem  {
 
         private void adjust(Vector2D vector2D) {
 
+        }
+
+        private double module(double value) {
+            if (value < 0)
+                value *= -1;
+            return value;
         }
 
         private void showVertexrInfo(String vertexName, Vertex vertex) {
