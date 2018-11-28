@@ -269,8 +269,8 @@ public class GravitySystem  {
             sin = ch / hip;
             degrees = Math.toDegrees(Math.asin(sin));
 
-            System.out.println(vertex.getAngle());
-            System.out.println(leg.getLengthVector().getAngle());
+            System.out.println(Math.toDegrees(vertex.getAngle()));
+            System.out.println(Math.toDegrees(leg.getLengthVector().getAngle()));
         }
 
         void adjust() {
