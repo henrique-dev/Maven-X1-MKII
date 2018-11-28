@@ -130,6 +130,8 @@ public class GravitySystem  {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
             angle = degrees = Math.toDegrees(Math.asin(sin));
+            System.out.println(module(angle));
+            System.out.println(module(degrees));
             if (mid.vertex.angleSign(mid.leg.getTarsus().getFinalVector()) > 0)
                 Log.e("SUBINDO " + (45 - module(degrees)));
             else
