@@ -532,7 +532,6 @@ public class Maven {
 										runningProgram = false;
 										robotSystem.stopLegsControl();
 										break;
-										break;
 									case "":
 										break;
 									default:
