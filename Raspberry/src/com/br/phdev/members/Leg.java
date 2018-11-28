@@ -105,6 +105,25 @@ public class Leg {
 
     public void move(Vector2D vertexVector, double angle, double finalLength, double precision, List<Task> servoTaskList, TaskListener taskListener) {
 
+        double wf = this.femur.getLength();
+        double wt = this.tarsus.getLength();
+        double cxft = 0;
+        double cteta = this.tarsus.getServo().getServoData().getMinPosition();
+        while (cxft < finalLength) {
+            cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
+            if (cxft >= finalLength)
+                break;
+            else
+                cteta += precision;
+            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
+                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
+                break;
+        }
+
+        System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
+        System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
+        System.out.println();
+
         TaskGroup taskGroups = new TaskGroup(new int[]{1, 4});
 
         servoTaskList.add(new ServoTask(this.femur.getServo(), 40, 1000, null, new FlavorTaskGroup(0, taskGroups)));
@@ -129,26 +148,6 @@ public class Leg {
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
-
-
-        double wf = this.femur.getLength();
-        double wt = this.tarsus.getLength();
-        double cxft = 0;
-        double cteta = this.tarsus.getServo().getServoData().getMinPosition();
-        while (cxft < finalLength) {
-            cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
-            if (cxft >= finalLength)
-                break;
-            else
-                cteta += precision;
-            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
-                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
-                break;
-        }
-
-        System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
-        System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
-        System.out.println();
 
 
         servoTaskList.add(new ServoTask(
