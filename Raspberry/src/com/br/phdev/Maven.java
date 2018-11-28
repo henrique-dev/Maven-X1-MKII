@@ -538,7 +538,7 @@ public class Maven {
                                             } else if (command.startsWith("init-gravity-system")) {
                                                 if (command.endsWith("init-gravity-system")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
-                                                    robotSystem.getMovementSystem().initGravitySystem(430, 430, 0.5);
+                                                    robotSystem.getMovementSystem().initGravitySystem(430, 430, 0.5, 2000);
                                                 } else {
                                                     String values = command.substring(20);
                                                     int index = values.indexOf(" ");
@@ -548,11 +548,15 @@ public class Maven {
                                                     index = values.indexOf(" ");
                                                     value = values.substring(0, index);
                                                     double height = Double.parseDouble(value);
-                                                    value = values.substring(index+1);
+													values = values.substring(index+1);
+													index = values.indexOf(" ");
+													value = values.substring(0, index);
                                                     double precision = Double.parseDouble(value);
+													value = values.substring(index+1);
+													int gaitSpeed = Integer.parseInt(value);
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão " + width +
-                                                            "mmx" + height + "mm e precisão de " + precision + "mm");
-                                                    robotSystem.getMovementSystem().initGravitySystem(width, height, precision);
+                                                            "mmx" + height + "mm e precisão de " + precision + "mm com velocidade de passo de " + gaitSpeed);
+                                                    robotSystem.getMovementSystem().initGravitySystem(width, height, precision, gaitSpeed);
                                                 }
                                             } else
                                                 show(Error.INVALID_COMMAND);

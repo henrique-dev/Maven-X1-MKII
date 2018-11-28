@@ -30,9 +30,12 @@ public class GravitySystem  {
     private GravityCell leftGravityCell;
     private GravityCell rightGravityCell;
 
-    public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision) {
+    private int gaitSpeed;
+
+    public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision, int gaitSpeed) {
         this.servoTaskController = servoTaskController;
         this.precision = precision;
+        this.gaitSpeed = gaitSpeed;
         this.width = width;
         this.height = height;
         double cx = body.getArea().x / 2;
@@ -138,7 +141,7 @@ public class GravitySystem  {
             ));
             Log.s("Comprimento atual da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
 
-            top.leg.move(top.vertex, angle, hip, precision, servoTaskList, taskListener);
+            top.leg.move(true, angle, hip, precision, gaitSpeed, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
 
             lock.lock();
@@ -197,7 +200,7 @@ public class GravitySystem  {
             ));
             Log.s("Comprimento atual da perna: " + mid.leg.getTarsus().getFinalVector().subtract(mid.leg.getBase().getOriginVector()).getSize());
 
-            mid.leg.move(mid.vertex, angle, hip, precision, servoTaskList, taskListener);
+            mid.leg.move(true, angle, hip, precision, gaitSpeed, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
             lock.lock();
             waitFor();
@@ -256,7 +259,7 @@ public class GravitySystem  {
             ));
             Log.s("Comprimento atual da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
 
-            bottom.leg.move(bottom.vertex, angle, hip, precision, servoTaskList, taskListener);
+            bottom.leg.move(true, angle, hip, precision, gaitSpeed, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
             lock.lock();
             waitFor();

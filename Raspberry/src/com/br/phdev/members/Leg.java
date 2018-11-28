@@ -103,7 +103,7 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void move(Vector2D vertexVector, double angle, double finalLength, double precision, List<Task> servoTaskList, TaskListener taskListener) {
+    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, List<Task> servoTaskList, TaskListener taskListener) {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
@@ -131,14 +131,15 @@ public class Leg {
         System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
         System.out.println();
 
-        TaskGroup taskGroups = new TaskGroup(new int[]{1, 4});
-
-        servoTaskList.add(new ServoTask(this.femur.getServo(), 40, 1000, null, new FlavorTaskGroup(0, taskGroups)));
+        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
+        
+        if (elevate)
+            servoTaskList.add(new ServoTask(this.femur.getServo(), 40, delayMillis / 2, null, new FlavorTaskGroup(0, taskGroups)));
 
         servoTaskList.add(new ServoTask(
                 this.base.getServo(),
                 (int) angle,
-                400,
+                delayMillis / 5,
                 new TaskListener[]{new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
@@ -149,13 +150,13 @@ public class Leg {
                         base.getFinalVector().set(ox + x, oy + y);
                     }
                 }},
-                new FlavorTaskGroup(1, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
 
 
         servoTaskList.add(new ServoTask(
                 this.femur.getServo(),
                 (int) (cteta / 3),
-                800,
+                (int)(delayMillis / 2.5),
                 new TaskListener[]{new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
@@ -166,12 +167,12 @@ public class Leg {
                         femur.getFinalVector().set(ox + x, oy + y);
                     }
                 }},
-                new FlavorTaskGroup(1, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
 
         servoTaskList.add(new ServoTask(
                 this.tarsus.getServo(),
                 (int) cteta,
-                800,
+                (int)(delayMillis / 2.5),
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
@@ -182,7 +183,7 @@ public class Leg {
                         tarsus.getFinalVector().set(ox + x, oy + y);
                     }
                 }},
-                new FlavorTaskGroup(1, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
     }
 
     public void stay() {
