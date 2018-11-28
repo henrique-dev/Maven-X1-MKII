@@ -514,8 +514,8 @@ public class Maven {
 						moveSystem = true;
 						break;
 					case "move-system":
-						boolean runningMoveSystem = true;
-						if (moveSystem) {
+						if (moveSystem && initSystem) {
+							boolean runningMoveSystem = true;
 							while (runningMoveSystem) {
 								currentPath = "move-system ";
 								System.out.print(currentPath + "> ");
@@ -530,6 +530,8 @@ public class Maven {
 									case "exit-f":
 										runningMoveSystem = false;
 										runningProgram = false;
+										robotSystem.stopLegsControl();
+										break;
 										break;
 									case "":
 										break;
