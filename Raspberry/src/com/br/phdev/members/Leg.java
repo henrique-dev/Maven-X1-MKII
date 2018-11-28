@@ -138,25 +138,15 @@ public class Leg {
         servoTaskList.add(new ServoTask(
                 this.base.getServo(),
                 (int) angle,
-                800,
+                400,
                 new TaskListener[]{new TaskListener() {
                     @Override
-                    public void onServoTaskComplete(double currentPos) {/*
-                        Log.w("Testando funcionalidade - BASE");
-                        Log.i("Vetor antigo:");
-                        Log.i("Origin vector: " + base.getOriginVector());
-                        Log.i("Final vector: " + base.getFinalVector());*/
-                        //legData.getLegMidDegrees() + currentPos
+                    public void onServoTaskComplete(double currentPos) {
                         double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
-                        base.getFinalVector().set(ox + x, oy + y);/*
-                        Log.i("Vetor novo:");
-                        Log.i("Origin vector: " + base.getOriginVector());
-                        Log.i("Final vector: " + base.getFinalVector());
-
-                        Log.s("Comprimento atual da base: " + base.getFinalVector().subtract(base.getOriginVector()).getSize());*/
+                        base.getFinalVector().set(ox + x, oy + y);
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
@@ -168,21 +158,12 @@ public class Leg {
                 800,
                 new TaskListener[]{new TaskListener() {
                     @Override
-                    public void onServoTaskComplete(double currentPos) {/*
-                        Log.w("Testando funcionalidade - FEMUR");
-                        Log.i("Vetor antigo:");
-                        Log.i("Origin vector: " + femur.getOriginVector());
-                        Log.i("Final vector: " + femur.getFinalVector());*/
+                    public void onServoTaskComplete(double currentPos) {
                         double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
-                        femur.getFinalVector().set(ox + x, oy + y);/*
-                        Log.i("Vetor novo:");
-                        Log.i("Origin vector: " + femur.getOriginVector());
-                        Log.i("Final vector: " + femur.getFinalVector());
-
-                        Log.s("Comprimento atual do femur: " + femur.getFinalVector().subtract(femur.getOriginVector()).getSize());*/
+                        femur.getFinalVector().set(ox + x, oy + y);
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
@@ -193,52 +174,16 @@ public class Leg {
                 800,
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
-                    public void onServoTaskComplete(double currentPos) {/*
-                        Log.w("Testando funcionalidade - TARSO");
-                        Log.i("Vetor antigo:");
-                        Log.i("Origin vector: " + tarsus.getOriginVector());
-                        Log.i("Final vector: " + tarsus.getFinalVector());*/
+                    public void onServoTaskComplete(double currentPos) {
                         double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
-                        tarsus.getFinalVector().set(ox + x, oy + y);/*
-                        Log.i("Vetor novo:");
-                        Log.i("Origin vector: " + tarsus.getOriginVector());
-                        Log.i("Final vector: " + tarsus.getFinalVector());
-
-                        Log.s("Comprimento atual do tarso: " + tarsus.getFinalVector().subtract(tarsus.getOriginVector()).getSize());
-                        Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getFinalVector()).getSize());*/
+                        tarsus.getFinalVector().set(ox + x, oy + y);
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
     }
-
-/*
-    public void move(double angle, double finalLength, double precision) {
-        this.base.move(angle);
-        double wf = this.femur.getLength();
-        double wt = this.tarsus.getLength();
-        double cxft = 0;
-        double cteta = 0;
-        while (cxft < finalLength) {
-            cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
-            if (cxft >= finalLength)
-                break;
-            else
-                cteta += precision;
-            if (cteta > 45)
-                break;
-        }
-
-        System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
-        System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
-        System.out.println();
-
-        this.femur.move(cteta / 3);
-        this.tarsus.move(cteta);
-
-    }*/
 
     public void stay() {
         this.femur.move(femur.getCurrentAngle());
