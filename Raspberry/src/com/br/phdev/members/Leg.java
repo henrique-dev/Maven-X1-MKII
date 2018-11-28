@@ -108,7 +108,7 @@ public class Leg {
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double cxft = 0;
-        double cteta = this.tarsus.getServo().getServoData().getMinPosition();
+        double cteta = this.tarsus.getServo().getCurrentPositionDegrees();
         while (cxft < finalLength) {
             cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
             if (cxft >= finalLength)
