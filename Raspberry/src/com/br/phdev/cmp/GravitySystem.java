@@ -149,10 +149,10 @@ public class GravitySystem  {
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
 
-            //degrees = Math.toDegrees(Math.asin(sin)) * -1;
-            //angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
-            degrees = Math.toDegrees(Math.asin(sin));
+            degrees = Math.toDegrees(Math.asin(sin)) * -1;
             angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
+            //degrees = Math.toDegrees(Math.asin(sin));
+            //angle = degrees < 45 ? degrees - 45 : 45 - degrees;
 
             Log.m(String.format("3) BOTTOM VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
