@@ -107,10 +107,14 @@ public class Leg {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
+        double tempxf = 0;
+        double tempxt = 0;
         double cxft = 0;
         double cteta = this.tarsus.getServo().getCurrentPositionDegrees();
         while (cxft < finalLength) {
-            cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
+            tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
+            tempxt = Math.sin(Math.toRadians(cteta)) * wt;
+            cxft = tempxf + tempxt;
             if (cxft >= finalLength)
                 break;
             else
@@ -119,6 +123,9 @@ public class Leg {
                     cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
                 break;
         }
+
+        final double xf = tempxf;
+        final double xt = tempxt;
 
         System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
         System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
@@ -166,8 +173,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
                         Log.i("Final vector: " + femur.getFinalVector());
-                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * femur.getLength();
-                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * femur.getLength();
+                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
+                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
                         femur.getFinalVector().set(ox + x, oy + y);
@@ -191,8 +198,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
-                        double x = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
-                        double y = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
+                        double x = Math.cos(Math.toRadians(currentPos)) * xt;
+                        double y = Math.sin(Math.toRadians(currentPos)) * xt;
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
