@@ -136,6 +136,7 @@ public class GravitySystem  {
                     top.leg.getTarsus().getFinalVector().x,
                     top.leg.getTarsus().getFinalVector().y
             ));
+            Log.s("Comprimento atual da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
 
             top.leg.move(top.vertex, angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
@@ -162,6 +163,7 @@ public class GravitySystem  {
                     top.leg.getTarsus().getFinalVector().x,
                     top.leg.getTarsus().getFinalVector().y
             ));
+            Log.s("compirmento novo da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
             System.out.println();
 
             cw = mid.vertex.x - mid.leg.getOriginVector().x;
@@ -193,6 +195,7 @@ public class GravitySystem  {
                     mid.leg.getTarsus().getFinalVector().x,
                     mid.leg.getTarsus().getFinalVector().y
             ));
+            Log.s("Comprimento atual da perna: " + mid.leg.getTarsus().getFinalVector().subtract(mid.leg.getBase().getOriginVector()).getSize());
 
             mid.leg.move(mid.vertex, angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
@@ -218,6 +221,7 @@ public class GravitySystem  {
                     mid.leg.getTarsus().getFinalVector().x,
                     mid.leg.getTarsus().getFinalVector().y
             ));
+            Log.s("Comprimento novo da perna: " + mid.leg.getTarsus().getFinalVector().subtract(mid.leg.getBase().getOriginVector()).getSize());
             System.out.println();
 
             cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
@@ -250,6 +254,7 @@ public class GravitySystem  {
                     bottom.leg.getTarsus().getFinalVector().x,
                     bottom.leg.getTarsus().getFinalVector().y
             ));
+            Log.s("Comprimento atual da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
 
             bottom.leg.move(bottom.vertex, angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
@@ -275,6 +280,7 @@ public class GravitySystem  {
                     bottom.leg.getTarsus().getFinalVector().x,
                     bottom.leg.getTarsus().getFinalVector().y
             ));
+            Log.s("Comprimento novo da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
             System.out.println();
 
 
