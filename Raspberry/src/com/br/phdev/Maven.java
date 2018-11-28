@@ -40,11 +40,7 @@ public class Maven {
 		try {
 			RobotSystem robotSystem = new RobotSystem();
 
-			for (String s : args)
-				System.out.println(s);
-
 			LinkedList<String> argsList = new LinkedList<>(Arrays.asList(args));
-
 
 			Scanner in = new Scanner(System.in);
 
@@ -57,8 +53,7 @@ public class Maven {
 				String currentPath = "";
 				System.out.print(currentPath + "> ");
 				String command;
-				System.out.println(argsList.size());
-				if (!argsList.isEmpty())
+				if (!argsList.isEmpty()) 
 					command = argsList.pop();
 				else
 					command = in.nextLine();
