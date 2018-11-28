@@ -127,9 +127,8 @@ public class Leg {
         final double xf = tempxf;
         final double xt = tempxt;
 
-        System.out.println("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
-        System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
-        System.out.println();
+        Log.i("O angulo em graus encontrado para solução foi: " + cteta + " com precisão de " + precision + " graus");
+        Log.i("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta + " e xft = " + cxft + "\n");
 
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
