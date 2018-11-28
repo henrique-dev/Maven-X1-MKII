@@ -22,4 +22,8 @@ public class MovementSystem {
         Log.s("Sistema de centro de gravidade iniciado");
     }
 
+    public void move(double x, double y, double z) {
+
+    }
+
 }

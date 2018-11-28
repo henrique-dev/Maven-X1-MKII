@@ -43,7 +43,7 @@ public class GravitySystem  {
         this.center = new Vector2D(cx, cy);
 
         this.leftGravityCell = new GravityCell(
-                new Vertex(new Vector2D(cx - width/2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
+                new Vertex(new Vector2D(cx - width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
                 new Vertex(new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT)),
                 new Vertex(new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT))
         );
@@ -61,15 +61,11 @@ public class GravitySystem  {
         init();
     }
 
-    private void waitFor() {
-        try {
-            movingLeg.await();
-        } catch (InterruptedException ie) {
-            ie.printStackTrace();
-        }
+    public void adjust(Vector2D vector2D) {
+        this.center.addMe(vector2D);
     }
 
-    public void init() {
+    private void init() {
         leftGravityCell.initCell();
         rightGravityCell.initCell();
     }
@@ -77,7 +73,6 @@ public class GravitySystem  {
     private class GravityCell implements TaskListener {
 
         boolean moving;
-        boolean active;
 
         Vertex top;
         Vertex mid;
@@ -98,12 +93,6 @@ public class GravitySystem  {
             double sin;
             double degrees;
             double angle;
-
-            TaskListener taskListener = currentPos -> {
-                lock.lock();
-                movingLeg.signal();
-                lock.unlock();
-            };
 
             cw = top.vertex.x - top.leg.getOriginVector().x;
             ch = top.vertex.y - top.leg.getOriginVector().y;
@@ -159,10 +148,13 @@ public class GravitySystem  {
             ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
-            degrees = Math.toDegrees(Math.asin(sin)) * -1;
-            angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
 
-            Log.m(String.format("3) MID VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+            //degrees = Math.toDegrees(Math.asin(sin)) * -1;
+            //angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
+            degrees = Math.toDegrees(Math.asin(sin));
+            angle = degrees < 45 ? degrees - 45 : 45 - degrees;
+
+            Log.m(String.format("3) BOTTOM VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
                     new Vector2D(cw, ch).getSize() + bottom.leg.getBase().getLength()));
 
@@ -180,6 +172,10 @@ public class GravitySystem  {
             Log.s("Comprimento novo da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
             System.out.println();
 
+            this.moving = false;
+        }
+
+        private void adjust(Vector2D vector2D) {
 
         }
 
@@ -201,6 +197,14 @@ public class GravitySystem  {
                     vertex.leg.getTarsus().getFinalVector().x,
                     vertex.leg.getTarsus().getFinalVector().y
             ));
+        }
+
+        private void waitFor() {
+            try {
+                movingLeg.await();
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
         }
 
         @Override
@@ -225,10 +229,24 @@ public class GravitySystem  {
             this.leg = leg;
         }
 
+        void init() {
+
+        }
+
+        void adjust() {
+
+        }
+
         @Override
         public String toString() {
             return " " + leg.getLegData().getLegNumber() + String.format("(%.2f,%.2f)", vertex.x, vertex.y);
         }
     }
+
+    private TaskListener taskListener = currentPos -> {
+        lock.lock();
+        movingLeg.signal();
+        lock.unlock();
+    };
 
 }

@@ -110,7 +110,6 @@ public class Leg {
         double tempxf = 0;
         double tempxt = 0;
         double cxft = 0;
-        //double cteta = this.tarsus.getServo().getCurrentPositionDegrees();
         double cteta = 0;
         while (cxft < finalLength) {
             tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
