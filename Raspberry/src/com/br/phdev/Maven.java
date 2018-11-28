@@ -15,9 +15,7 @@ import com.br.phdev.misc.*;
 import com.pi4j.io.i2c.I2CFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Maven {
@@ -42,6 +40,8 @@ public class Maven {
 		try {
 			RobotSystem robotSystem = new RobotSystem();
 
+			LinkedList<String> argsList = new LinkedList<>(Arrays.asList(args));
+
 			Scanner in = new Scanner(System.in);
 
 			boolean runningProgram = true;
@@ -53,8 +53,8 @@ public class Maven {
 				String currentPath = "";
 				System.out.print(currentPath + "> ");
 				String command;
-				if (args != null)
-					command = args[0];
+				if (!argsList.isEmpty())
+					command = argsList.pop();
 				else
 					command = in.nextLine();
 				switch (command.trim()) {
@@ -519,7 +519,10 @@ public class Maven {
 							while (runningMoveSystem) {
 								currentPath = "move-system ";
 								System.out.print(currentPath + "> ");
-								command = in.nextLine();
+								if (!argsList.isEmpty())
+									command = argsList.pop();
+								else
+									command = in.nextLine();
 								switch (command) {
                                     case "exit":
                                         runningMoveSystem = false;
@@ -567,7 +570,6 @@ public class Maven {
 					    show(Error.INVALID_COMMAND);
 						break;
 				}
-				args = null;
 			}
 
 		} catch (I2CFactory.UnsupportedBusNumberException e) {
