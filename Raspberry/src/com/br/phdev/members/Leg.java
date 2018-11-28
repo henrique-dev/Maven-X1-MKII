@@ -139,8 +139,9 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());
-                        double x = Math.sin(Math.toRadians(currentPos)) * base.getLength();
-                        double y = Math.cos(Math.toRadians(currentPos)) * base.getLength();
+                        //legData.getLegMidDegrees() + currentPos
+                        double x = Math.cos(Math.toRadians(currentPos)) * base.getLength();
+                        double y = Math.sin(Math.toRadians(currentPos)) * base.getLength();
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
@@ -165,7 +166,9 @@ public class Leg {
                         Log.i("Final vector: " + femur.getFinalVector());
                         double x = Math.cos(Math.toRadians(currentPos)) * femur.getLength();
                         double y = Math.sin(Math.toRadians(currentPos)) * femur.getLength();
-                        femur.getFinalVector().set(x, y);
+                        double ox = femur.getOriginVector().x;
+                        double oy = femur.getOriginVector().y;
+                        femur.getFinalVector().set(ox + x, oy + y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
                         Log.i("Final vector: " + femur.getFinalVector());
@@ -186,7 +189,9 @@ public class Leg {
                         Log.i("Final vector: " + tarsus.getFinalVector());
                         double x = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
                         double y = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
-                        tarsus.getFinalVector().set(x, y);
+                        double ox = tarsus.getOriginVector().x;
+                        double oy = tarsus.getOriginVector().y;
+                        tarsus.getFinalVector().set(ox + x, oy + y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());

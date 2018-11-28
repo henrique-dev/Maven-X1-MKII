@@ -1,2 +1,2 @@
 echo "EXECUTANDO PROGRAMA PRINCIPAL DO MAVEN"
-sudo java -cp .:classes:lib/*:build com/br/phdev/Maven
+sudo java -cp .:classes:lib/*:build com/br/phdev/Maven $1
