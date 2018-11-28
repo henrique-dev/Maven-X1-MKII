@@ -195,6 +195,8 @@ public class Leg {
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
+
+                        Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getOriginVector()).getSize());
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
