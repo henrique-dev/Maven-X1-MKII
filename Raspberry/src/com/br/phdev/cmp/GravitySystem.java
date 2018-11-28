@@ -115,10 +115,10 @@ public class GravitySystem  {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            Log.w("Antigos vetores TOP ( " + top.leg.getLegData().getLegNumber() + " ): " +
+            Log.w("Antigos vetores TOP ( " + top.leg.getLegData().getLegNumber() + " ): \n" +
                     "OB(" + top.leg.getBase().getOriginVector().x + "," + top.leg.getBase().getOriginVector().y + ") " +
                     "OF(" + top.leg.getFemur().getOriginVector().x + "," + top.leg.getFemur().getOriginVector().y + ") " +
-                    "OT(" + top.leg.getTarsus().getOriginVector().x + "," + top.leg.getTarsus().getOriginVector().y + ") - "+
+                    "OT(" + top.leg.getTarsus().getOriginVector().x + "," + top.leg.getTarsus().getOriginVector().y + ") \n "+
                     "FB(" + top.leg.getBase().getFinalVector().x + "," + top.leg.getBase().getFinalVector().y + ") " +
                     "FF(" + top.leg.getFemur().getFinalVector().x + "," + top.leg.getFemur().getFinalVector().y + ") " +
                     "FT(" + top.leg.getTarsus().getFinalVector().x + "," + top.leg.getTarsus().getFinalVector().y + ")");
@@ -130,10 +130,10 @@ public class GravitySystem  {
             lock.unlock();
             servoTaskList.clear();
 
-            Log.w("Novos vetores TOP ( " + top.leg.getLegData().getLegNumber() + " ): " +
+            Log.w("Novos vetores TOP ( " + top.leg.getLegData().getLegNumber() + " ): \n" +
                     "OB(" + top.leg.getBase().getOriginVector().x + "," + top.leg.getBase().getOriginVector().y + ") " +
                     "OF(" + top.leg.getFemur().getOriginVector().x + "," + top.leg.getFemur().getOriginVector().y + ") " +
-                    "OT(" + top.leg.getTarsus().getOriginVector().x + "," + top.leg.getTarsus().getOriginVector().y + ") - "+
+                    "OT(" + top.leg.getTarsus().getOriginVector().x + "," + top.leg.getTarsus().getOriginVector().y + ") \n "+
                     "FB(" + top.leg.getBase().getFinalVector().x + "," + top.leg.getBase().getFinalVector().y + ") " +
                     "FF(" + top.leg.getFemur().getFinalVector().x + "," + top.leg.getFemur().getFinalVector().y + ") " +
                     "FT(" + top.leg.getTarsus().getFinalVector().x + "," + top.leg.getTarsus().getFinalVector().y + ")");
@@ -151,10 +151,10 @@ public class GravitySystem  {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            Log.w("Antigos vetores MID ( " + top.leg.getLegData().getLegNumber() + " ): " +
+            Log.w("Antigos vetores MID ( " + top.leg.getLegData().getLegNumber() + " \n" +
                     "OB(" + mid.leg.getBase().getOriginVector().x + "," + mid.leg.getBase().getOriginVector().y + ") " +
                     "OF(" + mid.leg.getFemur().getOriginVector().x + "," + mid.leg.getFemur().getOriginVector().y + ") " +
-                    "OT(" + mid.leg.getTarsus().getOriginVector().x + "," + mid.leg.getTarsus().getOriginVector().y + ") - "+
+                    "OT(" + mid.leg.getTarsus().getOriginVector().x + "," + mid.leg.getTarsus().getOriginVector().y + ") \n "+
                     "FB(" + mid.leg.getBase().getFinalVector().x + "," + mid.leg.getBase().getFinalVector().y + ") " +
                     "FF(" + mid.leg.getFemur().getFinalVector().x + "," + mid.leg.getFemur().getFinalVector().y + ") " +
                     "FT(" + mid.leg.getTarsus().getFinalVector().x + "," + mid.leg.getTarsus().getFinalVector().y + ")");
@@ -166,10 +166,10 @@ public class GravitySystem  {
             lock.unlock();
             servoTaskList.clear();
 
-            Log.w("Novos vetores MID ( " + top.leg.getLegData().getLegNumber() + " ): " +
+            Log.w("Novos vetores MID ( " + top.leg.getLegData().getLegNumber() + " \n" +
                     "OB(" + mid.leg.getBase().getOriginVector().x + "," + mid.leg.getBase().getOriginVector().y + ") " +
                     "OF(" + mid.leg.getFemur().getOriginVector().x + "," + mid.leg.getFemur().getOriginVector().y + ") " +
-                    "OT(" + mid.leg.getTarsus().getOriginVector().x + "," + mid.leg.getTarsus().getOriginVector().y + ") - "+
+                    "OT(" + mid.leg.getTarsus().getOriginVector().x + "," + mid.leg.getTarsus().getOriginVector().y + ") \n "+
                     "FB(" + mid.leg.getBase().getFinalVector().x + "," + mid.leg.getBase().getFinalVector().y + ") " +
                     "FF(" + mid.leg.getFemur().getFinalVector().x + "," + mid.leg.getFemur().getFinalVector().y + ") " +
                     "FT(" + mid.leg.getTarsus().getFinalVector().x + "," + mid.leg.getTarsus().getFinalVector().y + ")");
@@ -188,7 +188,7 @@ public class GravitySystem  {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            Log.w("Antigos vetores BOTTOM ( " + top.leg.getLegData().getLegNumber() + " ): " +
+            Log.w("Antigos vetores BOTTOM ( " + top.leg.getLegData().getLegNumber() + " \n" +
                     "OB(" + bottom.leg.getBase().getOriginVector().x + "," + bottom.leg.getBase().getOriginVector().y + ") " +
                     "OF(" + bottom.leg.getFemur().getOriginVector().x + "," + bottom.leg.getFemur().getOriginVector().y + ") " +
                     "OT(" + bottom.leg.getTarsus().getOriginVector().x + "," + bottom.leg.getTarsus().getOriginVector().y + ") - "+
@@ -203,7 +203,7 @@ public class GravitySystem  {
             lock.unlock();
             servoTaskList.clear();
 
-            Log.w("Novos vetores BOTTOM ( " + top.leg.getLegData().getLegNumber() + " ): " +
+            Log.w("Novos vetores BOTTOM ( " + top.leg.getLegData().getLegNumber() + " \n" +
                     "OB(" + bottom.leg.getBase().getOriginVector().x + "," + bottom.leg.getBase().getOriginVector().y + ") " +
                     "OF(" + bottom.leg.getFemur().getOriginVector().x + "," + bottom.leg.getFemur().getOriginVector().y + ") " +
                     "OT(" + bottom.leg.getTarsus().getOriginVector().x + "," + bottom.leg.getTarsus().getOriginVector().y + ") - "+
