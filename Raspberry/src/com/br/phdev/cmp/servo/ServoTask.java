@@ -20,7 +20,7 @@ public class ServoTask implements Task {
     private boolean startTask;
     private boolean taskOver;
 
-    private TaskListener taskListener;
+    private TaskListener taskListener[];
 
     private static long currentTaskId = 0;
     private final long taskId;
@@ -29,7 +29,7 @@ public class ServoTask implements Task {
 
     private boolean jusForDelay;
 
-    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener, FlavorTaskGroup flavorTaskGroup) {
+    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.delay = delayInMilli;
@@ -37,10 +37,14 @@ public class ServoTask implements Task {
         this.timer = new Timer();
         this.startTask = false;
         this.taskOver = false;
-        this.taskListener = taskListener;
         this.taskId = currentTaskId++;
         this.flavorTaskGroup = flavorTaskGroup;
         this.jusForDelay = false;
+    }
+
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup) {
+        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup);
+        this.taskListener = taskListener;
     }
 
     public ServoTask(FlavorTaskGroup flavorTaskGroup, long delayInMilli) {
@@ -94,8 +98,11 @@ public class ServoTask implements Task {
                         this.servo.move(this.targetPos);
                     this.taskOver = true;
                     this.startTask = false;
-                    if (this.taskListener != null)
-                        this.taskListener.onServoTaskComplete(this.targetPos);
+                    if (this.taskListener != null) {
+                        for (int i=0; i<this.taskListener.length; i++) {
+                            this.taskListener[i].onServoTaskComplete(this.targetPos);
+                        }
+                    }
                     this.flavorTaskGroup.taskCompleted();
                 }
             }

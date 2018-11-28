@@ -116,7 +116,7 @@ public class GravitySystem  {
 
             List<Task> servoTaskList = new ArrayList<>();
 
-            top.leg.move(angle, hip, precision, servoTaskList, taskListener);
+            top.leg.move(top.vertex, angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
 
             lock.lock();
@@ -136,7 +136,7 @@ public class GravitySystem  {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            mid.leg.move(angle, hip, precision, servoTaskList, taskListener);
+            mid.leg.move(mid.vertex, angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
             lock.lock();
             waitFor();
@@ -156,7 +156,7 @@ public class GravitySystem  {
             System.out.println("Comprimento esperado para a perna: " + (new Vector2D(cw, ch).getSize()));
             System.out.println();
 
-            bottom.leg.move(angle, hip, precision, servoTaskList, taskListener);
+            bottom.leg.move(bottom.vertex, angle, hip, precision, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
             lock.lock();
             waitFor();

@@ -2,6 +2,6 @@ package com.br.phdev.cmp.task;
 
 public interface TaskListener {
 
-    void onServoTaskComplete(float currentPos);
+    void onServoTaskComplete(double currentPos);
 
 }

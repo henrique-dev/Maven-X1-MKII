@@ -103,19 +103,38 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void move(double angle, double finalLength, double precision, List<Task> servoTaskList, TaskListener taskListener) {
+    public void move(Vector2D vertexVector, double angle, double finalLength, double precision, List<Task> servoTaskList, TaskListener taskListener) {
 
         TaskGroup taskGroups = new TaskGroup(new int[]{1, 4});
 
         servoTaskList.add(new ServoTask(this.femur.getServo(), 40, 1000, null, new FlavorTaskGroup(0, taskGroups)));
 
-        servoTaskList.add(new ServoTask(this.base.getServo(), (int) angle, 800, null, new FlavorTaskGroup(1, taskGroups)));
+        servoTaskList.add(new ServoTask(
+                this.base.getServo(),
+                (int) angle,
+                800,
+                new TaskListener[]{new TaskListener() {
+                    @Override
+                    public void onServoTaskComplete(double currentPos) {
+                        Log.w("Testando funcionalidade - BASE");
+                        Log.i("Vetor antigo:");
+                        Log.i("Origin vector: " + base.getOriginVector());
+                        Log.i("Final vector: " + base.getFinalVector());
+                        double x = Math.cos(Math.toRadians(currentPos)) * base.getLength();
+                        double y = Math.sin(Math.toRadians(currentPos)) * base.getLength();
+                        base.getFinalVector().set(x, y);
+                        Log.i("Vetor novo:");
+                        Log.i("Origin vector: " + base.getOriginVector());
+                        Log.i("Final vector: " + base.getFinalVector());
+                    }
+                }},
+                new FlavorTaskGroup(1, taskGroups)));
 
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double cxft = 0;
-        double cteta = 0;
+        double cteta = this.tarsus.getServo().getServoData().getMinPosition();
         while (cxft < finalLength) {
             cxft = Math.cos(Math.toRadians(cteta / 3)) * wf + Math.sin(Math.toRadians(cteta)) * wt;
             if (cxft >= finalLength)
@@ -131,12 +150,51 @@ public class Leg {
         System.out.println("Portanto tetaF = " + cteta/3 + " e tetaW = " + cteta);
         System.out.println();
 
-        //this.femur.move(cteta / 3);
-        servoTaskList.add(new ServoTask(this.femur.getServo(), (int) (cteta / 3), 800, null, new FlavorTaskGroup(1, taskGroups)));
-        //this.tarsus.move(cteta);
-        servoTaskList.add(new ServoTask(this.tarsus.getServo(), (int) cteta, 800, taskListener, new FlavorTaskGroup(1, taskGroups)));
+
+        servoTaskList.add(new ServoTask(
+                this.femur.getServo(),
+                (int) (cteta / 3),
+                800,
+                new TaskListener[]{new TaskListener() {
+                    @Override
+                    public void onServoTaskComplete(double currentPos) {
+                        Log.w("Testando funcionalidade - FEMUR");
+                        Log.i("Vetor antigo:");
+                        Log.i("Origin vector: " + femur.getOriginVector());
+                        Log.i("Final vector: " + femur.getFinalVector());
+                        double x = Math.cos(Math.toRadians(currentPos)) * femur.getLength();
+                        double y = Math.sin(Math.toRadians(currentPos)) * femur.getLength();
+                        femur.getFinalVector().set(x, y);
+                        Log.i("Vetor novo:");
+                        Log.i("Origin vector: " + femur.getOriginVector());
+                        Log.i("Final vector: " + femur.getFinalVector());
+                    }
+                }},
+                new FlavorTaskGroup(1, taskGroups)));
+
+        servoTaskList.add(new ServoTask(
+                this.tarsus.getServo(),
+                (int) cteta,
+                800,
+                new TaskListener[]{taskListener, new TaskListener() {
+                    @Override
+                    public void onServoTaskComplete(double currentPos) {
+                        Log.w("Testando funcionalidade - TARSO");
+                        Log.i("Vetor antigo:");
+                        Log.i("Origin vector: " + tarsus.getOriginVector());
+                        Log.i("Final vector: " + tarsus.getFinalVector());
+                        double x = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
+                        double y = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                        tarsus.getFinalVector().set(x, y);
+                        Log.i("Vetor novo:");
+                        Log.i("Origin vector: " + tarsus.getOriginVector());
+                        Log.i("Final vector: " + tarsus.getFinalVector());
+                    }
+                }},
+                new FlavorTaskGroup(1, taskGroups)));
     }
 
+/*
     public void move(double angle, double finalLength, double precision) {
         this.base.move(angle);
         double wf = this.femur.getLength();
@@ -160,7 +218,7 @@ public class Leg {
         this.femur.move(cteta / 3);
         this.tarsus.move(cteta);
 
-    }
+    }*/
 
     public void stay() {
         this.femur.move(femur.getCurrentAngle());
