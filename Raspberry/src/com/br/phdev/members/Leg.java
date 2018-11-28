@@ -141,22 +141,22 @@ public class Leg {
                 800,
                 new TaskListener[]{new TaskListener() {
                     @Override
-                    public void onServoTaskComplete(double currentPos) {
+                    public void onServoTaskComplete(double currentPos) {/*
                         Log.w("Testando funcionalidade - BASE");
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + base.getOriginVector());
-                        Log.i("Final vector: " + base.getFinalVector());
+                        Log.i("Final vector: " + base.getFinalVector());*/
                         //legData.getLegMidDegrees() + currentPos
                         double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
-                        base.getFinalVector().set(ox + x, oy + y);
+                        base.getFinalVector().set(ox + x, oy + y);/*
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());
 
-                        Log.s("Comprimento atual da base: " + base.getFinalVector().subtract(base.getOriginVector()).getSize());
+                        Log.s("Comprimento atual da base: " + base.getFinalVector().subtract(base.getOriginVector()).getSize());*/
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
@@ -168,21 +168,21 @@ public class Leg {
                 800,
                 new TaskListener[]{new TaskListener() {
                     @Override
-                    public void onServoTaskComplete(double currentPos) {
+                    public void onServoTaskComplete(double currentPos) {/*
                         Log.w("Testando funcionalidade - FEMUR");
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
-                        Log.i("Final vector: " + femur.getFinalVector());
+                        Log.i("Final vector: " + femur.getFinalVector());*/
                         double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
-                        femur.getFinalVector().set(ox + x, oy + y);
+                        femur.getFinalVector().set(ox + x, oy + y);/*
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
                         Log.i("Final vector: " + femur.getFinalVector());
 
-                        Log.s("Comprimento atual do femur: " + femur.getFinalVector().subtract(femur.getOriginVector()).getSize());
+                        Log.s("Comprimento atual do femur: " + femur.getFinalVector().subtract(femur.getOriginVector()).getSize());*/
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
@@ -193,22 +193,22 @@ public class Leg {
                 800,
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
-                    public void onServoTaskComplete(double currentPos) {
+                    public void onServoTaskComplete(double currentPos) {/*
                         Log.w("Testando funcionalidade - TARSO");
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
-                        Log.i("Final vector: " + tarsus.getFinalVector());
+                        Log.i("Final vector: " + tarsus.getFinalVector());*/
                         double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
-                        tarsus.getFinalVector().set(ox + x, oy + y);
+                        tarsus.getFinalVector().set(ox + x, oy + y);/*
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
 
                         Log.s("Comprimento atual do tarso: " + tarsus.getFinalVector().subtract(tarsus.getOriginVector()).getSize());
-                        Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getFinalVector()).getSize());
+                        Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getFinalVector()).getSize());*/
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
