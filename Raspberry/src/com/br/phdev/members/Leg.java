@@ -140,8 +140,8 @@ public class Leg {
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());
                         //legData.getLegMidDegrees() + currentPos
-                        double x = Math.cos(Math.toRadians(currentPos)) * base.getLength();
-                        double y = Math.sin(Math.toRadians(currentPos)) * base.getLength();
+                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() + currentPos)) * base.getLength();
+                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() + currentPos)) * base.getLength();
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
@@ -164,8 +164,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + femur.getOriginVector());
                         Log.i("Final vector: " + femur.getFinalVector());
-                        double x = Math.cos(Math.toRadians(currentPos)) * femur.getLength();
-                        double y = Math.sin(Math.toRadians(currentPos)) * femur.getLength();
+                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() + currentPos)) * femur.getLength();
+                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() + currentPos)) * femur.getLength();
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
                         femur.getFinalVector().set(ox + x, oy + y);
@@ -187,8 +187,8 @@ public class Leg {
                         Log.i("Vetor antigo:");
                         Log.i("Origin vector: " + tarsus.getOriginVector());
                         Log.i("Final vector: " + tarsus.getFinalVector());
-                        double x = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
-                        double y = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                        double x = Math.sin(Math.toRadians(legData.getLegMidDegrees() + currentPos)) * tarsus.getLength();
+                        double y = Math.cos(Math.toRadians(legData.getLegMidDegrees() + currentPos)) * tarsus.getLength();
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);

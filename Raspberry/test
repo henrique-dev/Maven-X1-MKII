@@ -1,3 +1,4 @@
+#!/bin/bash
 ./pull.sh
 ./compile.maven
 ./run.maven $1
