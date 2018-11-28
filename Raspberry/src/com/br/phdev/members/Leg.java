@@ -143,7 +143,7 @@ public class Leg {
                         double y = Math.cos(Math.toRadians(currentPos)) * base.getLength();
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
-                        base.getFinalVector().set(x + x, y + y);
+                        base.getFinalVector().set(ox + x, oy + y);
                         Log.i("Vetor novo:");
                         Log.i("Origin vector: " + base.getOriginVector());
                         Log.i("Final vector: " + base.getFinalVector());

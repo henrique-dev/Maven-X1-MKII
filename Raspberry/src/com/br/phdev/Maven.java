@@ -42,6 +42,9 @@ public class Maven {
 		try {
 			RobotSystem robotSystem = new RobotSystem();
 
+			for (String s : args)
+				System.out.println(s);
+
 			Scanner in = new Scanner(System.in);
 
 			boolean runningProgram = true;
