@@ -131,9 +131,9 @@ public class GravitySystem  {
             sin = ch / hip;
             angle = degrees = Math.toDegrees(Math.asin(sin));
             if (mid.vertex.angleSign(mid.leg.getTarsus().getFinalVector()) > 0)
-                Log.e("SUBINDO " + (45 - module(degrees)));
+                Log.e("SUBINDO " + (45 - module(500)));
             else
-                Log.e("DESCENDO " + (45 - module(degrees)));
+                Log.e("DESCENDO " + (45 - module(500)));
 
             Log.m(String.format("2) MID VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     degrees, angle,
