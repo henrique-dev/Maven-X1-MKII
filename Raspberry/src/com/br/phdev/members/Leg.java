@@ -208,7 +208,7 @@ public class Leg {
                         Log.i("Final vector: " + tarsus.getFinalVector());
 
                         Log.s("Comprimento atual do tarso: " + tarsus.getFinalVector().subtract(tarsus.getOriginVector()).getSize());
-                        Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getOriginVector()).getSize());
+                        Log.s("Comprimento atual da perna: " + tarsus.getFinalVector().subtract(base.getFinalVector()).getSize());
                     }
                 }},
                 new FlavorTaskGroup(1, taskGroups)));
