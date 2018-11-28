@@ -122,7 +122,8 @@ public class Leg {
                 break;
             else
                 cteta += precision;
-            if (cteta > 45)
+            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
+                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
                 break;
         }
 
