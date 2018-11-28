@@ -54,7 +54,7 @@ public class GravitySystem  {
                 new Vertex(new Vector2D(cx + width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_RIGHT))
         );
 
-        Log.w("Centro de gravidade em (" + cx + "," + cy + ")");
+        Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
 
@@ -296,9 +296,7 @@ public class GravitySystem  {
 
         @Override
         public String toString() {
-            return "Top vertex-> " + top.toString() + "\n" +
-                    "Mid vertex-> " + mid.toString() + "\n" +
-                    "Bottom vertex-> " + bottom.toString();
+            return "T" + top.toString() + "  M" + mid.toString() + "  B" + bottom.toString() + "\n";
         }
 
     }
@@ -315,7 +313,7 @@ public class GravitySystem  {
 
         @Override
         public String toString() {
-            return "Leg number: " + leg.getLegData().getLegNumber() + "  V(" + vertex.x + "," + vertex.y + ")";
+            return " " + leg.getLegData().getLegNumber() + String.format("(%.2f,%.2f)", vertex.x, vertex.y);
         }
     }
 
