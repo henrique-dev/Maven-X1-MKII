@@ -53,6 +53,7 @@ public class Maven {
 				String currentPath = "";
 				System.out.print(currentPath + "> ");
 				String command;
+				System.out.println(argsList.size());
 				if (!argsList.isEmpty())
 					command = argsList.pop();
 				else
