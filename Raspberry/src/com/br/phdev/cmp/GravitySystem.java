@@ -1,5 +1,6 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
@@ -63,15 +64,16 @@ public class GravitySystem  {
     }
 
     public void adjust(Vector2D vector2D) {
-        leftGravityCell.adjustLegToVertex(vector2D, false, 500, true);
+        leftGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
         lock.lock();
         waitForAnotherCell();
         lock.unlock();
         Log.s("Celula executou o movimento");
-        //lock.lock();
-        //leftGravityCell.adjustLegToVertex(vector2D, false, 500, true);
-        //waitForAnotherCell();
-        //lock.unlock();
+        lock.lock();
+        leftGravityCell.adjustLegToVertex(vector2D, false, 500, true, null);
+        rightGravityCell.adjustLegToVertex(vector2D, false, 500, true, waitingTaskCellListener);
+        waitForAnotherCell();
+        lock.unlock();
         Log.s("Celula executou o movimento");
     }
 
@@ -118,10 +120,10 @@ public class GravitySystem  {
             bottom.init();
         }
 
-        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed) {
-            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed);
-            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed);
-            bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed);
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
+            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
+            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
+            bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
         }
 
         @Override
@@ -184,7 +186,7 @@ public class GravitySystem  {
             System.out.println();
         }
 
-        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed) {
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
             List<Task> servoTaskList = new ArrayList<>();
 
             if (elevate)
@@ -208,7 +210,7 @@ public class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, waitingTaskCellListener);
+            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, tl);
             servoTaskController.addTasks(servoTaskList);
         }
 
