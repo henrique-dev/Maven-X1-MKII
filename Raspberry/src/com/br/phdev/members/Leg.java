@@ -181,6 +181,7 @@ public class Leg {
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
+                        lengthVector = tarsus.getFinalVector();
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
