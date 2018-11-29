@@ -250,9 +250,9 @@ public class GravitySystem  {
     private TaskListener waitingTaskCellListener = new TaskListener() {
         @Override
         public void onServoTaskComplete(double currentPos) {
-            lock.lock();
+            lock2.lock();
             movingCell.signal();
-            lock.unlock();
+            lock2.unlock();
         }
     };
 
