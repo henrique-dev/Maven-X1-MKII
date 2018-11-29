@@ -1,6 +1,5 @@
 package com.br.phdev.cmp;
 
-import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
@@ -26,7 +25,6 @@ public class GravitySystem  {
 
     private double width;
     private double height;
-    private Vector2D center;
 
     private GravityCell leftGravityCell;
     private GravityCell rightGravityCell;
@@ -41,15 +39,16 @@ public class GravitySystem  {
         this.height = height;
         double cx = body.getArea().x / 2;
         double cy = body.getArea().y / 2;
-        this.center = new Vector2D(cx, cy);
 
         this.leftGravityCell = new GravityCell(
+                new Vector2D(cx, cy),
                 new Vertex("Top", new Vector2D(cx - width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
                 new Vertex("Mid", new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT)),
                 new Vertex("Bottom", new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT))
         );
 
         this.rightGravityCell = new GravityCell(
+                new Vector2D(cx, cy),
                 new Vertex("Top", new Vector2D(cx + width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_RIGHT)),
                 new Vertex("Mid", new Vector2D(cx - width / 2, cy), body.getLeg(Body.LEG_MID_LEFT)),
                 new Vertex("Bottom", new Vector2D(cx + width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_RIGHT))
@@ -63,8 +62,7 @@ public class GravitySystem  {
     }
 
     public void adjust(Vector2D vector2D) {
-        this.center.addMe(vector2D);
-        leftGravityCell.adjust(vector2D);
+        leftGravityCell.adjustLegToVertex(vector2D, true);
     }
 
     private void init() {
@@ -84,11 +82,13 @@ public class GravitySystem  {
 
         boolean moving;
 
+        Vector2D center;
         Vertex top;
         Vertex mid;
         Vertex bottom;
 
-        GravityCell(Vertex top, Vertex mid, Vertex bottom) {
+        public GravityCell(Vector2D center, Vertex top, Vertex mid, Vertex bottom) {
+            this.center = center;
             this.top = top;
             this.mid = mid;
             this.bottom = bottom;
@@ -100,10 +100,10 @@ public class GravitySystem  {
             bottom.init();
         }
 
-        private void adjust(Vector2D vector2D) {
-            top.adjust(vector2D);
-            mid.adjust(vector2D);
-            bottom.adjust(vector2D);
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate) {
+            top.adjustLegToVertex(vector2D, elevate);
+            mid.adjustLegToVertex(vector2D, elevate);
+            bottom.adjustLegToVertex(vector2D, elevate);
         }
 
         @Override
@@ -171,12 +171,11 @@ public class GravitySystem  {
             System.out.println();
         }
 
-        private void makeCalc() {
-
-        }
-
-        private void adjust(Vector2D vector2D) {
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate) {
             List<Task> servoTaskList = new ArrayList<>();
+
+            if (elevate)
+                leg.getOriginVector().add(vector2D);
 
             this.vertex.addMe(vector2D);
             double vw = vertex.x - leg.getOriginVector().x;
@@ -195,7 +194,7 @@ public class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(true, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
+            leg.move(elevate, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
         }
 
