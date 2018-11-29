@@ -72,8 +72,8 @@ public class GravitySystem  {
 
 
         lock.lock();
-        leftGravityCell.adjustBodyToVertex(vector2D, 1000, null);
-        rightGravityCell.adjustBodyToVertex(vector2D, 1000, waitingTaskCellListener);
+        leftGravityCell.adjustBodyToVertex(vector2D, 500, null);
+        rightGravityCell.adjustBodyToVertex(vector2D, 500, waitingTaskCellListener);
         waitForAnotherCell();
         lock.unlock();
         Log.s("Celula executou o movimento");
