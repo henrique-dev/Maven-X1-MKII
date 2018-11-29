@@ -540,10 +540,14 @@ public class Maven {
 												String values = command.substring(5);
 												int index = values.indexOf(" ");
 												String value = values.substring(0, index);
-												int stepAmount = Integer.parseInt(value);
+												double stepSizeX = Double.parseDouble(value);
+												values = values.substring(index+1);
+												index = values.indexOf(" ");
+												value = values.substring(0, index);
+												double stepSizeY = Double.parseDouble(value);
 												value = values.substring(index+1);
-												int stepSize = Integer.parseInt(value);
-												robotSystem.getMovementSystem().move(stepAmount, stepSize);
+												int stepAmount = Integer.parseInt(value);
+												robotSystem.getMovementSystem().move(stepSizeX, stepSizeY, stepAmount);
                                             } else if (command.startsWith("down")) {
 
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
