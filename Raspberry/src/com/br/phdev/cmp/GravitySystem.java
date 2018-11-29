@@ -71,7 +71,7 @@ public class GravitySystem  {
         //lock.lock();
         //leftGravityCell.adjustLegToVertex(vector2D, false, 500, true);
         //waitForAnotherCell();
-        lock.unlock();
+        //lock.unlock();
         Log.s("Celula executou o movimento");
     }
 
