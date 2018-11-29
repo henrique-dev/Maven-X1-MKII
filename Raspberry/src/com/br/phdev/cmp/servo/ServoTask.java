@@ -100,7 +100,8 @@ public class ServoTask implements Task {
                     this.startTask = false;
                     if (this.taskListener != null) {
                         for (int i=0; i<this.taskListener.length; i++) {
-                            this.taskListener[i].onServoTaskComplete(this.targetPos);
+                            if (taskListener[i] != null)
+                                this.taskListener[i].onServoTaskComplete(this.targetPos);
                         }
                     }
                     this.flavorTaskGroup.taskCompleted();
