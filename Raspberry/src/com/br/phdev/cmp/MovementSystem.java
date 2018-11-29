@@ -24,7 +24,7 @@ public class MovementSystem {
     }
 
     public void move(int stepAmount, double stepSize) {
-        this.gravitySystem.adjust(new Vector2D(0, stepSize), stepAmount);
+        this.gravitySystem.adjust(new Vector2D(stepAmount, stepSize), 1);
     }
 
     public void move(double x, double y, double z) {
