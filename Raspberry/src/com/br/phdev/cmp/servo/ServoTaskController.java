@@ -62,25 +62,29 @@ public class ServoTaskController {
 
         @Override
         public void run() {
-            this.runningMainLoop = true;
-            while (this.runningMainLoop) {
-                synchronized (ServoTaskController.this.taskList) {
-                    for (int i=0; i<ServoTaskController.this.taskList.size(); i++) {
-                        Task task = ServoTaskController.this.taskList.get(i);
-                        if (!task.isTaskStarted() && !task.isTaskOver()) {
-                            task.startTask();
-                        }
-                        task.doTask();
-                        if (task.isTaskOver()) {
-                            task.deleteTask();
-                            ServoTaskController.this.taskList.remove(i);
-                            i--;
-                            Log.w("Tarefa removida. Numero de tarefas atuais: " + ServoTaskController.this.taskList.size());
-                            if (ServoTaskController.this.taskList.isEmpty())
-                                break;
+            try {
+                this.runningMainLoop = true;
+                while (this.runningMainLoop) {
+                    synchronized (ServoTaskController.this.taskList) {
+                        for (int i = 0; i < ServoTaskController.this.taskList.size(); i++) {
+                            Task task = ServoTaskController.this.taskList.get(i);
+                            if (!task.isTaskStarted() && !task.isTaskOver()) {
+                                task.startTask();
+                            }
+                            task.doTask();
+                            if (task.isTaskOver()) {
+                                task.deleteTask();
+                                ServoTaskController.this.taskList.remove(i);
+                                i--;
+                                Log.w("Tarefa removida. Numero de tarefas atuais: " + ServoTaskController.this.taskList.size());
+                                if (ServoTaskController.this.taskList.isEmpty())
+                                    break;
+                            }
                         }
                     }
                 }
+            } catch (Exception e) {
+                Log.e("Falha no controlador de tarefas");
             }
         }
 
