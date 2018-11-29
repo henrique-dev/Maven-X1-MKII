@@ -102,7 +102,8 @@ public class GravitySystem  {
 
         private void adjust(Vector2D vector2D) {
             top.adjust(vector2D);
-
+            mid.adjust(vector2D);
+            bottom.adjust(vector2D);
         }
 
         @Override
