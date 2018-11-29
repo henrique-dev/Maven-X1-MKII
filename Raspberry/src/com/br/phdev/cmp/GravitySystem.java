@@ -63,8 +63,11 @@ public class GravitySystem  {
     }
 
     public void adjust(Vector2D vector2D) {
-        leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, true);
+        leftGravityCell.adjustLegToVertex(vector2D, true, 1000, false);
         lock.lock();
+        waitForAnotherCell();
+        Log.s("Celula executou o movimento");
+        leftGravityCell.adjustLegToVertex(vector2D, false, gaitSpeed, true);
         waitForAnotherCell();
         Log.s("Celula executou o movimento");
     }
@@ -183,8 +186,9 @@ public class GravitySystem  {
 
             if (elevate)
                 leg.getOriginVector().add(vector2D);
+            else
+                this.vertex.addMe(vector2D);
 
-            this.vertex.addMe(vector2D);
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;
             double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
