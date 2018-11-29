@@ -74,7 +74,8 @@ public class Leg {
                 legData.getLegMidDegrees()).addMe(femur.getFinalVector());
         tarsus.setFinalVector(new Vector2D(tarsusXY.x, tarsusXY.y));
 
-        lengthVector = this.tarsus.getFinalVector().subtract(this.base.getOriginVector());
+        //lengthVector = this.tarsus.getFinalVector().subtract(this.base.getOriginVector());
+        lengthVector = this.tarsus.getFinalVector();
 
         Log.w("");
         Log.w("Vetores da perna " + legData.getLegNumber() + " com inclinação de " + legData.getLegMidDegrees());
@@ -91,7 +92,7 @@ public class Leg {
 
         Log.w("Perna lengthVector: " + lengthVector);
 
-        Log.w("Comprimento da perna em relação a origem da base: " + this.lengthVector.getSize());
+        Log.w("Comprimento da perna em relação a origem da base: " + this.lengthVector.subtract(this.base.getOriginVector()).getSize());
 
     }
 
