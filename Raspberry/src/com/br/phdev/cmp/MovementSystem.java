@@ -23,8 +23,12 @@ public class MovementSystem {
         Log.s("Sistema de centro de gravidade iniciado");
     }
 
+    public void move(int stepAmount, double stepSize) {
+        this.gravitySystem.adjust(new Vector2D(0, stepSize), stepAmount);
+    }
+
     public void move(double x, double y, double z) {
-        this.gravitySystem.adjust(new Vector2D(x, y));
+        //this.gravitySystem.adjust(new Vector2D(x, y));
     }
 
 }

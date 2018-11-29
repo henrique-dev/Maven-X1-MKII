@@ -537,7 +537,13 @@ public class Maven {
 									default:
 										try {
 											if (command.startsWith("move")) {
-												robotSystem.getMovementSystem().move(0, 50, 0);
+												String values = command.substring(5);
+												int index = values.indexOf(" ");
+												String value = values.substring(0, index);
+												int stepAmount = Integer.parseInt(value);
+												value = values.substring(index+1);
+												int stepSize = Integer.parseInt(value);
+												robotSystem.getMovementSystem().move(stepAmount, stepSize);
                                             } else if (command.startsWith("down")) {
 
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {

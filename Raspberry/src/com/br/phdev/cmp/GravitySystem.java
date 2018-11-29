@@ -63,26 +63,28 @@ public class GravitySystem  {
         init();
     }
 
-    public void adjust(Vector2D vector2D) {
-        leftGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
-        lock.lock();
-        waitForAnotherCell();
-        lock.unlock();
-        Log.s("Celula executou o movimento");
+    public void adjust(Vector2D vector2D, int stepAmount) {
+        for (int i=0; i<stepAmount; i++) {
+            leftGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
+            lock.lock();
+            waitForAnotherCell();
+            lock.unlock();
+            Log.s("Celula executou o movimento");
 
 
-        lock.lock();
-        leftGravityCell.adjustBodyToVertex(vector2D, 200, null);
-        rightGravityCell.adjustBodyToVertex(vector2D, 200, waitingTaskCellListener);
-        waitForAnotherCell();
-        lock.unlock();
-        Log.s("Celula executou o movimento");
+            lock.lock();
+            leftGravityCell.adjustBodyToVertex(vector2D, 200, null);
+            rightGravityCell.adjustBodyToVertex(vector2D, 200, waitingTaskCellListener);
+            waitForAnotherCell();
+            lock.unlock();
+            Log.s("Celula executou o movimento");
 
-        lock.lock();
-        rightGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
-        waitForAnotherCell();
-        lock.unlock();
-        Log.s("Celula executou o movimento");
+            lock.lock();
+            rightGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
+            waitForAnotherCell();
+            lock.unlock();
+            Log.s("Celula executou o movimento");
+        }
 
     }
 
