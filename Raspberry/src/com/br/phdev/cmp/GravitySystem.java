@@ -282,6 +282,10 @@ public class GravitySystem  {
             lsin = lh / lhip;
             ldegrees = Math.toDegrees(Math.asin(lsin));
 
+            System.out.println(vw);
+            System.out.println(vh);
+            System.out.println(lw);
+            System.out.println(lh);
             System.out.println("vertex degrees: " + vdegrees);
             System.out.println("leg degrees: " + ldegrees);
         }
