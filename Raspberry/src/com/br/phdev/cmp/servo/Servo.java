@@ -23,9 +23,9 @@ public class Servo {
 
     private void initServo() {
         this.move(0);
-        waitFor(300);
-        this.setRawPosition(0);
-        waitFor(100);
+        //waitFor(300);
+        //this.setRawPosition(0);
+        //waitFor(100);
     }
 
     public long getTaskSlave() {
