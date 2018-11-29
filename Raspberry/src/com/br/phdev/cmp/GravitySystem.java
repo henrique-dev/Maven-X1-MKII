@@ -78,7 +78,7 @@ public class GravitySystem  {
         }
     }
 
-    private class GravityCell implements TaskListener {
+    private class GravityCell {
 
         boolean moving;
 
@@ -104,11 +104,6 @@ public class GravitySystem  {
             top.adjustLegToVertex(vector2D, elevate);
             mid.adjustLegToVertex(vector2D, elevate);
             bottom.adjustLegToVertex(vector2D, elevate);
-        }
-
-        @Override
-        public void onServoTaskComplete(double currentPos) {
-            notifyAll();
         }
 
         @Override
