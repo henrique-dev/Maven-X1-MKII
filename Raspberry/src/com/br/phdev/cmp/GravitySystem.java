@@ -86,12 +86,12 @@ public class GravitySystem  {
 
         void initCell() {
 
-/*
+
             top.init();
             mid.init();
-            bottom.init();*/
+            bottom.init();
 
-
+            /*
             List<Task> servoTaskList = new ArrayList<>();
             double cw;
             double ch;
@@ -191,7 +191,7 @@ public class GravitySystem  {
             Log.s("Comprimento novo da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
             System.out.println();
 
-            this.moving = false;
+            this.moving = false;*/
         }
 
         private void adjust(Vector2D vector2D) {
@@ -288,6 +288,8 @@ public class GravitySystem  {
             System.out.println(lh);
             System.out.println("vertex degrees: " + vdegrees);
             System.out.println("leg degrees: " + ldegrees);
+            System.out.println(name + " Aplicando este angulo: " + String.format("%.3f", (ldegrees - vdegrees)));
+            System.out.println();
         }
 
         void adjust() {
