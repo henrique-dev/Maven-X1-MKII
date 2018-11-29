@@ -149,8 +149,8 @@ public class GravitySystem  {
 
             double angle = vdegrees - ldegrees;
 
-            Log.m(String.format("1) " + name + " VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
-                    vdegrees, angle,
+            Log.m(String.format(name + " VERTEX > Angulo do vertex: %.2f  |  Angulo da perna: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+                    vdegrees, ldegrees, angle,
                     new Vector2D(vw, vh).getSize() + leg.getBase().getLength()));
 
             showVertexrInfo("Antigos vetores " + name, this);
