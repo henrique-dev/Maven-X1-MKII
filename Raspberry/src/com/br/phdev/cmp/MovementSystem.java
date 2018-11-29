@@ -3,6 +3,7 @@ package com.br.phdev.cmp;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.members.Body;
 import com.br.phdev.misc.Log;
+import com.br.phdev.misc.Vector2D;
 
 public class MovementSystem {
 
@@ -23,7 +24,7 @@ public class MovementSystem {
     }
 
     public void move(double x, double y, double z) {
-
+        this.gravitySystem.adjust(new Vector2D(x, y));
     }
 
 }

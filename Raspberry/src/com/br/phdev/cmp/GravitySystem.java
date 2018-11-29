@@ -1,5 +1,6 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
@@ -63,6 +64,7 @@ public class GravitySystem  {
 
     public void adjust(Vector2D vector2D) {
         this.center.addMe(vector2D);
+        leftGravityCell.adjust(vector2D);
     }
 
     private void init() {
@@ -99,13 +101,8 @@ public class GravitySystem  {
         }
 
         private void adjust(Vector2D vector2D) {
+            top.adjust(vector2D);
 
-        }
-
-        private double module(double value) {
-            if (value < 0)
-                value *= -1;
-            return value;
         }
 
         @Override
@@ -147,7 +144,6 @@ public class GravitySystem  {
             double lsin = lh / lhip;
             double ldegrees = Math.toDegrees(Math.asin(lsin));
 
-            //double angle = vdegrees - ldegrees;
             double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
@@ -174,8 +170,32 @@ public class GravitySystem  {
             System.out.println();
         }
 
-        void adjust() {
+        private void makeCalc() {
 
+        }
+
+        private void adjust(Vector2D vector2D) {
+            List<Task> servoTaskList = new ArrayList<>();
+
+            this.vertex.addMe(vector2D);
+            double vw = vertex.x - leg.getOriginVector().x;
+            double vh = vertex.y - leg.getOriginVector().y;
+            double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
+            double vsin = vh / vhip;
+            double vdegrees = Math.toDegrees(Math.asin(vsin));
+
+            double lw = leg.getLengthVector().x - leg.getOriginVector().x;
+            double lh = leg.getLengthVector().y - leg.getOriginVector().y;
+            double lhip = Math.sqrt(Math.pow(lw, 2) + Math.pow(lh, 2));
+            double lsin = lh / lhip;
+            double ldegrees = Math.toDegrees(Math.asin(lsin));
+
+            double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
+            double asin = Math.asin(sin);
+            double angle = vdegrees - Math.toDegrees(asin);
+
+            leg.move(true, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
+            servoTaskController.addTasks(servoTaskList);
         }
 
         private void showVertexrInfo(String vertexName, Vertex vertex) {

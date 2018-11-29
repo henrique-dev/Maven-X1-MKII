@@ -536,8 +536,8 @@ public class Maven {
 										break;
 									default:
 										try {
-											if (command.startsWith("up")) {
-
+											if (command.startsWith("move")) {
+												robotSystem.getMovementSystem().move(0, 50, 0);
                                             } else if (command.startsWith("down")) {
 
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
