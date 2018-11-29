@@ -150,11 +150,7 @@ public class GravitySystem  {
             //double angle = vdegrees - ldegrees;
             double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
             double asin = Math.asin(sin);
-            Log.e(sin);
-            Log.e(asin);
-            Log.e(Math.toDegrees(asin));
-            Log.e(leg.getLegData().getLegMidDegrees());
-            double angle = vdegrees - Math.toDegrees(Math.asin(Math.sin(leg.getLegData().getLegMidDegrees())));
+            double angle = vdegrees - Math.toDegrees(asin);
 
             Log.m(String.format(name + " VERTEX > Angulo do vertex: %.2f  |  Angulo da perna: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     vdegrees, ldegrees, angle,
