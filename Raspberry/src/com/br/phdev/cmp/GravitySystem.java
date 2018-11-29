@@ -43,15 +43,15 @@ public class GravitySystem  {
         this.center = new Vector2D(cx, cy);
 
         this.leftGravityCell = new GravityCell(
-                new Vertex(new Vector2D(cx - width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
-                new Vertex(new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT)),
-                new Vertex(new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT))
+                new Vertex("Top", new Vector2D(cx - width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
+                new Vertex("Mid", new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT)),
+                new Vertex("Bottom", new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT))
         );
 
         this.rightGravityCell = new GravityCell(
-                new Vertex(new Vector2D(cx + width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_RIGHT)),
-                new Vertex(new Vector2D(cx - width / 2, cy), body.getLeg(Body.LEG_MID_LEFT)),
-                new Vertex(new Vector2D(cx + width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_RIGHT))
+                new Vertex("Top", new Vector2D(cx + width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_RIGHT)),
+                new Vertex("Mid", new Vector2D(cx - width / 2, cy), body.getLeg(Body.LEG_MID_LEFT)),
+                new Vertex("Bottom", new Vector2D(cx + width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_RIGHT))
         );
 
         Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
@@ -246,31 +246,44 @@ public class GravitySystem  {
 
     private class Vertex {
 
+        String name;
         Vector2D vertex;
         Leg leg;
 
-        Vertex(Vector2D vertex, Leg leg) {
+        Vertex(String name, Vector2D vertex, Leg leg) {
             this.vertex = vertex;
             this.leg = leg;
+            this.name = name;
         }
 
         void init() {
             List<Task> servoTaskList = new ArrayList<>();
-            double cw;
-            double ch;
-            double hip;
-            double sin;
-            double degrees;
+            double vw;
+            double vh;
+            double lw;
+            double lh;
+            double vhip;
+            double lhip;
+            double vsin;
+            double lsin;
+            double vdegrees;
+            double ldegrees;
             double angle;
 
-            cw = vertex.x - leg.getOriginVector().x;
-            ch = vertex.y - leg.getOriginVector().y;
-            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
-            sin = ch / hip;
-            System.out.println("Seno: " + sin);
-            degrees = Math.toDegrees(Math.asin(sin));
+            vw = vertex.x - leg.getOriginVector().x;
+            vh = vertex.y - leg.getOriginVector().y;
+            vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
+            vsin = vh / vhip;
+            vdegrees = Math.toDegrees(Math.asin(vsin));
 
-            System.out.println();
+            lw = leg.getLengthVector().x - leg.getOriginVector().x;
+            lh = leg.getLengthVector().y - leg.getOriginVector().y;
+            lhip = Math.sqrt(Math.pow(lw, 2) + Math.pow(lh, 2));
+            lsin = lh / lhip;
+            ldegrees = Math.toDegrees(Math.asin(lsin));
+
+            System.out.println("vertex degrees: " + vdegrees);
+            System.out.println("leg degrees: " + ldegrees);
         }
 
         void adjust() {
