@@ -148,7 +148,11 @@ public class GravitySystem  {
             double ldegrees = Math.toDegrees(Math.asin(lsin));
 
             //double angle = vdegrees - ldegrees;
-            Log.e(Math.toDegrees(Math.asin(Math.sin(leg.getLegData().getLegMidDegrees()))));
+            double sin = Math.sin(leg.getLegData().getLegMidDegrees());
+            double asin = Math.asin(Math.sin(sin));
+            Log.e(sin);
+            Log.e(asin);
+            Log.e(Math.toDegrees(asin));
             Log.e(leg.getLegData().getLegMidDegrees());
             double angle = vdegrees - Math.toDegrees(Math.asin(Math.sin(leg.getLegData().getLegMidDegrees())));
 
