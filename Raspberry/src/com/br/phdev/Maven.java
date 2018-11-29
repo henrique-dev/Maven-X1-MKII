@@ -549,7 +549,7 @@ public class Maven {
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
                                                 if (command.endsWith("init-gravity-system") || command.endsWith("igs")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
-                                                    robotSystem.getMovementSystem().initGravitySystem(430, 430, 0.5, 2000);
+                                                    robotSystem.getMovementSystem().initGravitySystem(390, 390, 0.5, 2000);
                                                 } else {
                                                     String values = command.startsWith("igs") ? command.substring(4) : command.substring(20);
                                                     int index = values.indexOf(" ");
