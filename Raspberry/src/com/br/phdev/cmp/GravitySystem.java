@@ -63,7 +63,7 @@ public class GravitySystem  {
     }
 
     public void adjust(Vector2D vector2D) {
-        leftGravityCell.adjustLegToVertex(vector2D, false, 1000, false);
+        leftGravityCell.adjustLegToVertex(vector2D, false, 500, true);
         lock.lock();
         waitForAnotherCell();
         lock.unlock();
