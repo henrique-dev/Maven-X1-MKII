@@ -70,11 +70,13 @@ public class GravitySystem  {
         waitForAnotherCell();
         lock2.unlock();
         Log.s("Celula executou o movimento");
-        //lock2.lock();
-        leftGravityCell.adjustLegToVertex(vector2D, true, 2000, true, null);
-        rightGravityCell.adjustLegToVertex(vector2D, true, 2000, true, null);
-        //waitForAnotherCell();
-        //lock2.unlock();
+
+
+        lock2.lock();
+        leftGravityCell.adjustBodyToVertex(vector2D, 1000, null);
+        rightGravityCell.adjustBodyToVertex(vector2D, 1000, waitingTaskCellListener);
+        waitForAnotherCell();
+        lock2.unlock();
         Log.s("Celula executou o movimento");
     }
 
@@ -125,6 +127,12 @@ public class GravitySystem  {
             top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
             mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
             bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
+        }
+
+        private void adjustBodyToVertex(Vector2D vector2D, int gaitSpeed, TaskListener tl) {
+            top.adjustLegToVertex(vector2D, false, gaitSpeed, true, null);
+            mid.adjustLegToVertex(vector2D, false, gaitSpeed, true, null);
+            bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, tl);
         }
 
         @Override
