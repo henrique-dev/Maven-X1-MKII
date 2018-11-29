@@ -114,7 +114,7 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, List<Task> servoTaskList, TaskListener taskListener) {
+    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
@@ -144,12 +144,17 @@ public class Leg {
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
         if (elevate)
-            servoTaskList.add(new ServoTask(this.femur.getServo(), 40, delayMillis / 2, null, new FlavorTaskGroup(0, taskGroups)));
+            servoTaskList.add(new ServoTask(
+                    this.femur.getServo(),
+                    40,
+                    sameDelay ? delayMillis : delayMillis / 2,
+                    null,
+                    new FlavorTaskGroup(0, taskGroups)));
 
         servoTaskList.add(new ServoTask(
                 this.base.getServo(),
                 (int) angle,
-                delayMillis / 5,
+                sameDelay ? delayMillis : delayMillis / 5,
                 new TaskListener[]{new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
@@ -167,7 +172,7 @@ public class Leg {
         servoTaskList.add(new ServoTask(
                 this.femur.getServo(),
                 (int) (cteta / 3),
-                (int)(delayMillis / 2.5),
+                sameDelay ? delayMillis : (int)(delayMillis / 2.5),
                 new TaskListener[]{new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
@@ -183,7 +188,7 @@ public class Leg {
         servoTaskList.add(new ServoTask(
                 this.tarsus.getServo(),
                 (int) cteta,
-                (int)(delayMillis / 2.5),
+                sameDelay ? delayMillis : (int)(delayMillis / 2.5),
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {

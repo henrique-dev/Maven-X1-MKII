@@ -18,6 +18,7 @@ public class GravitySystem  {
 
     private final Lock lock = new ReentrantLock();
     private final Condition movingLeg = lock.newCondition();
+    private final Condition movingCell = lock.newCondition();
 
     private ServoTaskController servoTaskController;
 
@@ -62,12 +63,22 @@ public class GravitySystem  {
     }
 
     public void adjust(Vector2D vector2D) {
-        leftGravityCell.adjustLegToVertex(vector2D, true);
+        leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, true);
+        lock.lock();
+        waitForAnotherCell();
     }
 
     private void init() {
         leftGravityCell.initCell();
         rightGravityCell.initCell();
+    }
+
+    private void waitForAnotherCell() {
+        try {
+            movingCell.await();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
     }
 
     private void waitFor() {
@@ -100,10 +111,10 @@ public class GravitySystem  {
             bottom.init();
         }
 
-        private void adjustLegToVertex(Vector2D vector2D, boolean elevate) {
-            top.adjustLegToVertex(vector2D, elevate);
-            mid.adjustLegToVertex(vector2D, elevate);
-            bottom.adjustLegToVertex(vector2D, elevate);
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed) {
+            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed);
+            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed);
+            bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed);
         }
 
         @Override
@@ -152,7 +163,7 @@ public class GravitySystem  {
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
             Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
 
-            leg.move(true, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
+            leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
 
             lock.lock();
@@ -166,7 +177,7 @@ public class GravitySystem  {
             System.out.println();
         }
 
-        private void adjustLegToVertex(Vector2D vector2D, boolean elevate) {
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed) {
             List<Task> servoTaskList = new ArrayList<>();
 
             if (elevate)
@@ -189,7 +200,7 @@ public class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(elevate, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
+            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, null);
             servoTaskController.addTasks(servoTaskList);
         }
 
@@ -223,6 +234,15 @@ public class GravitySystem  {
         lock.lock();
         movingLeg.signal();
         lock.unlock();
+    };
+
+    private TaskListener waitingTaskCellListener = new TaskListener() {
+        @Override
+        public void onServoTaskComplete(double currentPos) {
+            lock.lock();
+            movingCell.signal();
+            lock.unlock();
+        }
     };
 
 }
