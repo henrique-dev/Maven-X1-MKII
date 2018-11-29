@@ -18,9 +18,8 @@ import java.util.concurrent.locks.ReentrantLock;
 public class GravitySystem  {
 
     private final Lock lock = new ReentrantLock();
-    private final Lock lock2 = new ReentrantLock();
     private final Condition movingLeg = lock.newCondition();
-    private final Condition movingCell = lock2.newCondition();
+    private final Condition movingCell = lock.newCondition();
 
     private ServoTaskController servoTaskController;
 
@@ -66,18 +65,25 @@ public class GravitySystem  {
 
     public void adjust(Vector2D vector2D) {
         leftGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
-        lock2.lock();
+        lock.lock();
         waitForAnotherCell();
-        lock2.unlock();
+        lock.unlock();
         Log.s("Celula executou o movimento");
 
 
-        lock2.lock();
+        lock.lock();
         leftGravityCell.adjustBodyToVertex(vector2D, 1000, null);
         rightGravityCell.adjustBodyToVertex(vector2D, 1000, waitingTaskCellListener);
         waitForAnotherCell();
-        lock2.unlock();
+        lock.unlock();
         Log.s("Celula executou o movimento");
+
+        lock.lock();
+        rightGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
+        waitForAnotherCell();
+        lock.unlock();
+        Log.s("Celula executou o movimento");
+
     }
 
     private void init() {
@@ -258,9 +264,9 @@ public class GravitySystem  {
     private TaskListener waitingTaskCellListener = new TaskListener() {
         @Override
         public void onServoTaskComplete(double currentPos) {
-            lock2.lock();
+            lock.lock();
             movingCell.signal();
-            lock2.unlock();
+            lock.unlock();
         }
     };
 
