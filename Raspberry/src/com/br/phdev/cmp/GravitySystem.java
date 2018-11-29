@@ -66,6 +66,7 @@ public class GravitySystem  {
         leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, true);
         lock.lock();
         waitForAnotherCell();
+        Log.s("Celula executou o movimento");
     }
 
     private void init() {
@@ -200,7 +201,7 @@ public class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, null);
+            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, waitingTaskCellListener);
             servoTaskController.addTasks(servoTaskList);
         }
 
