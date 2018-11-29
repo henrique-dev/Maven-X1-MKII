@@ -93,113 +93,9 @@ public class GravitySystem  {
         }
 
         void initCell() {
-
-
             top.init();
             mid.init();
             bottom.init();
-
-            /*
-            List<Task> servoTaskList = new ArrayList<>();
-            double cw;
-            double ch;
-            double hip;
-            double sin;
-            double degrees;
-            double angle;
-
-            cw = top.vertex.x - top.leg.getOriginVector().x;
-            ch = top.vertex.y - top.leg.getOriginVector().y;
-            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
-            sin = ch / hip;
-            degrees = Math.toDegrees(Math.asin(sin));
-            if (top.vertex.angleSign(top.leg.getTarsus().getFinalVector()) > 0)
-                Log.e("SUBINDO " + (45 - module(degrees)));
-            else
-                Log.e("DESCENDO " + (45 - module(degrees)));
-
-            angle = degrees < 45 ? degrees - 45 : 45 - degrees;
-
-            Log.m(String.format("1) TOP VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
-                    degrees, angle,
-                    new Vector2D(cw, ch).getSize() + top.leg.getBase().getLength()));
-
-            showVertexrInfo("Antigos vetores TOP", top);
-            Log.s("Comprimento atual da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
-
-            top.leg.move(true, angle, hip, precision, gaitSpeed, servoTaskList, taskListener);
-            servoTaskController.addTasks(servoTaskList);
-
-            lock.lock();
-            waitFor();
-            lock.unlock();
-            servoTaskList.clear();
-
-            showVertexrInfo("Novos vetores TOP", top);
-            Log.s("Comprimento novo da perna: " + top.leg.getTarsus().getFinalVector().subtract(top.leg.getBase().getOriginVector()).getSize());
-            System.out.println();
-
-            cw = mid.vertex.x - mid.leg.getOriginVector().x;
-            ch = mid.vertex.y - mid.leg.getOriginVector().y;
-            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
-            sin = ch / hip;
-            angle = degrees = Math.toDegrees(Math.asin(sin));
-            System.out.println(module(angle));
-            System.out.println(module(degrees));
-            if (mid.vertex.angleSign(mid.leg.getTarsus().getFinalVector()) > 0)
-                Log.e("SUBINDO " + (45 - module(degrees)));
-            else
-                Log.e("DESCENDO " + (45 - module(degrees)));
-
-            Log.m(String.format("2) MID VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
-                    degrees, angle,
-                    new Vector2D(cw, ch).getSize() + mid.leg.getBase().getLength()));
-
-            showVertexrInfo("Antigos vetores MID", mid);
-            Log.s("Comprimento atual da perna: " + mid.leg.getTarsus().getFinalVector().subtract(mid.leg.getBase().getOriginVector()).getSize());
-
-            mid.leg.move(true, angle, hip, precision, gaitSpeed, servoTaskList, taskListener);
-            servoTaskController.addTasks(servoTaskList);
-            lock.lock();
-            waitFor();
-            lock.unlock();
-            servoTaskList.clear();
-
-            showVertexrInfo("Novos vetores MID", mid);
-            Log.s("Comprimento novo da perna: " + mid.leg.getTarsus().getFinalVector().subtract(mid.leg.getBase().getOriginVector()).getSize());
-            System.out.println();
-
-            cw = bottom.vertex.x - bottom.leg.getOriginVector().x;
-            ch = bottom.vertex.y - bottom.leg.getOriginVector().y;
-            hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
-            sin = ch / hip;
-
-            degrees = Math.toDegrees(Math.asin(sin)) * -1;
-            angle = degrees >= 45 ? degrees - 45 : 45 - degrees;
-            if (bottom.vertex.angleSign(bottom.leg.getTarsus().getFinalVector()) > 0)
-                Log.e("SUBINDO " + (45 - module(degrees)));
-            else
-                Log.e("DESCENDO " + (45 - module(degrees)));
-
-            Log.m(String.format("3) BOTTOM VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
-                    degrees, angle,
-                    new Vector2D(cw, ch).getSize() + bottom.leg.getBase().getLength()));
-
-            showVertexrInfo("Antigos vetores MID", bottom);
-            Log.s("Comprimento atual da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
-
-            bottom.leg.move(true, angle, hip, precision, gaitSpeed, servoTaskList, taskListener);
-            servoTaskController.addTasks(servoTaskList);
-            lock.lock();
-            waitFor();
-            lock.unlock();
-            servoTaskList.clear();
-
-            showVertexrInfo("Novos vetores MID", bottom);
-            Log.s("Comprimento novo da perna: " + bottom.leg.getTarsus().getFinalVector().subtract(bottom.leg.getBase().getOriginVector()).getSize());
-            System.out.println();
-
-            this.moving = false;*/
         }
 
         private void adjust(Vector2D vector2D) {
@@ -238,31 +134,20 @@ public class GravitySystem  {
 
         void init() {
             List<Task> servoTaskList = new ArrayList<>();
-            double vw;
-            double vh;
-            double lw;
-            double lh;
-            double vhip;
-            double lhip;
-            double vsin;
-            double lsin;
-            double vdegrees;
-            double ldegrees;
-            double angle;
 
-            vw = vertex.x - leg.getOriginVector().x;
-            vh = vertex.y - leg.getOriginVector().y;
-            vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
-            vsin = vh / vhip;
-            vdegrees = Math.toDegrees(Math.asin(vsin));
+            double vw = vertex.x - leg.getOriginVector().x;
+            double vh = vertex.y - leg.getOriginVector().y;
+            double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
+            double vsin = vh / vhip;
+            double vdegrees = Math.toDegrees(Math.asin(vsin));
 
-            lw = leg.getLengthVector().x - leg.getOriginVector().x;
-            lh = leg.getLengthVector().y - leg.getOriginVector().y;
-            lhip = Math.sqrt(Math.pow(lw, 2) + Math.pow(lh, 2));
-            lsin = lh / lhip;
-            ldegrees = Math.toDegrees(Math.asin(lsin));
+            double lw = leg.getLengthVector().x - leg.getOriginVector().x;
+            double lh = leg.getLengthVector().y - leg.getOriginVector().y;
+            double lhip = Math.sqrt(Math.pow(lw, 2) + Math.pow(lh, 2));
+            double lsin = lh / lhip;
+            double ldegrees = Math.toDegrees(Math.asin(lsin));
 
-            angle = ldegrees - vdegrees;
+            double angle = vdegrees - ldegrees;
 
             Log.m(String.format("1) " + name + " VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
                     vdegrees, angle,
