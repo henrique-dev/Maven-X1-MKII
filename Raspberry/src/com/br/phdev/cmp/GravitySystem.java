@@ -267,12 +267,9 @@ public class GravitySystem  {
             ch = vertex.y - leg.getOriginVector().y;
             hip = Math.sqrt(Math.pow(cw, 2) + Math.pow(ch, 2));
             sin = ch / hip;
+            System.out.println("Seno: " + sin);
             degrees = Math.toDegrees(Math.asin(sin));
 
-            System.out.println(Math.toDegrees(vertex.normalize().getAngle()));
-            System.out.println(Math.toDegrees(leg.getLengthVector().normalize().getAngle()));
-            System.out.println(Math.toDegrees(vertex.normalize().angleBetween(leg.getLengthVector().normalize())));
-            System.out.println(Math.toDegrees(vertex.normalize().angleBetween(leg.getBase().getFinalVector().normalize())));
             System.out.println();
         }
 
