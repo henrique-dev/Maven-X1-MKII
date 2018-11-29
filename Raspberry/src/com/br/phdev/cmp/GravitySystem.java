@@ -124,8 +124,8 @@ public class GravitySystem  {
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
-            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
-            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
+            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, null);
+            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, null);
             bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
         }
 
