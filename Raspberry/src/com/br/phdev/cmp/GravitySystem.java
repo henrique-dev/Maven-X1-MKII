@@ -70,8 +70,8 @@ public class GravitySystem  {
         lock.unlock();
         Log.s("Celula executou o movimento");
         lock.lock();
-        leftGravityCell.adjustLegToVertex(vector2D, false, 1000, true, null);
-        rightGravityCell.adjustLegToVertex(vector2D, false, 1000, true, waitingTaskCellListener);
+        leftGravityCell.adjustLegToVertex(vector2D, true, 1000, false, null);
+        rightGravityCell.adjustLegToVertex(vector2D, true, 1000, false, waitingTaskCellListener);
         waitForAnotherCell();
         lock.unlock();
         Log.s("Celula executou o movimento");
