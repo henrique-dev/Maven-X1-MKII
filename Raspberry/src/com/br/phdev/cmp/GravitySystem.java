@@ -70,6 +70,14 @@ public class GravitySystem  {
         rightGravityCell.initCell();
     }
 
+    private void waitFor() {
+        try {
+            movingLeg.await();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
     private class GravityCell implements TaskListener {
 
         boolean moving;
@@ -204,34 +212,6 @@ public class GravitySystem  {
             return value;
         }
 
-        private void showVertexrInfo(String vertexName, Vertex vertex) {
-            Log.w(vertexName + " ( " + vertex.leg.getLegData().getLegNumber() + " ):");
-            Log.w(String.format("OB( %.3f , %.3f ) OF( %.3f , %.3f ) OT( %.3f , %.3f )",
-                    vertex.leg.getBase().getOriginVector().x,
-                    vertex.leg.getBase().getOriginVector().y,
-                    vertex.leg.getFemur().getOriginVector().x,
-                    vertex.leg.getFemur().getOriginVector().y,
-                    vertex.leg.getTarsus().getOriginVector().x,
-                    vertex.leg.getTarsus().getOriginVector().y
-            ));
-            Log.w(String.format("FB( %.3f , %.3f ) FF( %.3f , %.3f ) FT( %.3f , %.3f )",
-                    vertex.leg.getBase().getFinalVector().x,
-                    vertex.leg.getBase().getFinalVector().y,
-                    vertex.leg.getFemur().getFinalVector().x,
-                    vertex.leg.getFemur().getFinalVector().y,
-                    vertex.leg.getTarsus().getFinalVector().x,
-                    vertex.leg.getTarsus().getFinalVector().y
-            ));
-        }
-
-        private void waitFor() {
-            try {
-                movingLeg.await();
-            } catch (InterruptedException ie) {
-                ie.printStackTrace();
-            }
-        }
-
         @Override
         public void onServoTaskComplete(double currentPos) {
             notifyAll();
@@ -282,18 +262,50 @@ public class GravitySystem  {
             lsin = lh / lhip;
             ldegrees = Math.toDegrees(Math.asin(lsin));
 
-            System.out.println(vw);
-            System.out.println(vh);
-            System.out.println(lw);
-            System.out.println(lh);
-            System.out.println("vertex degrees: " + vdegrees);
-            System.out.println("leg degrees: " + ldegrees);
-            System.out.println(name + " Aplicando este angulo: " + String.format("%.3f", (ldegrees - vdegrees)));
+            angle = ldegrees - vdegrees;
+
+            Log.m(String.format("1) " + name + " VERTEX > Angulo encontrado: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+                    vdegrees, angle,
+                    new Vector2D(vw, vh).getSize() + leg.getBase().getLength()));
+
+            showVertexrInfo("Antigos vetores " + name, this);
+            Log.s("Comprimento atual da perna: " + leg.getTarsus().getFinalVector().subtract(leg.getBase().getOriginVector()).getSize());
+
+            leg.move(true, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
+            servoTaskController.addTasks(servoTaskList);
+
+            lock.lock();
+            waitFor();
+            lock.unlock();
+            servoTaskList.clear();
+
+            showVertexrInfo("Novos vetores " + name, this);
+            Log.s("Comprimento novo da perna: " + leg.getTarsus().getFinalVector().subtract(leg.getBase().getOriginVector()).getSize());
             System.out.println();
         }
 
         void adjust() {
 
+        }
+
+        private void showVertexrInfo(String vertexName, Vertex vertex) {
+            Log.w(vertexName + " ( " + vertex.leg.getLegData().getLegNumber() + " ):");
+            Log.w(String.format("OB( %.3f , %.3f ) OF( %.3f , %.3f ) OT( %.3f , %.3f )",
+                    vertex.leg.getBase().getOriginVector().x,
+                    vertex.leg.getBase().getOriginVector().y,
+                    vertex.leg.getFemur().getOriginVector().x,
+                    vertex.leg.getFemur().getOriginVector().y,
+                    vertex.leg.getTarsus().getOriginVector().x,
+                    vertex.leg.getTarsus().getOriginVector().y
+            ));
+            Log.w(String.format("FB( %.3f , %.3f ) FF( %.3f , %.3f ) FT( %.3f , %.3f )",
+                    vertex.leg.getBase().getFinalVector().x,
+                    vertex.leg.getBase().getFinalVector().y,
+                    vertex.leg.getFemur().getFinalVector().x,
+                    vertex.leg.getFemur().getFinalVector().y,
+                    vertex.leg.getTarsus().getFinalVector().x,
+                    vertex.leg.getTarsus().getFinalVector().y
+            ));
         }
 
         @Override
