@@ -63,9 +63,9 @@ public class GravitySystem  {
         init();
     }
 
-    public void adjust(Vector2D vector2D, int stepAmount) {
+    public void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
         for (int i=0; i<stepAmount; i++) {
-            leftGravityCell.adjustLegToVertex(vector2D, true, 500, false, waitingTaskCellListener);
+            leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, waitingTaskCellListener);
             lock.lock();
             waitForAnotherCell();
             lock.unlock();
@@ -73,14 +73,14 @@ public class GravitySystem  {
 
 
             lock.lock();
-            leftGravityCell.adjustBodyToVertex(vector2D, 100, null);
-            rightGravityCell.adjustBodyToVertex(vector2D, 100, waitingTaskCellListener);
+            leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, null);
+            rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, waitingTaskCellListener);
             waitForAnotherCell();
             lock.unlock();
             Log.s("Celula executou o movimento");
 
             lock.lock();
-            rightGravityCell.adjustLegToVertex(vector2D, true, 500, false, waitingTaskCellListener);
+            rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed / 5, false, waitingTaskCellListener);
             waitForAnotherCell();
             lock.unlock();
             Log.s("Celula executou o movimento");

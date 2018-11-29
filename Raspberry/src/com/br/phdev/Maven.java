@@ -545,9 +545,13 @@ public class Maven {
 												index = values.indexOf(" ");
 												value = values.substring(0, index);
 												double stepSizeY = Double.parseDouble(value);
+												values = values.substring(index+1);
+												index = values.indexOf(" ");
+												value = values.substring(0, index);
+												int gaitSpeed = Integer.parseInt(value);
 												value = values.substring(index+1);
 												int stepAmount = Integer.parseInt(value);
-												robotSystem.getMovementSystem().move(stepSizeX, stepSizeY, stepAmount);
+												robotSystem.getMovementSystem().move(stepSizeX, stepSizeY, stepAmount, gaitSpeed);
                                             } else if (command.startsWith("down")) {
 
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
