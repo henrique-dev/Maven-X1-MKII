@@ -191,9 +191,9 @@ public class GravitySystem  {
             List<Task> servoTaskList = new ArrayList<>();
 
             if (elevate)
-                leg.getOriginVector().addMe(vector2D);
-            else
                 vertex.addMe(vector2D);
+            else
+                leg.getOriginVector().addMe(vector2D);
 
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;

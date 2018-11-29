@@ -75,7 +75,7 @@ public class ServoTaskController {
                             task.deleteTask();
                             ServoTaskController.this.taskList.remove(i);
                             i--;
-                            //Log.w("Tarefa removida. Numero de tarefas atuais: " + ServoTaskController.this.taskList.size());
+                            Log.w("Tarefa removida. Numero de tarefas atuais: " + ServoTaskController.this.taskList.size());
                             if (ServoTaskController.this.taskList.isEmpty())
                                 break;
                         }
