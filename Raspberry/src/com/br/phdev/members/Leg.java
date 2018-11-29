@@ -31,7 +31,6 @@ public class Leg {
         this.femur = femur;
         this.tarsus = tarsus;
         this.onGround = true;
-        this.currentLegDegrees = base.getCurrentAngle();
     }
 
     public LegData getLegData() {
