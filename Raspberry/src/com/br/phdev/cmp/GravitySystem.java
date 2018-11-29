@@ -155,6 +155,7 @@ public class GravitySystem  {
 
             showVertexrInfo("Antigos vetores " + name, this);
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
+            Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
 
             leg.move(true, angle, vhip, precision, gaitSpeed, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
@@ -166,6 +167,7 @@ public class GravitySystem  {
 
             showVertexrInfo("Novos vetores " + name, this);
             Log.s("Comprimento novo da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
+            Log.s("Grau novo da perna: " + leg.getCurrentLegDegrees());
             System.out.println();
         }
 

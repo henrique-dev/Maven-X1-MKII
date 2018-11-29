@@ -15,6 +15,8 @@ public class Leg {
 
     private boolean onGround;
 
+    private double currentLegDegrees;
+
     private final LegData legData;
     private final Base base;
     private final Femur femur;
@@ -29,6 +31,7 @@ public class Leg {
         this.femur = femur;
         this.tarsus = tarsus;
         this.onGround = true;
+        this.currentLegDegrees = base.getCurrentAngle();
     }
 
     public LegData getLegData() {
@@ -96,6 +99,14 @@ public class Leg {
 
     }
 
+    public double getCurrentLegDegrees() {
+        return currentLegDegrees;
+    }
+
+    public void setCurrentLegDegrees(double currentLegDegrees) {
+        this.currentLegDegrees = currentLegDegrees;
+    }
+
     public boolean isOnGround() {
         return onGround;
     }
@@ -148,6 +159,7 @@ public class Leg {
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
+                        currentLegDegrees = currentPos;
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
