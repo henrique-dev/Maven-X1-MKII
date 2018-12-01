@@ -66,14 +66,21 @@ public class Maven {
 						break;
 					case "init-system":
 						if (!initSystem) {
-							robotSystem.initSystem(true);
+							robotSystem.initSystem(true, true);
+							initSystem = true;
+						} else
+							show(Warning.SYSTEM_ALL_READY_STARTED);
+						break;
+					case "init-system-nm":
+						if (!initSystem) {
+							robotSystem.initSystem(true, false);
 							initSystem = true;
 						} else
 							show(Warning.SYSTEM_ALL_READY_STARTED);
 						break;
 					case "init-system-d":
 						if (!initSystem) {
-							robotSystem.initSystem(false);
+							robotSystem.initSystem(false, false);
 							initSystem = true;
 						} else
 							show(Warning.SYSTEM_ALL_READY_STARTED);

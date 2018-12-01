@@ -30,7 +30,7 @@ public class RobotSystem {
     private Leg[] legs;
     private Servo[] servos;
 
-    public void initSystem(boolean startModules) throws I2CFactory.UnsupportedBusNumberException {
+    public void initSystem(boolean startModules, boolean moveServosToMid) throws I2CFactory.UnsupportedBusNumberException {
         if (this.loadData(true)) {
             if (startModules) {
                 for (Module module : moduleList) {
@@ -39,7 +39,7 @@ public class RobotSystem {
                         ((PCA9685) module).setPWMFreq(60);
                 }
             }
-            this.injectData(startModules);
+            this.injectData(moveServosToMid);
             this.injectVectors();
         } else
             Log.e("Falha ao iniciar o sistema");
