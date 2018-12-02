@@ -115,6 +115,7 @@ public class Leg {
     }
 
     public void elevate(int elevationType, List<Task> servoTaskList) {
+        base.getServo().setRawPosition(0);
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (elevationType) {
             case 0: { // DESCER
