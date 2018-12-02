@@ -97,6 +97,11 @@ class GravitySystem  {
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
+    void adjust() {
+        this.leftGravityCell.adjust();
+        this.rightGravityCell.adjust();
+    }
+
     void elevate(int elevateType) {
         leftGravityCell.elevate(elevateType);
         rightGravityCell.elevate(elevateType);
