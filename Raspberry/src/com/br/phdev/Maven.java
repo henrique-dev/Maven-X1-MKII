@@ -564,7 +564,7 @@ public class Maven {
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
                                                 if (command.endsWith("init-gravity-system") || command.endsWith("igs")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
-                                                    robotSystem.getMovementSystem().initGravitySystem(390, 390, 0.5, 2000);
+                                                    robotSystem.getMovementSystem().startGravitySystem(390, 390, 0.5, 2000);
                                                 } else {
                                                     String values = command.startsWith("igs") ? command.substring(4) : command.substring(20);
                                                     int index = values.indexOf(" ");
@@ -582,7 +582,7 @@ public class Maven {
 													int gaitSpeed = Integer.parseInt(value);
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão " + width +
                                                             "mmx" + height + "mm e precisão de " + precision + "mm com velocidade de passo de " + gaitSpeed);
-                                                    robotSystem.getMovementSystem().initGravitySystem(width, height, precision, gaitSpeed);
+                                                    robotSystem.getMovementSystem().startGravitySystem(width, height, precision, gaitSpeed);
                                                 }
                                             } else
                                                 show(Error.INVALID_COMMAND);

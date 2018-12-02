@@ -1,6 +1,5 @@
 package com.br.phdev.cmp;
 
-import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
@@ -59,8 +58,11 @@ public class GravitySystem  {
         Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
+    }
 
-        init();
+    public void adjust() {
+        leftGravityCell.adjust();
+        rightGravityCell.adjust();
     }
 
     public void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
@@ -86,11 +88,6 @@ public class GravitySystem  {
             Log.s("Celula executou o movimento");
         }
 
-    }
-
-    private void init() {
-        leftGravityCell.initCell();
-        rightGravityCell.initCell();
     }
 
     private void waitForAnotherCell() {
@@ -125,10 +122,10 @@ public class GravitySystem  {
             this.bottom = bottom;
         }
 
-        void initCell() {
-            top.init();
-            mid.init();
-            bottom.init();
+        void adjust() {
+            top.adjust();
+            mid.adjust();
+            bottom.adjust();
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
@@ -162,8 +159,9 @@ public class GravitySystem  {
             this.name = name;
         }
 
-        void init() {
+        void adjust() {
             List<Task> servoTaskList = new ArrayList<>();
+            leg.resetPosition();
 
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;
@@ -271,5 +269,14 @@ public class GravitySystem  {
             lock.unlock();
         }
     };
+
+    class AccGirThread extends Thread {
+
+        @Override
+        public void run() {
+
+        }
+
+    }
 
 }

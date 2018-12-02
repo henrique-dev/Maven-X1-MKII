@@ -23,7 +23,11 @@ public class DataRepo {
             moduleList = new ArrayList<>();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                moduleList.add(new PCA9685(rs.getString("mod_address")));
+                String module = rs.getString("mod_desc");
+                if (module.toLowerCase().equals("pca9685"))
+                    moduleList.add(new PCA9685(rs.getString("mod_address")));
+                else if (module.toLowerCase().equals("mpu9150"))
+                    moduleList.add(new PCA9685(rs.getString("mod_address")));
             }
         } catch (SQLException e) {
             throw new MavenDataException("Falha ao carregar as informações para os módulos.", e);

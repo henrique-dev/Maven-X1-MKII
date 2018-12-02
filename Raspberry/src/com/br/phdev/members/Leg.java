@@ -208,6 +208,12 @@ public class Leg {
         this.tarsus.move(tarsus.getCurrentAngle());
     }
 
+    public void resetPosition() {
+        this.base.getServo().setCurrentPositionDegrees(0);
+        this.femur.getServo().setCurrentPositionDegrees(0);
+        this.tarsus.getServo().setCurrentPositionDegrees(0);
+    }
+
 
 
 }

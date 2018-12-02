@@ -5,6 +5,7 @@
  */
 package com.br.phdev.driver;
 
+import com.br.phdev.misc.Log;
 import com.pi4j.io.i2c.I2CBus;
 import com.pi4j.io.i2c.I2CDevice;
 import com.pi4j.io.i2c.I2CFactory;
@@ -16,33 +17,36 @@ import java.util.List;
  *
  * @author PH
  */
-public class MPU9150 {
+public class MPU9150 extends Module {
 
     private I2CBus bus;
     private I2CDevice mpuDriver;
     private byte[] accelData, gyroData;
 
-    public MPU9150() throws I2CFactory.UnsupportedBusNumberException {
+    public MPU9150(String moduleAddress) {
+        super(moduleAddress);
+    }
 
+    @Override
+    public void init() throws I2CFactory.UnsupportedBusNumberException {
         try {
             bus = I2CFactory.getInstance(I2CBus.BUS_1);
             System.out.println("Conectado ao barramento OK");
 
-            mpuDriver = bus.getDevice(0x68);
+            mpuDriver = bus.getDevice(Integer.getInteger(super.moduleAddress));
             System.out.println("Conectado ao dispositivo OK");
 
             // iniciando sensor
             mpuDriver.write(0x6B, (byte) 0b00000000);
             mpuDriver.write(0x6C, (byte) 0b00000000);
-            System.out.println("Confirando dispositivo OK");
+            System.out.println("Configurando dispositivo OK");
 
             mpuDriver.write(0x1B, (byte) 0b11100000);
             mpuDriver.write(0x1C, (byte) 0b00000001);
-            System.out.println("Confirando sensores OK");
+            System.out.println("Configurando sensores OK");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Log.e(e.getMessage());
         }
-
     }
 
     public List<Double> readAccel() {
@@ -110,7 +114,7 @@ public class MPU9150 {
             ret.add((double) gz);
             return ret;
         } catch (IOException ex) {
-
+            Log.e(ex.getMessage());
         }
         return null;
 

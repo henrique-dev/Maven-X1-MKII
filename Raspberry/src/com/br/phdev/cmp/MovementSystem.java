@@ -17,10 +17,14 @@ public class MovementSystem {
         this.body.stay();
     }
 
-    public void initGravitySystem(double width, double height, double precision, int gaitSpeed) {
+    public void startGravitySystem(double width, double height, double precision, int gaitSpeed) {
         Log.i("Iniciando sistema de centro de gravidade");
         this.gravitySystem = new GravitySystem(this.servoTaskController, this.body, width, height, precision, gaitSpeed);
         Log.s("Sistema de centro de gravidade iniciado");
+    }
+
+    public void adjustGravitySystem(double width, double height, double precision, int gaitSpeed) {
+        this.gravitySystem.adjust();
     }
 
     public void move(double stepSizeX, double stepSizeY, int stepAmount, int gaitSpeed) {
