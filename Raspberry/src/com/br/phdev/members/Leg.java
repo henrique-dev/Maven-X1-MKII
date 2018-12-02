@@ -152,7 +152,7 @@ public class Leg {
                 double totalAngle = this.femur.getLimitMax() > this.tarsus.getLimitMin() ? this.tarsus.getLimitMin() : this.femur.getLimitMax();
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        (int)totalAngle,
+                        (int)totalAngle / 2,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -161,10 +161,10 @@ public class Leg {
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
-/*
+
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        -(int)totalAngle / 2,
+                        -(int)totalAngle / 4,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
