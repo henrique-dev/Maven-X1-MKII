@@ -121,6 +121,9 @@ public class Leg {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
+        double tempxf = 0;
+        double tempxt = 0;
+        double cxft = 0;
         double tempyf = 0;
         double tempyt = 0;
         double cyf = 0;
@@ -133,8 +136,14 @@ public class Leg {
         }
 
         Log.i(String.format("O angulo em graus encontrado para solução foi: " +
-                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f, YT = %.2f e YF = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
+                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaT = %.2f, YT = %.2f e YF = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
                 cteta, precision, cteta/3, cteta, cyt, cyf, currentHeight, newHeight));
+
+        tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
+        tempxt = Math.sin(Math.toRadians(cteta)) * wt;
+        cxft = tempxf + tempxt;
+
+        Log.i("Comprimento da perna: " + cxft);
 
         //this.femur.move(cteta / 3);
         //this.tarsus.move(cteta);
