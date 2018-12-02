@@ -118,7 +118,8 @@ public class Leg {
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (elevationType) {
             case 0: { // DESCER
-                double totalAngle = module(module(this.femur.getLimitMin()) > module(this.tarsus.getLimitMax()) ? this.tarsus.getLimitMax() : this.femur.getLimitMin());
+                //double totalAngle = module(module(this.femur.getLimitMin()) > module(this.tarsus.getLimitMax()) ? this.tarsus.getLimitMax() : this.femur.getLimitMin());
+                double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
                         (int)totalAngle,
