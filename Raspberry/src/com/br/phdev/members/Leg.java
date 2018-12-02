@@ -145,7 +145,7 @@ public class Leg {
                 break;
             }
             case 1: { // RETORNAR A POSIÇÃO ORIGINAL
-                this.move(false, 0, getLengthVector().subtract(getOriginVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
+                this.move(false, 0, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
                 break;
             }
             case 2: { // SUBIR
