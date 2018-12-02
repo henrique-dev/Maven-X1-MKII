@@ -149,10 +149,10 @@ public class Leg {
                 break;
             }
             case 2: { // SUBIR
-                double totalAngle = this.femur.getLimitMax() > this.tarsus.getLimitMin() ? this.tarsus.getLimitMin() : this.femur.getLimitMax();
+                double totalAngle = module(module(this.femur.getLimitMax()) > module(this.tarsus.getLimitMin()) ? this.tarsus.getLimitMin() : this.femur.getLimitMax());
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        (int)totalAngle / 2,
+                        (int)-totalAngle / 2,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -164,7 +164,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        (int)-totalAngle,
+                        (int)totalAngle,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
