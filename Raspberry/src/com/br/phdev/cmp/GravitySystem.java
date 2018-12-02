@@ -63,9 +63,38 @@ class GravitySystem  {
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
-    void adjust() {
+    void adjust(double width, double height, double precision, int gaitSpeed) {
+        this.precision = precision;
+        this.gaitSpeed = gaitSpeed;
+        this.width = width;
+        this.height = height;
+        double cx = body.getArea().x / 2;
+        double cy = body.getArea().y / 2;
+
+        this.leftGravityCell.center.x = cx;
+        this.leftGravityCell.center.y = cy;
+        this.leftGravityCell.top.vertex.x = cx - width / 2;
+        this.leftGravityCell.top.vertex.y = cy + height / 2;
+        this.leftGravityCell.mid.vertex.x = cx + width / 2;
+        this.leftGravityCell.mid.vertex.y = cy;
+        this.leftGravityCell.bottom.vertex.x = cx - width / 2;
+        this.leftGravityCell.bottom.vertex.y = cy - height / 2;
+
+        this.rightGravityCell.center.x = cx;
+        this.rightGravityCell.center.y = cy;
+        this.rightGravityCell.top.vertex.x = cx + width / 2;
+        this.rightGravityCell.top.vertex.y = cy + height / 2;
+        this.rightGravityCell.mid.vertex.x = cx - width / 2;
+        this.rightGravityCell.mid.vertex.y = cy;
+        this.rightGravityCell.bottom.vertex.x = cx + width / 2;
+        this.rightGravityCell.bottom.vertex.y = cy - height / 2;
+
         this.leftGravityCell.adjust();
         this.rightGravityCell.adjust();
+
+        Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
+        Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
+        Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
     void elevate(int elevateType) {

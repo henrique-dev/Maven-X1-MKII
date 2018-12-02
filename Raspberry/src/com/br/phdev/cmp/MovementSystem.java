@@ -27,7 +27,7 @@ public class MovementSystem {
     }
 
     public void adjustGravitySystem(double width, double height, double precision, int gaitSpeed) {
-        this.gravitySystem.adjust();
+        this.gravitySystem.adjust(width, height, precision, gaitSpeed);
     }
 
     public void move(double stepSizeX, double stepSizeY, int stepAmount, int gaitSpeed) {
