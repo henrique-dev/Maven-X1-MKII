@@ -21,7 +21,7 @@ public class MovementSystem {
     public void startGravitySystem(double width, double height, double precision, int gaitSpeed) {
         Log.i("Iniciando sistema de centro de gravidade");
         this.gravitySystem = new GravitySystem(this.servoTaskController, this.body, width, height, precision, gaitSpeed);
-        this.gravitySystem.elevate(0);
+        //this.gravitySystem.elevate(0);
         //adjustGravitySystem(width, height, precision, gaitSpeed);
         Log.s("Sistema de centro de gravidade iniciado");
     }
