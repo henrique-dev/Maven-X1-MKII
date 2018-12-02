@@ -161,7 +161,6 @@ public class GravitySystem  {
 
         void adjust() {
             List<Task> servoTaskList = new ArrayList<>();
-            leg.resetPosition();
 
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;
