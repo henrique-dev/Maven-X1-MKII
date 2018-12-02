@@ -182,7 +182,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        this.tarsus.getServo().getServoData().getLimitMin(),
+                        this.tarsus.getServo().getServoData().getLimitMax(),
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
