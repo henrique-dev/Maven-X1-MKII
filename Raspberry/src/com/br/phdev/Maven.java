@@ -569,8 +569,7 @@ public class Maven {
 												int index = values.indexOf(" ");
 												String value = values.substring(0, index);
 												double z = Double.parseDouble(value);
-												values = values.substring(index+1);
-												value = values.substring(0, index);
+												value = values.substring(index+1);
 												double precision = Double.parseDouble(value);
 												robotSystem.getMovementSystem().elevate(z, precision);
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
