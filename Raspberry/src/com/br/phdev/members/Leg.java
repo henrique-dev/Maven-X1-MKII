@@ -122,6 +122,7 @@ public class Leg {
         double cyft = 0;
         double cteta = 0;
         while (cyft < finalLength) {
+            Log.e("HERE");
             tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
             tempyt = Math.cos(Math.toRadians(cteta)) * wt;
             cyft = tempyf + tempyt;

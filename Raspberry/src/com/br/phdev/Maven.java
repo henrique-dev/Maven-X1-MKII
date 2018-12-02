@@ -572,7 +572,7 @@ public class Maven {
 												values = values.substring(index+1);
 												value = values.substring(0, index);
 												double precision = Double.parseDouble(value);
-												robotSystem.getMovementSystem().elevate(z, precision);
+												robotSystem.getMovementSystem().elevate(z, 0.5);
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
                                                 if (command.endsWith("init-gravity-system") || command.endsWith("igs")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
