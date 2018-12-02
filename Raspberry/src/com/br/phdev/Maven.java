@@ -528,6 +528,7 @@ public class Maven {
 					case "move-system":
 						if (moveSystem && initSystem) {
 							boolean runningMoveSystem = true;
+							boolean runningGravitySystem = false;
 							while (runningMoveSystem) {
 								currentPath = "move-system ";
 								System.out.print(currentPath + "> ");
@@ -571,7 +572,11 @@ public class Maven {
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
                                                 if (command.endsWith("init-gravity-system") || command.endsWith("igs")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
-                                                    robotSystem.getMovementSystem().startGravitySystem(390, 390, 0.5, 2000);
+                                                    if (!runningGravitySystem) {
+														robotSystem.getMovementSystem().startGravitySystem(390, 390, 0.5, 2000);
+														runningGravitySystem = true;
+													} else
+														robotSystem.getMovementSystem().adjustGravitySystem(390, 390, 0.5, 2000);
                                                 } else {
                                                     String values = command.startsWith("igs") ? command.substring(4) : command.substring(20);
                                                     int index = values.indexOf(" ");
@@ -589,7 +594,12 @@ public class Maven {
 													int gaitSpeed = Integer.parseInt(value);
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão " + width +
                                                             "mmx" + height + "mm e precisão de " + precision + "mm com velocidade de passo de " + gaitSpeed);
-                                                    robotSystem.getMovementSystem().startGravitySystem(width, height, precision, gaitSpeed);
+                                                    if (!runningGravitySystem) {
+														robotSystem.getMovementSystem().startGravitySystem(width, height, precision, gaitSpeed);
+														runningGravitySystem = true;
+													} else {
+														robotSystem.getMovementSystem().adjustGravitySystem(width, height, precision, gaitSpeed);
+													}
                                                 }
                                             } else
                                                 show(Error.INVALID_COMMAND);
