@@ -170,7 +170,7 @@ public class Leg {
             case 2:
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        this.femur.getServo().getServoData().getLimitMax() / 2,
+                        this.femur.getServo().getServoData().getLimitMax(),
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -182,7 +182,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        this.tarsus.getServo().getServoData().getLimitMax(),
+                        this.tarsus.getServo().getServoData().getLimitMax() / 2,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
