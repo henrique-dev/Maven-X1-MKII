@@ -230,7 +230,7 @@ public class Leg {
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
-                        //base.getServo().setRawPosition(0);
+                        base.getServo().setRawPosition(0);
                         currentLegDegrees = currentPos;
                     }
                 }},
