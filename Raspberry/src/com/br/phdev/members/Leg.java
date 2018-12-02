@@ -133,16 +133,18 @@ public class Leg {
                 if (cyft <= newHeight)
                     break;
                 else
-                    cteta += precision;
+                    cteta -= precision;
             } else {
                 if (cyft >= newHeight)
                     break;
                 else
-                    cteta -= precision;
+                    cteta += precision;
             }
             if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
-                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
+                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax()) {
+                Log.w("Atingiu limites");
                 break;
+            }
         }
 
         Log.i(String.format("O angulo em graus encontrado para solução foi: " +
