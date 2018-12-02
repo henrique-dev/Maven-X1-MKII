@@ -48,6 +48,14 @@ public class Member {
         this.finalVector = area;
     }
 
+    public double getLimitMax() {
+        return this.servo.getServoData().getLimitMax();
+    }
+
+    public double getLimitMin() {
+        return this.servo.getServoData().getLimitMin();
+    }
+
     public void move(double angle) {
         this.servo.move(angle);
     }

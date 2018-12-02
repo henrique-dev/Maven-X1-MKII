@@ -117,10 +117,11 @@ public class Leg {
     public void elevate(int elevationType, List<Task> servoTaskList) {
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (elevationType) {
-            case 0:
+            case 0: { // SUBIR
+                double totalAngle = this.femur.getLimitMin() > this.tarsus.getLimitMax() ? this.tarsus.getLimitMax() : this.femur.getLimitMin();
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        this.femur.getServo().getServoData().getLimitMin() / 2,
+                        (int)-totalAngle,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -132,7 +133,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        this.tarsus.getServo().getServoData().getLimitMax(),
+                        (int)totalAngle,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -142,10 +143,16 @@ public class Leg {
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
                 break;
-            case 1:
+            }
+            case 1: { // RETORNAR A POSIÇÃO ORIGINAL
+                this.move(false, 0, getLengthVector().subtract(getOriginVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
+                break;
+            }
+            case 2: { // DESCER
+                double totalAngle = this.femur.getLimitMax() > this.tarsus.getLimitMin() ? this.tarsus.getLimitMin() : this.femur.getLimitMax();
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        0,
+                        (int)totalAngle,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -157,32 +164,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        0,
-                        1000,
-                        new TaskListener[]{new TaskListener() {
-                            @Override
-                            public void onServoTaskComplete(double currentPos) {
-                                
-                            }
-                        }},
-                        new FlavorTaskGroup(0, taskGroups)));
-                break;
-            case 2:
-                servoTaskList.add(new ServoTask(
-                        this.femur.getServo(),
-                        this.femur.getServo().getServoData().getLimitMax(),
-                        1000,
-                        new TaskListener[]{new TaskListener() {
-                            @Override
-                            public void onServoTaskComplete(double currentPos) {
-
-                            }
-                        }},
-                        new FlavorTaskGroup(0, taskGroups)));
-
-                servoTaskList.add(new ServoTask(
-                        this.tarsus.getServo(),
-                        this.tarsus.getServo().getServoData().getLimitMax() / 2,
+                        (int)-totalAngle,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -192,6 +174,7 @@ public class Leg {
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
                 break;
+            }
         }
     }
 
