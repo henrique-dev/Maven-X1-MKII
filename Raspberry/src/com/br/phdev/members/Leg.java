@@ -133,10 +133,10 @@ public class Leg {
         double tetaF = femur.getServo().getServoData().getLimitMin();
         double tetaT = tarsus.getServo().getServoData().getLimitMin();
 
-        while (cyf - cyt < newHeight) {
+        while (cyt - cyf < newHeight) {
             cyf = Math.sin(Math.toRadians(tetaF)) * wf;
             cyt = Math.cos(Math.toRadians(tetaT)) * wt;
-            Log.e(cyf - cyt);
+            Log.e(cyt - cyf);
             tetaT += precision;
             if (tetaT > tarsus.getServo().getServoData().getLimitMax()) {
                 tetaT = tarsus.getServo().getServoData().getLimitMin();
@@ -150,7 +150,7 @@ public class Leg {
 
         Log.i(String.format("O angulo em graus encontrado para solução foi: " +
                         "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaT = %.2f, YT = %.2f e YF = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
-                cteta, precision, cteta/3, cteta, cyt, cyf, currentHeight, newHeight));
+                cteta, precision, tetaF, tetaT, cyt, cyf, currentHeight, newHeight));
 
         tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
         tempxt = Math.sin(Math.toRadians(cteta)) * wt;
