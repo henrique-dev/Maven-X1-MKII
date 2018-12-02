@@ -136,6 +136,7 @@ public class Leg {
         while (cyf - cyt < newHeight) {
             cyf = Math.sin(Math.toRadians(tetaF)) * wf;
             cyt = Math.cos(Math.toRadians(tetaT)) * wt;
+            Log.e(cyf - cyt);
             tetaT += precision;
             if (tetaT > tarsus.getServo().getServoData().getLimitMax()) {
                 tetaT = tarsus.getServo().getServoData().getLimitMin();
