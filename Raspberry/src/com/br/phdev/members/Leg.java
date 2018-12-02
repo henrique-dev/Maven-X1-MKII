@@ -137,7 +137,7 @@ public class Leg {
             tempxt = Math.sin(Math.toRadians(cteta)) * wt;
             cxft = tempxf + tempxt;
 
-            if (currentHeight >= newHeight) {
+            if (currentHeight < newHeight) {
                 if (cyft <= newHeight && cxft - 20 > finalLength && cxft + 20 < finalLength)
                     break;
             } else {
