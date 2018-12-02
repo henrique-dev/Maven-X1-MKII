@@ -32,8 +32,8 @@ public class MovementSystem {
         this.gravitySystem.adjust(new Vector2D(stepSizeX, stepSizeY), stepAmount, gaitSpeed);
     }
 
-    public void move(double x, double y, double z) {
-        //this.gravitySystem.adjust(new Vector2D(x, y));
+    public void elevate(double z) {
+        this.gravitySystem.elevate(z);
     }
 
 }

@@ -114,6 +114,38 @@ public class Leg {
         this.onGround = onGround;
     }
 
+    public void elevate(double currentHeight, double newHeight, double finalLength, double precision) {
+        double wf = this.femur.getLength();
+        double wt = this.tarsus.getLength();
+        double tempyf = 0;
+        double tempyt = 0;
+        double cyft = 0;
+        double cteta = 0;
+        while (cyft < finalLength) {
+            tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
+            tempyt = Math.cos(Math.toRadians(cteta)) * wt;
+            cyft = tempyf + tempyt;
+            if (currentHeight >= newHeight) {
+                if (cyft <= newHeight)
+                    break;
+                else
+                    cteta -= precision;
+            } else {
+                if (cyft >= newHeight)
+                    break;
+                else
+                    cteta += precision;
+            }
+            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
+                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
+                break;
+        }
+
+        Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f",
+                cteta, precision, cteta/3, cteta, cyft));
+
+    }
+
     public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
 
         double wf = this.femur.getLength();

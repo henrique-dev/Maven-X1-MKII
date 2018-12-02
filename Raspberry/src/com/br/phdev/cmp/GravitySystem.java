@@ -14,7 +14,7 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class GravitySystem  {
+class GravitySystem  {
 
     private final Lock lock = new ReentrantLock();
     private final Condition movingLeg = lock.newCondition();
@@ -32,12 +32,15 @@ public class GravitySystem  {
 
     private int gaitSpeed;
 
-    public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision, int gaitSpeed) {
+    private Body body;
+
+    GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision, int gaitSpeed) {
         this.servoTaskController = servoTaskController;
         this.precision = precision;
         this.gaitSpeed = gaitSpeed;
         this.width = width;
         this.height = height;
+        this.body = body;
         double cx = body.getArea().x / 2;
         double cy = body.getArea().y / 2;
 
@@ -60,12 +63,17 @@ public class GravitySystem  {
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
-    public void adjust() {
-        leftGravityCell.adjust();
-        rightGravityCell.adjust();
+    void adjust() {
+        this.leftGravityCell.adjust();
+        this.rightGravityCell.adjust();
     }
 
-    public void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
+    void elevate(double z) {
+        leftGravityCell.elevate(z);
+        rightGravityCell.elevate(z);
+    }
+
+    void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
         for (int i=0; i<stepAmount; i++) {
             leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, waitingTaskCellListener);
             lock.lock();
@@ -122,6 +130,10 @@ public class GravitySystem  {
             this.bottom = bottom;
         }
 
+        void elevate(double z) {
+
+        }
+
         void adjust() {
             top.adjust();
             mid.adjust();
@@ -158,6 +170,14 @@ public class GravitySystem  {
             this.leg = leg;
             this.name = name;
         }
+
+        void elevate(double z, double precision) {
+            double currentHeight = body.getCurrentHeightToFloor();
+            double newHeight = currentHeight - z;
+            double finalLength = leg.getLengthVector().subtract(leg.getOriginVector()).getSize();
+            leg.elevate(currentHeight, newHeight, finalLength, precision);
+        }
+
 
         void adjust() {
             List<Task> servoTaskList = new ArrayList<>();

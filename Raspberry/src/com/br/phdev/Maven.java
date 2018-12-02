@@ -559,8 +559,12 @@ public class Maven {
 												value = values.substring(index+1);
 												int stepAmount = Integer.parseInt(value);
 												robotSystem.getMovementSystem().move(stepSizeX, stepSizeY, stepAmount, gaitSpeed);
-                                            } else if (command.startsWith("down")) {
-
+                                            } else if (command.startsWith("elevate")) {
+												String values = command.substring(8);
+												int index = values.indexOf(" ");
+												String value = values.substring(0, index);
+												double z = Double.parseDouble(value);
+												robotSystem.getMovementSystem().elevate(z);
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
                                                 if (command.endsWith("init-gravity-system") || command.endsWith("igs")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
