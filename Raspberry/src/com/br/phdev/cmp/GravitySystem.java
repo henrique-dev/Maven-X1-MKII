@@ -131,7 +131,8 @@ class GravitySystem  {
         }
 
         void elevate(double z, double precision) {
-            top.elevate(z, precision);
+            //top.elevate(z, precision);
+            bottom.elevate(z, precision);
         }
 
         void adjust() {
