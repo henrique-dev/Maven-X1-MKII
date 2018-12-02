@@ -115,6 +115,10 @@ public class Leg {
     }
 
     public void elevate(double currentHeight, double newHeight, double finalLength, double precision) {
+
+        Log.i("Altura atual: " + currentHeight);
+        Log.i("Altura desejada: " + newHeight);
+
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double tempyf = 0;
@@ -122,7 +126,7 @@ public class Leg {
         double cyft = 0;
         double cteta = 0;
         while (cyft < finalLength) {
-            Log.e("HERE");
+            Log.e(cteta);
             tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
             tempyt = Math.cos(Math.toRadians(cteta)) * wt;
             cyft = tempyf + tempyt;
