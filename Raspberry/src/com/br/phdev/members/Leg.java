@@ -149,7 +149,10 @@ public class Leg {
                 break;
             }
             case 2: { // SUBIR
-                double totalAngle = module(module(this.femur.getLimitMax()) > module(this.tarsus.getLimitMin()) ? this.tarsus.getLimitMin() : this.femur.getLimitMax());
+
+                //double totalAngle = module(module(this.femur.getLimitMax()) > module(this.tarsus.getLimitMin()) ? this.tarsus.getLimitMin() : this.femur.getLimitMax());
+                double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
+                Log.w("Angulo total: " + totalAngle);
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
                         (int)-totalAngle / 2,
