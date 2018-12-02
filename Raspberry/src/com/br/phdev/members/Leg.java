@@ -126,8 +126,8 @@ public class Leg {
         double cyft = 0;
         double cteta = 0;
         while (cyft < finalLength) {
-            tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
-            tempyt = Math.cos(Math.toRadians(cteta)) * wt;
+            tempyf = Math.sin(Math.toRadians(cteta)) * wf;
+            tempyt = Math.cos(Math.toRadians(cteta / 3)) * wt;
             cyft = tempyf + tempyt;
             if (currentHeight >= newHeight) {
                 if (cyft <= newHeight)
