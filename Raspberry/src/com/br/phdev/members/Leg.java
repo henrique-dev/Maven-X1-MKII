@@ -115,7 +115,6 @@ public class Leg {
     }
 
     public void elevate(int elevationType, List<Task> servoTaskList) {
-        base.getServo().setRawPosition(0);
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (elevationType) {
             case 0: { // DESCER
@@ -228,6 +227,7 @@ public class Leg {
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
+                        base.getServo().setRawPosition(0);
                         currentLegDegrees = currentPos;
                     }
                 }},

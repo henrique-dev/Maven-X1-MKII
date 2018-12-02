@@ -68,9 +68,9 @@ class GravitySystem  {
         this.rightGravityCell.adjust();
     }
 
-    void elevate(double z, double precision) {
-        leftGravityCell.elevate(z, precision);
-        rightGravityCell.elevate(z, precision);
+    void elevate(int elevateType) {
+        leftGravityCell.elevate(elevateType);
+        rightGravityCell.elevate(elevateType);
     }
 
     void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
@@ -130,10 +130,10 @@ class GravitySystem  {
             this.bottom = bottom;
         }
 
-        void elevate(double z, double precision) {
-            top.elevate(z);
-            mid.elevate(z);
-            bottom.elevate(z);
+        void elevate(int elevateType) {
+            top.elevate(elevateType);
+            mid.elevate(elevateType);
+            bottom.elevate(elevateType);
         }
 
         void adjust() {
@@ -173,9 +173,9 @@ class GravitySystem  {
             this.name = name;
         }
 
-        void elevate(double z) {
+        void elevate(int elevateType) {
             List<Task> servoTaskList = new ArrayList<>();
-            leg.elevate((int)z, servoTaskList);
+            leg.elevate(elevateType, servoTaskList);
             servoTaskController.addTasks(servoTaskList);
         }
 
