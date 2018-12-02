@@ -172,7 +172,7 @@ public class Leg {
 
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));*/
+                        new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
         }
