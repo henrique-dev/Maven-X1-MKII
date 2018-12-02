@@ -70,7 +70,7 @@ class GravitySystem  {
 
     void elevate(double z, double precision) {
         leftGravityCell.elevate(z, precision);
-        //rightGravityCell.elevate(z, precision);
+        rightGravityCell.elevate(z, precision);
     }
 
     void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
@@ -131,8 +131,9 @@ class GravitySystem  {
         }
 
         void elevate(double z, double precision) {
-            //top.elevate(z, precision);
-            bottom.elevate(z, precision);
+            top.elevate(z);
+            mid.elevate(z);
+            bottom.elevate(z);
         }
 
         void adjust() {
@@ -172,11 +173,10 @@ class GravitySystem  {
             this.name = name;
         }
 
-        void elevate(double z, double precision) {
-            double currentHeight = body.getCurrentHeightToFloor();
-            double newHeight = currentHeight + z;
-            double finalLength = leg.getLengthVector().subtract(leg.getOriginVector()).getSize();
-            leg.elevate(currentHeight, newHeight, finalLength, precision);
+        void elevate(double z) {
+            List<Task> servoTaskList = new ArrayList<>();
+            leg.elevate((int)z, servoTaskList);
+            servoTaskController.addTasks(servoTaskList);
         }
 
 

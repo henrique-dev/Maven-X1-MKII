@@ -114,53 +114,62 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void elevate(double currentHeight, double newHeight, double finalLength, double precision) {
+    public void elevate(int elevationType, List<Task> servoTaskList) {
+        TaskGroup taskGroups = new TaskGroup(new int[]{4});
+        switch (elevationType) {
+            case 0:
+                servoTaskList.add(new ServoTask(
+                        this.femur.getServo(),
+                        this.femur.getServo().getServoData().getLimitMin() / 2,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
 
-        Log.i("Altura atual: " + currentHeight);
-        Log.i("Altura desejada: " + newHeight);
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
 
-        double wf = this.femur.getLength();
-        double wt = this.tarsus.getLength();
-        double tempxf = 0;
-        double tempxt = 0;
-        double cxft = 0;
-        double tempyf = 0;
-        double tempyt = 0;
-        double cyf = 0;
-        double cyt = 0;
-        double cteta = 0;
+                servoTaskList.add(new ServoTask(
+                        this.tarsus.getServo(),
+                        this.femur.getServo().getServoData().getLimitMax(),
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
 
-        double tetaF = femur.getServo().getServoData().getLimitMin();
-        double tetaT = tarsus.getServo().getServoData().getLimitMin();
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+                break;
+            case 1:
+                servoTaskList.add(new ServoTask(
+                        this.femur.getServo(),
+                        0,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
 
-        while (cyt - cyf >= newHeight) {
-            cyf = Math.cos(Math.toRadians(tetaF)) * wf;
-            cyt = Math.sin(Math.toRadians(tetaT)) * wt;
-            Log.e(cyt - cyf);
-            tetaT += precision;
-            if (tetaT > tarsus.getServo().getServoData().getLimitMax()) {
-                tetaT = tarsus.getServo().getServoData().getLimitMin();
-                tetaF += precision;
-                if (tetaF > femur.getServo().getServoData().getLimitMax()) {
-                    Log.w("Interrompido");
-                    break;
-                }
-            }
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+
+                servoTaskList.add(new ServoTask(
+                        this.tarsus.getServo(),
+                        0,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+                                
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+                break;
+            case 2:
+                break;
         }
-
-        Log.i(String.format("O angulo em graus encontrado para solução foi: " +
-                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaT = %.2f, YT = %.2f e YF = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
-                cteta, precision, tetaF, tetaT, cyt, cyf, currentHeight, newHeight));
-
-        tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
-        tempxt = Math.sin(Math.toRadians(cteta)) * wt;
-        cxft = tempxf + tempxt;
-
-        Log.i("Comprimento da perna: " + cxft);
-
-        //this.femur.move(cteta / 3);
-        //this.tarsus.move(cteta);
-
     }
 
     public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
