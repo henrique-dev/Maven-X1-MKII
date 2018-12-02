@@ -128,11 +128,23 @@ public class Leg {
         double tempyt = 0;
         double cyf = 0;
         double cyt = 0;
-        double cteta = -90;
+        double cteta = 0;
+
+        double tetaF = femur.getServo().getServoData().getLimitMin();
+        double tetaT = tarsus.getServo().getServoData().getLimitMin();
+
         while (cyf - cyt < newHeight) {
-            cyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
-            cyt = Math.cos(Math.toRadians(cteta)) * wt;
-            cteta += precision;
+            cyf = Math.sin(Math.toRadians(tetaF)) * wf;
+            cyt = Math.cos(Math.toRadians(tetaT)) * wt;
+            tetaT += precision;
+            if (tetaT > tarsus.getServo().getServoData().getLimitMax()) {
+                tetaT = tarsus.getServo().getServoData().getLimitMin();
+                tetaF += precision;
+                if (tetaF > femur.getServo().getServoData().getLimitMax()) {
+                    Log.w("Interrompido");
+                    break;
+                }
+            }
         }
 
         Log.i(String.format("O angulo em graus encontrado para solução foi: " +
