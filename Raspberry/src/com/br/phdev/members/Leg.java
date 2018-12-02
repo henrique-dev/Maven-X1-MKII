@@ -128,7 +128,7 @@ public class Leg {
         double tempyt = 0;
         double cyf = 0;
         double cyt = 0;
-        double cteta = 0;
+        double cteta = -90;
         while (cyf - cyt < newHeight) {
             cyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
             cyt = Math.cos(Math.toRadians(cteta)) * wt;
