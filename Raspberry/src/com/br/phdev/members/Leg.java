@@ -141,8 +141,9 @@ public class Leg {
                 break;
         }
 
-        Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f",
-                cteta, precision, cteta/3, cteta, cyft));
+        Log.i(String.format("O angulo em graus encontrado para solução foi: " +
+                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
+                cteta, precision, cteta/3, cteta, cyft, currentHeight, newHeight));
 
     }
 

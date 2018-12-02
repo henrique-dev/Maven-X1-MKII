@@ -570,7 +570,6 @@ public class Maven {
 												String value = values.substring(0, index);
 												double z = Double.parseDouble(value);
 												values = values.substring(index+1);
-												index = values.indexOf(" ");
 												value = values.substring(0, index);
 												double precision = Double.parseDouble(value);
 												robotSystem.getMovementSystem().elevate(z, precision);
