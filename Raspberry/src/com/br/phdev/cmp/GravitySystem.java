@@ -174,7 +174,7 @@ class GravitySystem  {
 
         void elevate(double z, double precision) {
             double currentHeight = body.getCurrentHeightToFloor();
-            double newHeight = currentHeight - z;
+            double newHeight = currentHeight + z;
             double finalLength = leg.getLengthVector().subtract(leg.getOriginVector()).getSize();
             leg.elevate(currentHeight, newHeight, finalLength, precision);
         }

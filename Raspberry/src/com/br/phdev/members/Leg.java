@@ -123,43 +123,18 @@ public class Leg {
         double wt = this.tarsus.getLength();
         double tempyf = 0;
         double tempyt = 0;
-        double cyft = 0;
-        double tempxf = 0;
-        double tempxt = 0;
-        double cxft = 0;
+        double cyf = 0;
+        double cyt = 0;
         double cteta = 0;
-        while (cyft < finalLength) {
-            tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
-            tempyt = Math.cos(Math.toRadians(cteta)) * wt;
-            cyft = tempyf + tempyt;
-
-            tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
-            tempxt = Math.sin(Math.toRadians(cteta)) * wt;
-            cxft = tempxf + tempxt;
-
-            if (currentHeight >= newHeight) {
-                if (cyft >= newHeight && cxft - 20 > finalLength && cxft + 20 < finalLength)
-                    break;
-            } else {
-                if (cyft <= newHeight && cxft - 20 > finalLength && cxft + 20 < finalLength)
-                    break;
-            }
+        while (cyf - cyt < newHeight) {
+            cyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
+            cyt = Math.cos(Math.toRadians(cteta)) * wt;
             cteta += precision;
-            /*
-            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
-                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax()) {
-                Log.w("Atingiu limites");
-                break;
-            }*/
-            if (cteta > 360) {
-                Log.w("Interrompido");
-                break;
-            }
         }
 
         Log.i(String.format("O angulo em graus encontrado para solução foi: " +
-                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
-                cteta, precision, cteta/3, cteta, cyft, currentHeight, newHeight));
+                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f, YT = %.2f e YF = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
+                cteta, precision, cteta/3, cteta, cyt, cyf, currentHeight, newHeight));
 
         //this.femur.move(cteta / 3);
         //this.tarsus.move(cteta);
