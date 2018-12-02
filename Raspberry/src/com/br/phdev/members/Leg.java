@@ -124,25 +124,35 @@ public class Leg {
         double tempyf = 0;
         double tempyt = 0;
         double cyft = 0;
+        double tempxf = 0;
+        double tempxt = 0;
+        double cxft = 0;
         double cteta = 0;
         while (cyft < finalLength) {
             tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
             tempyt = Math.cos(Math.toRadians(cteta)) * wt;
             cyft = tempyf + tempyt;
-            if (currentHeight >= newHeight) {
+
+            tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
+            tempxt = Math.sin(Math.toRadians(cteta)) * wt;
+            cxft = tempxf + tempxt;
+
+            if (currentHeight >= newHeight && cxft - 20 > finalLength && cxft + 20 < finalLength) {
                 if (cyft <= newHeight)
                     break;
-                else
-                    cteta -= precision;
             } else {
-                if (cyft >= newHeight)
+                if (cyft >= newHeight && cxft - 20 > finalLength && cxft + 20 < finalLength)
                     break;
-                else
-                    cteta += precision;
             }
+            cteta += precision;
+            /*
             if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
                     cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax()) {
                 Log.w("Atingiu limites");
+                break;
+            }*/
+            if (cteta > 360) {
+                Log.w("Interrompido");
                 break;
             }
         }
@@ -151,8 +161,8 @@ public class Leg {
                         "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
                 cteta, precision, cteta/3, cteta, cyft, currentHeight, newHeight));
 
-        this.femur.move(cteta / 3);
-        this.tarsus.move(cteta);
+        //this.femur.move(cteta / 3);
+        //this.tarsus.move(cteta);
 
     }
 
