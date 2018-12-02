@@ -126,8 +126,8 @@ public class Leg {
         double cyft = 0;
         double cteta = 0;
         while (cyft < finalLength) {
-            tempyf = Math.sin(Math.toRadians(cteta)) * wf;
-            tempyt = Math.cos(Math.toRadians(cteta / 3)) * wt;
+            tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
+            tempyt = Math.cos(Math.toRadians(cteta)) * wt;
             cyft = tempyf + tempyt;
             if (currentHeight >= newHeight) {
                 if (cyft <= newHeight)
@@ -150,6 +150,9 @@ public class Leg {
         Log.i(String.format("O angulo em graus encontrado para solução foi: " +
                         "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
                 cteta, precision, cteta/3, cteta, cyft, currentHeight, newHeight));
+
+        this.femur.move(cteta / 3);
+        this.tarsus.move(cteta);
 
     }
 

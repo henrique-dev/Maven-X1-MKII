@@ -70,7 +70,7 @@ class GravitySystem  {
 
     void elevate(double z, double precision) {
         leftGravityCell.elevate(z, precision);
-        rightGravityCell.elevate(z, precision);
+        //rightGravityCell.elevate(z, precision);
     }
 
     void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
