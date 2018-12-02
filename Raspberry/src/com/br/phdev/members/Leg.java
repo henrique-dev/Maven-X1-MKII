@@ -133,7 +133,7 @@ public class Leg {
         double tetaF = femur.getServo().getServoData().getLimitMin();
         double tetaT = tarsus.getServo().getServoData().getLimitMin();
 
-        while (cyt - cyf < newHeight) {
+        while (cyt - cyf >= newHeight) {
             cyf = Math.sin(Math.toRadians(tetaF)) * wf;
             cyt = Math.cos(Math.toRadians(tetaT)) * wt;
             Log.e(cyt - cyf);
