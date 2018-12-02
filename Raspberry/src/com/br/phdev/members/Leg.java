@@ -132,7 +132,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        this.femur.getServo().getServoData().getLimitMax(),
+                        this.tarsus.getServo().getServoData().getLimitMax(),
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -168,6 +168,29 @@ public class Leg {
                         new FlavorTaskGroup(0, taskGroups)));
                 break;
             case 2:
+                servoTaskList.add(new ServoTask(
+                        this.femur.getServo(),
+                        this.femur.getServo().getServoData().getLimitMax() / 2,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+
+                servoTaskList.add(new ServoTask(
+                        this.tarsus.getServo(),
+                        this.tarsus.getServo().getServoData().getLimitMin(),
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
                 break;
         }
     }
