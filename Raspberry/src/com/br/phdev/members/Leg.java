@@ -133,7 +133,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        (int)totalAngle / 2,
+                        -(int)totalAngle / 2,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
