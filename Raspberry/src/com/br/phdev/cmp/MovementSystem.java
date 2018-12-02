@@ -11,10 +11,11 @@ public class MovementSystem {
     private GravitySystem gravitySystem;
     private Body body;
 
-    MovementSystem(ServoTaskController servoTaskController, Body body) {
+    MovementSystem(ServoTaskController servoTaskController, Body body, boolean stay) {
         this.servoTaskController = servoTaskController;
         this.body = body;
-        this.body.stay();
+        if (stay)
+            this.body.stay();
     }
 
     public void startGravitySystem(double width, double height, double precision, int gaitSpeed) {

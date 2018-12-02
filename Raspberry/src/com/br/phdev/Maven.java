@@ -517,7 +517,12 @@ public class Maven {
 						break;
 					case "init-move-system":
 						robotSystem.initServoTaskController();
-						robotSystem.initMovementSystem();
+						robotSystem.initMovementSystem(true);
+						moveSystem = true;
+						break;
+					case "init-move-system-nm":
+						robotSystem.initServoTaskController();
+						robotSystem.initMovementSystem(false);
 						moveSystem = true;
 						break;
 					case "move-system":
