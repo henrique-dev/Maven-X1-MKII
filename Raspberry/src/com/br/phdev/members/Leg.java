@@ -115,10 +115,6 @@ public class Leg {
     }
 
     public void elevate(double currentHeight, double newHeight, double finalLength, double precision) {
-
-        Log.i("Altura atual: " + currentHeight);
-        Log.i("Altura desejada: " + newHeight);
-
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double tempyf = 0;
@@ -126,7 +122,6 @@ public class Leg {
         double cyft = 0;
         double cteta = 0;
         while (cyft < finalLength) {
-            Log.e(cteta);
             tempyf = Math.sin(Math.toRadians(cteta / 3)) * wf;
             tempyt = Math.cos(Math.toRadians(cteta)) * wt;
             cyft = tempyf + tempyt;
@@ -146,9 +141,8 @@ public class Leg {
                 break;
         }
 
-        Log.i(String.format("O angulo em graus encontrado para solução foi: " +
-                        "%.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Yft = %.2f | Altura anterior: %.2f x Altura desejada: %.2f",
-                cteta, precision, cteta/3, cteta, cyft, currentHeight, newHeight));
+        Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Xft = %.2f",
+                cteta, precision, cteta/3, cteta, cyft));
 
     }
 
