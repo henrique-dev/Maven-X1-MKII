@@ -561,8 +561,7 @@ public class Maven {
 												robotSystem.getMovementSystem().move(stepSizeX, stepSizeY, stepAmount, gaitSpeed);
                                             } else if (command.startsWith("elevate")) {
 												String values = command.substring(8);
-												int index = values.indexOf(" ");
-												String value = values.substring(0, index);
+												String value = values;
 												double z = Double.parseDouble(value);
 												robotSystem.getMovementSystem().elevate(z);
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
