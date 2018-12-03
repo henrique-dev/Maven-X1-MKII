@@ -103,11 +103,6 @@ class GravitySystem  {
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
-    void adjust() {
-        this.leftGravityCell.adjust();
-        this.rightGravityCell.adjust();
-    }
-
     void elevate(int elevateType) {
         leftGravityCell.elevate(elevateType);
         rightGravityCell.elevate(elevateType);
@@ -119,6 +114,7 @@ class GravitySystem  {
             lock.lock();
             waitForAnotherCell();
             lock.unlock();
+            leftGravityCell.stabilize();
             Log.s("Celula executou o movimento");
 
 
@@ -127,12 +123,15 @@ class GravitySystem  {
             rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, waitingTaskCellListener);
             waitForAnotherCell();
             lock.unlock();
+            leftGravityCell.stabilize();
+            rightGravityCell.stabilize();
             Log.s("Celula executou o movimento");
 
             lock.lock();
             rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, waitingTaskCellListener);
             waitForAnotherCell();
             lock.unlock();
+            rightGravityCell.stabilize();
             Log.s("Celula executou o movimento");
         }
 
@@ -195,11 +194,16 @@ class GravitySystem  {
             bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, tl);
         }
 
+        void stabilize() {
+            top.stabilize();
+            mid.stabilize();
+            bottom.stabilize();
+        }
+
         @Override
         public String toString() {
             return "T" + top.toString() + "  M" + mid.toString() + "  B" + bottom.toString() + "\n";
         }
-
     }
 
     private class Vertex {
@@ -308,6 +312,10 @@ class GravitySystem  {
                     vertex.leg.getTarsus().getFinalVector().x,
                     vertex.leg.getTarsus().getFinalVector().y
             ));
+        }
+
+        void stabilize() {
+            leg.stay();
         }
 
         @Override

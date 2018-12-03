@@ -273,6 +273,7 @@ public class Leg {
     }
 
     public void stay() {
+        this.base.getServo().setRawPosition(0);
         this.femur.move(femur.getCurrentAngle());
         this.tarsus.move(tarsus.getCurrentAngle());
     }
