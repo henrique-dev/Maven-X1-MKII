@@ -101,10 +101,11 @@ public class RobotSystem {
                         );
                         Log.s("Servo do tarso da perna " + i + " carregado");
                     }
-                    legs[i] = new Leg(legDataList.get(i), base, femur, tarsus);
                 }
                 if (base == null || femur == null || tarsus == null)
                     throw new RuntimeException("Falha ao inicializar as pernas");
+                else
+                    legs[i] = new Leg(legDataList.get(i), base, femur, tarsus);
             }
             this.body = new Body(legs, bodyData);
             Log.s("Dados de todos os componentes injetados com sucesso");
