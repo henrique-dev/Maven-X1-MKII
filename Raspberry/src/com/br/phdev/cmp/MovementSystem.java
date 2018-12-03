@@ -23,7 +23,7 @@ public class MovementSystem {
         this.gravitySystem = new GravitySystem(this.servoTaskController, this.body, width, height, precision, gaitSpeed);
         //this.gravitySystem.elevate(0);
         //adjustGravitySystem(width, height, precision, gaitSpeed);
-        gravitySystem.adjust();
+        //gravitySystem.adjust();
         Log.s("Sistema de centro de gravidade iniciado");
     }
 
