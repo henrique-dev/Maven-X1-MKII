@@ -15,7 +15,7 @@ public class Test {
             int freq = Integer.parseInt(in.nextLine());
             module1.setPWMFreq(freq);
             while (true) {
-                System.out.print("Informe a posição");
+                System.out.print("Informe a posição: ");
                 int pos = Integer.parseInt(in.nextLine());
                 module1.setPWM(2, 0, pos);
             }
