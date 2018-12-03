@@ -114,10 +114,10 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void elevate(int elevationType, List<Task> servoTaskList) {
+    public void elevate(Body.CurrentHeight nextHeigth, List<Task> servoTaskList) {
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
-        switch (elevationType) {
-            case 0: { // DESCER
+        switch (nextHeigth) {
+            case MIN: { // DESCER
                 //double totalAngle = module(module(this.femur.getLimitMin()) > module(this.tarsus.getLimitMax()) ? this.tarsus.getLimitMax() : this.femur.getLimitMin());
                 double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
                 servoTaskList.add(new ServoTask(
@@ -145,12 +145,11 @@ public class Leg {
                         new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
-            case 1: { // RETORNAR A POSIÇÃO ORIGINAL
-                this.move(false, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
+            case NORMAL: { // RETORNAR A POSIÇÃO ORIGINAL
+                this.move(false, nextHeigth, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
                 break;
             }
-            case 2: { // SUBIR
-
+            case MAX: { // SUBIR
                 //double totalAngle = module(module(this.femur.getLimitMax()) > module(this.tarsus.getLimitMin()) ? this.tarsus.getLimitMin() : this.femur.getLimitMax());
                 double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
                 servoTaskList.add(new ServoTask(
@@ -181,7 +180,7 @@ public class Leg {
         }
     }
 
-    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
+    public void move(boolean elevate, Body.CurrentHeight currentHeight, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
@@ -210,13 +209,29 @@ public class Leg {
 
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
-        if (elevate)
+        if (elevate) {
+            double currentElevateAngle;
+            switch (currentHeight) {
+                case MAX:
+                    currentElevateAngle = -(Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))))) / 2;
+                    break;
+                case MIN:
+                    currentElevateAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
+                    break;
+                default:
+                    currentElevateAngle = femur.getCurrentAngle();
+                    break;
+            }
+            currentElevateAngle += 10;
+
+
             servoTaskList.add(new ServoTask(
                     this.femur.getServo(),
-                    40,
+                    (int) currentElevateAngle,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
                     new FlavorTaskGroup(0, taskGroups)));
+        }
 
         base.getServo().move(base.getServo().getCurrentPositionDegrees());
         servoTaskList.add(new ServoTask(

@@ -103,9 +103,10 @@ class GravitySystem  {
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
-    void elevate(int elevateType) {
-        leftGravityCell.elevate(elevateType);
-        rightGravityCell.elevate(elevateType);
+    void elevate(Body.CurrentHeight nextHeight) {
+        body.setCurrentHeight(nextHeight);
+        leftGravityCell.elevate(nextHeight);
+        rightGravityCell.elevate(nextHeight);
     }
 
     void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
@@ -169,10 +170,10 @@ class GravitySystem  {
             this.bottom = bottom;
         }
 
-        void elevate(int elevateType) {
-            top.elevate(elevateType);
-            mid.elevate(elevateType);
-            bottom.elevate(elevateType);
+        void elevate(Body.CurrentHeight nextHeight) {
+            top.elevate(nextHeight);
+            mid.elevate(nextHeight);
+            bottom.elevate(nextHeight);
         }
 
         void adjust() {
@@ -218,9 +219,9 @@ class GravitySystem  {
             this.name = name;
         }
 
-        void elevate(int elevateType) {
+        void elevate(Body.CurrentHeight nextHeight) {
             List<Task> servoTaskList = new ArrayList<>();
-            leg.elevate(elevateType, servoTaskList);
+            leg.elevate(nextHeight, servoTaskList);
             servoTaskController.addTasks(servoTaskList);
         }
 
@@ -251,14 +252,13 @@ class GravitySystem  {
             showVertexrInfo("Antigos vetores " + name, this);
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
             Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
-
-            leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, taskListener);
+            leg.move(true, body.getCurrentHeight(), angle, vhip, precision, gaitSpeed, false, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
 
-            lock.lock();
+            /*lock.lock();
             waitFor();
             lock.unlock();
-            servoTaskList.clear();
+            servoTaskList.clear();*/
 
             showVertexrInfo("Novos vetores " + name, this);
             Log.s("Comprimento novo da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
@@ -290,7 +290,7 @@ class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, tl);
+            leg.move(elevate, body.getCurrentHeight(), angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, tl);
             servoTaskController.addTasks(servoTaskList);
         }
 

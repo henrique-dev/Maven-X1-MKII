@@ -128,8 +128,6 @@ public class RobotSystem {
             this.legs[Body.LEG_BACK_LEFT].setOriginVector(new Vector2D(0, 0));
             this.legs[Body.LEG_BACK_RIGHT].setOriginVector(new Vector2D(bodyData.getBodyWidth(), 0));
 
-            this.body.setCurrentHeightToFloor(this.legs[Body.LEG_BACK_LEFT].getFemur().getLength());
-
             Log.s("Vetores injetados com sucesso");
         } catch (Exception e) {
             Log.e("Falha ao injetar os vetores. " + e.getMessage());

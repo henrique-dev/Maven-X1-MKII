@@ -5,6 +5,10 @@ import com.br.phdev.misc.Vector2D;
 
 public class Body {
 
+    public enum CurrentHeight {
+        MAX, NORMAL, MIN
+    }
+
     public static final int LEG_FRONT_LEFT = 0;
     public static final int LEG_MID_RIGHT = 2;
     public static final int LEG_BACK_LEFT = 4;
@@ -13,7 +17,7 @@ public class Body {
     public static final int LEG_MID_LEFT = 3;
     public static final int LEG_BACK_RIGHT = 5;
 
-    private double currentHeightToFloor;
+    private CurrentHeight currentHeight;
 
     private Vector2D area;
 
@@ -24,7 +28,7 @@ public class Body {
     public Body(Leg[] legs, BodyData bodyData) {
         this.legs = legs;
         this.bodyData = bodyData;
-        this.currentHeightToFloor = 0;
+        this.currentHeight = CurrentHeight.NORMAL;
     }
 
     public Vector2D getArea() {
@@ -47,12 +51,12 @@ public class Body {
         this.legs = legs;
     }
 
-    public double getCurrentHeightToFloor() {
-        return currentHeightToFloor;
+    public CurrentHeight getCurrentHeight() {
+        return currentHeight;
     }
 
-    public void setCurrentHeightToFloor(double currentHeightToFloor) {
-        this.currentHeightToFloor = currentHeightToFloor;
+    public void setCurrentHeight(CurrentHeight currentHeight) {
+        this.currentHeight = currentHeight;
     }
 
     public void stay() {
