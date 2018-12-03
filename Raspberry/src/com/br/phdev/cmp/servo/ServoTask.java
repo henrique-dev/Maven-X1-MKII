@@ -96,7 +96,7 @@ public class ServoTask implements Task {
                 this.currentTime += 100;
                 if (this.currentTime > this.delay) {
                     if (this.targetPos != this.currentPos)
-                        this.servo.move(this.targetPos);
+                        this.servo.move(this.targetPos + 5);
                     this.taskOver = true;
                     this.startTask = false;
                     if (this.taskListener != null) {
