@@ -55,7 +55,13 @@ public class Servo {
         }
     }
 
-    public boolean move(double degrees) {
+    public void setRawPosition(int on, int off) {
+        if (on >= 100 && on <= 650 || on == 0)
+            if (off >= 100 && off <= 650 || off == 0)
+                module.setPWM(this.servoData.getLocalChannel(), on, off);
+    }
+
+    public void move(double degrees) {
         if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
             if (this.servoData.isInverted()) {
                 this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - (this.servoData.getStep() * degrees)));
@@ -63,7 +69,6 @@ public class Servo {
                 this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + (this.servoData.getStep() * degrees)));
             }
             this.currentPositionDegrees = degrees;
-            return true;
         } else {
             Log.w("Posição ultrapassa os limites");
             if (degrees > this.servoData.getLimitMax()) {
@@ -73,7 +78,6 @@ public class Servo {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
                 }
                 this.currentPositionDegrees = this.servoData.getLimitMax();
-                return false;
             } else if (degrees < this.servoData.getLimitMin()) {
                 if (this.servoData.isInverted()) {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
@@ -81,10 +85,8 @@ public class Servo {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
                 }
                 this.currentPositionDegrees = this.servoData.getLimitMin();
-                return false;
             }
         }
-        return false;
     }
 
     public void moveToMin() {

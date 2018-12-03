@@ -525,6 +525,23 @@ public class Maven {
 						robotSystem.initMovementSystem(false);
 						moveSystem = true;
 						break;
+					case "test":
+						boolean runningTest = true;
+						while (runningTest) {
+							currentPath = "test ";
+							System.out.print(currentPath + "> ");
+							command = in.nextLine();
+							String values = command;
+							int index = values.indexOf(" ");
+							String value = values.substring(0, index);
+							double on = Double.parseDouble(value);
+							values = values.substring(index+1);
+							index = values.indexOf(" ");
+							value = values.substring(0, index);
+							double off = Double.parseDouble(value);
+							robotSystem.getServos()[1].setRawPosition((int)on, (int)off);
+						}
+						break;
 					case "move-system":
 						if (moveSystem && initSystem) {
 							boolean runningMoveSystem = true;
