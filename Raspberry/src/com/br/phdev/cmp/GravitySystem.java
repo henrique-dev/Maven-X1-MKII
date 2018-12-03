@@ -202,9 +202,9 @@ class GravitySystem  {
         }
 
         void stabilize() {
-            top.stabilize();
-            mid.stabilize();
-            bottom.stabilize();
+            //top.stabilize();
+            //mid.stabilize();
+            //bottom.stabilize();
         }
 
         @Override
