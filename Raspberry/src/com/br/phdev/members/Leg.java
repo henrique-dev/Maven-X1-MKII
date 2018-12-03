@@ -315,10 +315,8 @@ public class Leg {
     }
 
     public void stay() {
-        this.base.getServo().move(base.getCurrentAngle());
-        this.base.getServo().setRawPosition(0);
-        this.femur.move(femur.getCurrentAngle());
-        this.tarsus.move(tarsus.getCurrentAngle());
+        this.femur.move(femur.getCurrentAngle() + 2);
+        this.tarsus.move(tarsus.getCurrentAngle() + 2);
     }
 
     private double module(double value) {
