@@ -234,7 +234,7 @@ public class Leg {
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
                         currentLegDegrees = currentPos;
-                        base.getServo().setRawPosition(0);
+                        //base.getServo().setRawPosition(0);
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
