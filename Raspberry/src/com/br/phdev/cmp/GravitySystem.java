@@ -68,8 +68,11 @@ class GravitySystem  {
         this.gaitSpeed = gaitSpeed;
         this.width = width;
         this.height = height;
-        double cx = body.getArea().x / 2;
-        double cy = body.getArea().y / 2;
+        //double cx = body.getArea().x / 2;
+        //double cy = body.getArea().y / 2;
+
+        double cx = leftGravityCell.center.x;
+        double cy = leftGravityCell.center.y;
 
         this.leftGravityCell.center.x += cx - this.leftGravityCell.center.x;
         this.leftGravityCell.center.y += cy - this.leftGravityCell.center.y;
@@ -79,6 +82,9 @@ class GravitySystem  {
         this.leftGravityCell.mid.vertex.y = cy;
         this.leftGravityCell.bottom.vertex.x = cx - width / 2;
         this.leftGravityCell.bottom.vertex.y = cy - height / 2;
+
+        cx = rightGravityCell.center.x;
+        cy = rightGravityCell.center.y;
 
         this.rightGravityCell.center.x += cx - this.rightGravityCell.center.x;
         this.rightGravityCell.center.y += cy - this.rightGravityCell.center.y;
