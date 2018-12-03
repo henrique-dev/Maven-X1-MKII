@@ -144,7 +144,7 @@ public class Leg {
                                     taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));
+                        new FlavorTaskGroup(0, taskGroups), true));
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
@@ -156,7 +156,7 @@ public class Leg {
 
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));
+                        new FlavorTaskGroup(0, taskGroups), true));
                 break;
             }
             case NORMAL: { // RETORNAR A POSIÇÃO ORIGINAL
@@ -172,7 +172,7 @@ public class Leg {
                                     taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));
+                        new FlavorTaskGroup(0, taskGroups), true));
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
@@ -183,7 +183,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));
+                        new FlavorTaskGroup(0, taskGroups), true));
                 break;
             }
             case MAX: { // SUBIR
@@ -200,7 +200,7 @@ public class Leg {
                                     taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));
+                        new FlavorTaskGroup(0, taskGroups), true));
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
@@ -211,7 +211,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups)));
+                        new FlavorTaskGroup(0, taskGroups), true));
                 break;
             }
         }
@@ -254,7 +254,7 @@ public class Leg {
                     (int) currentElevateAngle,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
-                    new FlavorTaskGroup(0, taskGroups)));
+                    new FlavorTaskGroup(0, taskGroups), false));
         }
 
         base.getServo().move(base.getServo().getCurrentPositionDegrees());
@@ -274,7 +274,7 @@ public class Leg {
                         //base.getServo().setRawPosition(0);
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), false));
 
 
         servoTaskList.add(new ServoTask(
@@ -293,7 +293,7 @@ public class Leg {
 
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), true));
 
         servoTaskList.add(new ServoTask(
                 this.tarsus.getServo(),
@@ -311,7 +311,7 @@ public class Leg {
                         normalTarsusAngle = currentPos;
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), true));
     }
 
     public void stay() {

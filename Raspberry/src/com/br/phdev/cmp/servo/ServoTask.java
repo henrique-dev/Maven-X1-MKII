@@ -29,7 +29,9 @@ public class ServoTask implements Task {
 
     private boolean jusForDelay;
 
-    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup) {
+    private boolean forceCorrection;
+
+    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup, boolean forceCorrection) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.delay = delayInMilli;
@@ -40,10 +42,11 @@ public class ServoTask implements Task {
         this.taskId = currentTaskId++;
         this.flavorTaskGroup = flavorTaskGroup;
         this.jusForDelay = false;
+        this.forceCorrection = forceCorrection;
     }
 
-    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup) {
-        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup);
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup, boolean forceCorrection) {
+        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup, forceCorrection);
         this.taskListener = taskListener;
     }
 
@@ -96,7 +99,10 @@ public class ServoTask implements Task {
                 this.currentTime += 100;
                 if (this.currentTime > this.delay) {
                     if (this.targetPos != this.currentPos)
-                        this.servo.move(this.targetPos + 5);
+                        if (forceCorrection)
+                            this.servo.move(this.targetPos + 10);
+                        else
+                            this.servo.move(this.targetPos);
                     this.taskOver = true;
                     this.startTask = false;
                     if (this.taskListener != null) {
