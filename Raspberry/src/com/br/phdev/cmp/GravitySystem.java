@@ -111,9 +111,12 @@ class GravitySystem  {
 
     void elevate(Body.CurrentHeight nextHeight) {
         body.setCurrentHeight(nextHeight);
-        leftGravityCell.elevate(nextHeight);
+        leftGravityCell.elevate(nextHeight, null);
+        rightGravityCell.elevate(nextHeight, waitingTaskCellListener);
+        lock.lock();
+        waitForAnotherCell();
+        lock.unlock();
         leftGravityCell.stabilize();
-        rightGravityCell.elevate(nextHeight);
         rightGravityCell.stabilize();
     }
 
@@ -178,10 +181,10 @@ class GravitySystem  {
             this.bottom = bottom;
         }
 
-        void elevate(Body.CurrentHeight nextHeight) {
-            top.elevate(nextHeight);
-            mid.elevate(nextHeight);
-            bottom.elevate(nextHeight);
+        void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
+            top.elevate(nextHeight, null);
+            mid.elevate(nextHeight, null);
+            bottom.elevate(nextHeight, tl);
         }
 
         void adjust(TaskListener tl) {
@@ -227,9 +230,9 @@ class GravitySystem  {
             this.name = name;
         }
 
-        void elevate(Body.CurrentHeight nextHeight) {
+        void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
             List<Task> servoTaskList = new ArrayList<>();
-            leg.elevate(nextHeight, servoTaskList);
+            leg.elevate(nextHeight, servoTaskList, tl);
             servoTaskController.addTasks(servoTaskList);
         }
 

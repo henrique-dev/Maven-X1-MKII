@@ -17,6 +17,9 @@ public class Leg {
 
     private double currentLegDegrees;
 
+    private double normalFemurAngle;
+    private double normalTarsusAngle;
+
     private final LegData legData;
     private final Base base;
     private final Femur femur;
@@ -31,6 +34,16 @@ public class Leg {
         this.femur = femur;
         this.tarsus = tarsus;
         this.onGround = true;
+        this.normalFemurAngle = femur.getCurrentAngle();
+        this.normalFemurAngle = tarsus.getCurrentAngle();
+    }
+
+    public double getNormalFemurAngle() {
+        return normalFemurAngle;
+    }
+
+    public void setNormalFemurAngle(double normalFemurAngle) {
+        this.normalFemurAngle = normalFemurAngle;
     }
 
     public LegData getLegData() {
@@ -114,7 +127,7 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void elevate(Body.CurrentHeight nextHeigth, List<Task> servoTaskList) {
+    public void elevate(Body.CurrentHeight nextHeigth, List<Task> servoTaskList, TaskListener taskListener) {
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (nextHeigth) {
             case MIN: { // DESCER
@@ -127,7 +140,7 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-
+                                taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -146,7 +159,29 @@ public class Leg {
                 break;
             }
             case NORMAL: { // RETORNAR A POSIÇÃO ORIGINAL
-                this.move(false, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
+                //this.move(false, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, taskListener);
+                servoTaskList.add(new ServoTask(
+                        this.femur.getServo(),
+                        (int)normalFemurAngle,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+                                taskListener.onServoTaskComplete(currentPos);
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+
+                servoTaskList.add(new ServoTask(
+                        this.tarsus.getServo(),
+                        (int)normalTarsusAngle,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
             case MAX: { // SUBIR
@@ -159,7 +194,7 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-
+                                taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -171,7 +206,6 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -252,6 +286,8 @@ public class Leg {
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
                         femur.getFinalVector().set(ox + x, oy + y);
+                        normalFemurAngle = currentPos;
+
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
@@ -269,6 +305,7 @@ public class Leg {
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
                         lengthVector = tarsus.getFinalVector();
+                        normalTarsusAngle = currentPos;
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
