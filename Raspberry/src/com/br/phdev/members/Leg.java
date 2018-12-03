@@ -140,7 +140,8 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-                                taskListener.onServoTaskComplete(currentPos);
+                                if (taskListener != null)
+                                    taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -167,7 +168,8 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-                                taskListener.onServoTaskComplete(currentPos);
+                                if (taskListener != null)
+                                    taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -194,7 +196,8 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-                                taskListener.onServoTaskComplete(currentPos);
+                                if (taskListener != null)
+                                    taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
