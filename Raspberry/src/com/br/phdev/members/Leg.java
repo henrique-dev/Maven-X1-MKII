@@ -265,7 +265,7 @@ public class Leg {
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
                         lengthVector = tarsus.getFinalVector();
-                        base.getServo().setRawPosition(0);
+                        //base.getServo().setRawPosition(0);
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
