@@ -146,7 +146,7 @@ public class Leg {
                 break;
             }
             case NORMAL: { // RETORNAR A POSIÇÃO ORIGINAL
-                this.move(false, nextHeigth, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
+                this.move(false, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, null);
                 break;
             }
             case MAX: { // SUBIR
@@ -180,7 +180,7 @@ public class Leg {
         }
     }
 
-    public void move(boolean elevate, Body.CurrentHeight currentHeight, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
+    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
@@ -210,20 +210,7 @@ public class Leg {
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
         if (elevate) {
-            double currentElevateAngle;
-            switch (currentHeight) {
-                case MAX:
-                    currentElevateAngle = -(Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))))) / 2;
-                    break;
-                case MIN:
-                    currentElevateAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
-                    break;
-                default:
-                    currentElevateAngle = femur.getCurrentAngle();
-                    break;
-            }
-            currentElevateAngle += 10;
-
+            double currentElevateAngle = femur.getCurrentAngle() + 20;
 
             servoTaskList.add(new ServoTask(
                     this.femur.getServo(),

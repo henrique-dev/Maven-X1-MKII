@@ -252,7 +252,7 @@ class GravitySystem  {
             showVertexrInfo("Antigos vetores " + name, this);
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
             Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
-            leg.move(true, body.getCurrentHeight(), angle, vhip, precision, gaitSpeed, false, servoTaskList, taskListener);
+            leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, taskListener);
             servoTaskController.addTasks(servoTaskList);
 
             /*lock.lock();
@@ -290,7 +290,7 @@ class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(elevate, body.getCurrentHeight(), angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, tl);
+            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, tl);
             servoTaskController.addTasks(servoTaskList);
         }
 
