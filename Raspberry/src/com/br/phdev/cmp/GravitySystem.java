@@ -95,8 +95,14 @@ class GravitySystem  {
         this.rightGravityCell.bottom.vertex.x = cx + width / 2;
         this.rightGravityCell.bottom.vertex.y = cy - height / 2;
 
-        this.leftGravityCell.adjust();
-        this.rightGravityCell.adjust();
+        this.leftGravityCell.adjust(waitingTaskCellListener);
+        lock.lock();
+        waitForAnotherCell();
+        lock.unlock();
+        this.rightGravityCell.adjust(waitingTaskCellListener);
+        lock.lock();
+        waitForAnotherCell();
+        lock.unlock();
 
         Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
@@ -176,10 +182,10 @@ class GravitySystem  {
             bottom.elevate(nextHeight);
         }
 
-        void adjust() {
-            top.adjust();
-            mid.adjust();
-            bottom.adjust();
+        void adjust(TaskListener tl) {
+            top.adjust(null);
+            mid.adjust(null);
+            bottom.adjust(tl);
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
@@ -226,7 +232,7 @@ class GravitySystem  {
         }
 
 
-        void adjust() {
+        void adjust(TaskListener tl) {
             List<Task> servoTaskList = new ArrayList<>();
 
             double vw = vertex.x - leg.getOriginVector().x;
@@ -252,7 +258,7 @@ class GravitySystem  {
             showVertexrInfo("Antigos vetores " + name, this);
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
             Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
-            leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, taskListener);
+            leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
             servoTaskController.addTasks(servoTaskList);
 
             /*lock.lock();
