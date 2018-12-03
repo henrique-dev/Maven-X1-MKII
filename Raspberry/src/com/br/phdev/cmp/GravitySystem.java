@@ -112,7 +112,9 @@ class GravitySystem  {
     void elevate(Body.CurrentHeight nextHeight) {
         body.setCurrentHeight(nextHeight);
         leftGravityCell.elevate(nextHeight);
+        leftGravityCell.stabilize();
         rightGravityCell.elevate(nextHeight);
+        rightGravityCell.stabilize();
     }
 
     void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
@@ -202,9 +204,9 @@ class GravitySystem  {
         }
 
         void stabilize() {
-            //top.stabilize();
-            //mid.stabilize();
-            //bottom.stabilize();
+            top.stabilize();
+            mid.stabilize();
+            bottom.stabilize();
         }
 
         @Override
