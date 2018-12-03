@@ -71,8 +71,8 @@ class GravitySystem  {
         double cx = body.getArea().x / 2;
         double cy = body.getArea().y / 2;
 
-        this.leftGravityCell.center.x = cx;
-        this.leftGravityCell.center.y = cy;
+        this.leftGravityCell.center.x += cx - this.leftGravityCell.center.x;
+        this.leftGravityCell.center.y += cy - this.leftGravityCell.center.y;
         this.leftGravityCell.top.vertex.x = cx - width / 2;
         this.leftGravityCell.top.vertex.y = cy + height / 2;
         this.leftGravityCell.mid.vertex.x = cx + width / 2;
@@ -80,8 +80,8 @@ class GravitySystem  {
         this.leftGravityCell.bottom.vertex.x = cx - width / 2;
         this.leftGravityCell.bottom.vertex.y = cy - height / 2;
 
-        this.rightGravityCell.center.x = cx;
-        this.rightGravityCell.center.y = cy;
+        this.rightGravityCell.center.x += cx - this.rightGravityCell.center.x;
+        this.rightGravityCell.center.y += cy - this.rightGravityCell.center.y;
         this.rightGravityCell.top.vertex.x = cx + width / 2;
         this.rightGravityCell.top.vertex.y = cy + height / 2;
         this.rightGravityCell.mid.vertex.x = cx - width / 2;
@@ -177,6 +177,7 @@ class GravitySystem  {
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
+            center.addMe(vector2D);
             top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, null);
             mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, null);
             bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
