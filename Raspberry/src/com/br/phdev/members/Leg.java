@@ -218,6 +218,7 @@ public class Leg {
                     null,
                     new FlavorTaskGroup(0, taskGroups)));
 
+        base.getServo().move(base.getServo().getCurrentPositionDegrees());
         servoTaskList.add(new ServoTask(
                 this.base.getServo(),
                 (int) angle,
@@ -231,6 +232,7 @@ public class Leg {
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
                         currentLegDegrees = currentPos;
+                        base.getServo().setRawPosition(0);
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
@@ -265,7 +267,6 @@ public class Leg {
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
                         lengthVector = tarsus.getFinalVector();
-                        //base.getServo().setRawPosition(0);
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
