@@ -99,10 +99,12 @@ class GravitySystem  {
         lock.lock();
         waitForAnotherCell();
         lock.unlock();
+        this.leftGravityCell.stabilize();
         this.rightGravityCell.adjust(waitingTaskCellListener);
         lock.lock();
         waitForAnotherCell();
         lock.unlock();
+        this.rightGravityCell.stabilize();
 
         Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
         Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());

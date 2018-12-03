@@ -247,7 +247,7 @@ public class Leg {
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
         if (elevate) {
-            double currentElevateAngle = femur.getCurrentAngle() + 20;
+            double currentElevateAngle = femur.getCurrentAngle() + 40;
 
             servoTaskList.add(new ServoTask(
                     this.femur.getServo(),
