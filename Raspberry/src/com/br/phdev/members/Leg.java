@@ -262,13 +262,13 @@ public class Leg {
         }
 
         if (resultFound) {
-            Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println();
+            Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
             Log.s("Solução encontrada");
             Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
                     cteta, precision, tetaf, tetat, xft, yft));
-            System.out.println();
             Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println();
         } else {
             Log.s("Solução não encontrada");
         }
