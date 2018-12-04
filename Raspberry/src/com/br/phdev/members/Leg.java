@@ -230,8 +230,7 @@ public class Leg {
         }
     }
 
-    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
-
+    void test(double precision, double finalLength) {
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double xf = 0;
@@ -241,25 +240,10 @@ public class Leg {
         double xft = 0;
         double yft = 0;
         double cteta = 0;
-        /*
-        while (xft < finalLength) {
-            xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
-            xt = Math.sin(Math.toRadians(cteta)) * wt;
-            yf = Math.sin(Math.toRadians(cteta / 3)) * wf;
-            yt = Math.cos(Math.toRadians(cteta)) * wt;
-            xft = xf + xt;
-            yft = yf + yt;
-            if (xft >= finalLength)
-                break;
-            else
-                cteta += precision;
-            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
-                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
-                break;
-        }*/
+
         boolean resultFound = false;
-        double tetaf;
-        double tetat;
+        double tetaf = 0;
+        double tetat = 0;
 
         for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf -= precision) {
             xf = Math.cos(Math.toRadians(tetaf)) * wf;
@@ -275,14 +259,49 @@ public class Leg {
         }
 
         if (resultFound) {
+            Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println();
             Log.s("Solução encontrada");
             Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
                     cteta, precision, tetaf, tetat, xft, yft));
+            System.out.println();
+            Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             Log.s("Solução não encontrada");
         }
+    }
 
-        /*
+    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
+
+        double wf = this.femur.getLength();
+        double wt = this.tarsus.getLength();
+        double xf = 0;
+        double xt = 0;
+        double yf = 0;
+        double yt = 0;
+        double xft = 0;
+        double yft = 0;
+        double cteta = 0;
+
+        test(precision, finalLength);
+
+        while (xft < finalLength) {
+            xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
+            xt = Math.sin(Math.toRadians(cteta)) * wt;
+            yf = Math.sin(Math.toRadians(cteta / 3)) * wf;
+            yt = Math.cos(Math.toRadians(cteta)) * wt;
+            xft = xf + xt;
+            yft = yf + yt;
+            if (xft >= finalLength)
+                break;
+            else
+                cteta += precision;
+            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
+                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
+                break;
+        }
+
+
 
         final double nxf = xf;
         final double nxt = xt;
@@ -372,7 +391,7 @@ public class Leg {
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
 
-                */
+
     }
 
     public void stay() {
