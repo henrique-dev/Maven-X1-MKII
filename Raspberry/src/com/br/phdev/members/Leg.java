@@ -152,6 +152,7 @@ public class Leg {
 
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
+                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() + Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -170,6 +171,7 @@ public class Leg {
                                 double oy = tarsus.getOriginVector().y;
                                 tarsus.getFinalVector().set(ox + x, oy + y);
                                 lengthVector = tarsus.getFinalVector();
+                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() + Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -186,6 +188,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
+                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() + Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -197,6 +200,7 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
+                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() + Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -214,6 +218,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
+                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() + Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -225,6 +230,7 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
+                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() + Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
