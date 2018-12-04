@@ -251,7 +251,7 @@ public class Maven {
 																								break;
 																							case "move":
 																								valueForServo = Float.parseFloat(parameter);
-																								robotSystem.getServos()[globalChannel].move(valueForServo);
+																								robotSystem.getServos()[globalChannel].move(valueForServo, false);
 																								break;
 																							case "opening":
 																								valueForServo = Integer.parseInt(parameter);
