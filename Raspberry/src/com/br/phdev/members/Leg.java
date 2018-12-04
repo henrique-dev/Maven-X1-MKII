@@ -268,7 +268,7 @@ public class Leg {
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
                 yft = yf + yt;
-                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yf <= currentLegHeight + 5) {
+                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
                     resultFound = true;
                 }
             }
