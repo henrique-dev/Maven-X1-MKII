@@ -140,6 +140,13 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
+                                double xf = Math.cos(Math.toRadians(currentPos)) * femur.getLength();
+                                double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
+                                double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
+                                double ox = femur.getOriginVector().x;
+                                double oy = femur.getOriginVector().y;
+                                femur.getFinalVector().set(ox + x, oy + y);
+
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
                             }
@@ -153,7 +160,13 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-
+                                double xt = Math.sin(Math.toRadians(currentPos)) * tarsus.getLength();
+                                double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
+                                double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
+                                double ox = tarsus.getOriginVector().x;
+                                double oy = tarsus.getOriginVector().y;
+                                tarsus.getFinalVector().set(ox + x, oy + y);
+                                lengthVector = tarsus.getFinalVector();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -308,7 +321,7 @@ public class Leg {
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
                         femur.getFinalVector().set(ox + x, oy + y);
-                        normalFemurAngle = currentPos;
+                        //normalFemurAngle = currentPos;
 
                     }
                 }},
@@ -327,7 +340,7 @@ public class Leg {
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
                         lengthVector = tarsus.getFinalVector();
-                        normalTarsusAngle = currentPos;
+                        //normalTarsusAngle = currentPos;
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
