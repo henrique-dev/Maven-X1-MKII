@@ -221,15 +221,21 @@ public class Leg {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
-        double tempxf = 0;
-        double tempxt = 0;
-        double cxft = 0;
+        double xf = 0;
+        double xt = 0;
+        double yf = 0;
+        double yt = 0;
+        double xft = 0;
+        double yft = 0;
         double cteta = 0;
-        while (cxft < finalLength) {
-            tempxf = Math.cos(Math.toRadians(cteta / 3)) * wf;
-            tempxt = Math.sin(Math.toRadians(cteta)) * wt;
-            cxft = tempxf + tempxt;
-            if (cxft >= finalLength)
+        while (xft < finalLength) {
+            xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
+            xt = Math.sin(Math.toRadians(cteta)) * wt;
+            yf = Math.sin(Math.toRadians(cteta / 3)) * wf;
+            yt = Math.cos(Math.toRadians(cteta)) * wt;
+            xft = xf + xt;
+            yft = yf + yt;
+            if (xft >= finalLength)
                 break;
             else
                 cteta += precision;
@@ -238,11 +244,11 @@ public class Leg {
                 break;
         }
 
-        final double xf = tempxf;
-        final double xt = tempxt;
+        final double nxf = xf;
+        final double nxt = xt;
 
-        Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f, tetaW = %.2f e Xft = %.2f",
-                cteta, precision, cteta/3, cteta, cxft));
+        Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
+                cteta, precision, cteta/3, cteta, xft, yft));
 
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
@@ -284,8 +290,8 @@ public class Leg {
                 new TaskListener[]{new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
-                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
-                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xf;
+                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * nxf;
+                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * nxf;
                         double ox = femur.getOriginVector().x;
                         double oy = femur.getOriginVector().y;
                         femur.getFinalVector().set(ox + x, oy + y);
@@ -302,8 +308,8 @@ public class Leg {
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
-                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
-                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * xt;
+                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * nxt;
+                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * nxt;
                         double ox = tarsus.getOriginVector().x;
                         double oy = tarsus.getOriginVector().y;
                         tarsus.getFinalVector().set(ox + x, oy + y);
