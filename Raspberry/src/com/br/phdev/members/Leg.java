@@ -258,7 +258,6 @@ public class Leg {
                 yft = yf + yt;
                 if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yf <= currentLegHeight + 5) {
                     resultFound = true;
-                    currentLegHeight = yf + yt;
                 }
             }
         }
