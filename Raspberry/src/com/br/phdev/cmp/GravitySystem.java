@@ -190,9 +190,11 @@ class GravitySystem  {
         }
 
         void adjust(TaskListener tl) {
-            top.adjust(null);
-            mid.adjust(null);
-            bottom.adjust(tl);
+            List<Task> taskList = new ArrayList<>();
+            top.adjust(taskList, null);
+            mid.adjust(taskList, null);
+            bottom.adjust(taskList, tl);
+            servoTaskController.addTasks(taskList);
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
@@ -239,8 +241,8 @@ class GravitySystem  {
         }
 
 
-        void adjust(TaskListener tl) {
-            List<Task> servoTaskList = new ArrayList<>();
+        void adjust(List<Task> servoTaskList, TaskListener tl) {
+            //List<Task> servoTaskList = new ArrayList<>();
 
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;
@@ -266,17 +268,17 @@ class GravitySystem  {
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
             Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
             leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
-            servoTaskController.addTasks(servoTaskList);
+            //servoTaskController.addTasks(servoTaskList);
 
             /*lock.lock();
             waitFor();
             lock.unlock();
             servoTaskList.clear();*/
 
-            showVertexrInfo("Novos vetores " + name, this);
-            Log.s("Comprimento novo da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
-            Log.s("Grau novo da perna: " + leg.getCurrentLegDegrees());
-            System.out.println();
+            //showVertexrInfo("Novos vetores " + name, this);
+            //Log.s("Comprimento novo da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
+            //Log.s("Grau novo da perna: " + leg.getCurrentLegDegrees());
+            //System.out.println();
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {

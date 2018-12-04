@@ -250,6 +250,11 @@ public class Leg {
         Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
                 cteta, precision, cteta/3, cteta, xft, yft));
 
+        Log.s("Novos vetores");
+        Log.s("Comprimento novo da perna: " + String.format("%.2f", xft));
+        Log.s("Grau novo da perna: " + angle);
+        System.out.println();
+
         TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
         
         if (elevate) {
