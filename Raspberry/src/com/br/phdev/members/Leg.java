@@ -250,6 +250,7 @@ public class Leg {
             xf = Math.cos(Math.toRadians(tetaf)) * wf;
             yf = Math.sin(Math.toRadians(tetaf)) * wf;
             for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat =- 1) {
+                System.out.println(tetat);
                 xt = Math.sin(Math.toRadians(tetat)) * wt;
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
