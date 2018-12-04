@@ -29,9 +29,7 @@ public class ServoTask implements Task {
 
     private boolean jusForDelay;
 
-    private boolean forceCorrection;
-
-    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup, boolean forceCorrection) {
+    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.delay = delayInMilli;
@@ -42,11 +40,10 @@ public class ServoTask implements Task {
         this.taskId = currentTaskId++;
         this.flavorTaskGroup = flavorTaskGroup;
         this.jusForDelay = false;
-        this.forceCorrection = forceCorrection;
     }
 
-    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup, boolean forceCorrection) {
-        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup, forceCorrection);
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup) {
+        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup);
         this.taskListener = taskListener;
     }
 
@@ -91,22 +88,15 @@ public class ServoTask implements Task {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 if (this.delay > 0) {
                     this.currentPos = this.step * this.currentTime;
-                    this.servo.move(this.startPosition + this.currentPos);
+                    this.servo.move(this.startPosition + this.currentPos, false);
                 } else {
-                    this.servo.move(this.targetPos);
+                    this.servo.move(this.targetPos, false);
                     this.currentPos = this.targetPos;
                 }
                 this.currentTime += 100;
                 if (this.currentTime > this.delay) {
                     if (this.targetPos != this.currentPos)
-                        if (forceCorrection) {
-                            if (step < 0)
-                                this.servo.move(this.targetPos + 5);
-                            else
-                                this.servo.move(this.targetPos - 5);
-                        }
-                        else
-                            this.servo.move(this.targetPos);
+                        this.servo.move(this.targetPos, false);
                     this.taskOver = true;
                     this.startTask = false;
                     if (this.taskListener != null) {

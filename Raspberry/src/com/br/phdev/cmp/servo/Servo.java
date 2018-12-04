@@ -22,7 +22,7 @@ public class Servo {
     }
 
     private void initServo() {
-        this.move(0);
+        this.move(0, false);
         //waitFor(300);
         //this.setRawPosition(0);
         //waitFor(100);
@@ -61,14 +61,15 @@ public class Servo {
                 module.setPWM(this.servoData.getLocalChannel(), on, off);
     }
 
-    public void move(double degrees) {
+    public void move(double degrees, boolean justForCorrection) {
         if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
             if (this.servoData.isInverted()) {
                 this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - (this.servoData.getStep() * degrees)));
             } else {
                 this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + (this.servoData.getStep() * degrees)));
             }
-            this.currentPositionDegrees = degrees;
+            if (!justForCorrection)
+                this.currentPositionDegrees = degrees;
         } else {
             Log.w("Posição ultrapassa os limites");
             if (degrees > this.servoData.getLimitMax()) {
@@ -77,14 +78,16 @@ public class Servo {
                 } else {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
                 }
-                this.currentPositionDegrees = this.servoData.getLimitMax();
+                if (!justForCorrection)
+                    this.currentPositionDegrees = this.servoData.getLimitMax();
             } else if (degrees < this.servoData.getLimitMin()) {
                 if (this.servoData.isInverted()) {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
                 } else {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
                 }
-                this.currentPositionDegrees = this.servoData.getLimitMin();
+                if (!justForCorrection)
+                    this.currentPositionDegrees = this.servoData.getLimitMin();
             }
         }
     }

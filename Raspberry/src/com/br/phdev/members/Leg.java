@@ -144,7 +144,7 @@ public class Leg {
                                     taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups), true));
+                        new FlavorTaskGroup(0, taskGroups)));
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
@@ -156,7 +156,7 @@ public class Leg {
 
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups), true));
+                        new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
             case NORMAL: { // RETORNAR A POSIÇÃO ORIGINAL
@@ -172,7 +172,7 @@ public class Leg {
                                     taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups), true));
+                        new FlavorTaskGroup(0, taskGroups)));
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
@@ -183,7 +183,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups), true));
+                        new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
             case MAX: { // SUBIR
@@ -200,7 +200,7 @@ public class Leg {
                                     taskListener.onServoTaskComplete(currentPos);
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups), true));
+                        new FlavorTaskGroup(0, taskGroups)));
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
@@ -211,7 +211,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                             }
                         }},
-                        new FlavorTaskGroup(0, taskGroups), true));
+                        new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
         }
@@ -265,10 +265,10 @@ public class Leg {
                     (int) currentElevateAngle,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
-                    new FlavorTaskGroup(0, taskGroups), false));
+                    new FlavorTaskGroup(0, taskGroups)));
         }
 
-        base.getServo().move(base.getServo().getCurrentPositionDegrees());
+        //base.getServo().move(base.getServo().getCurrentPositionDegrees());
         servoTaskList.add(new ServoTask(
                 this.base.getServo(),
                 (int) angle,
@@ -285,7 +285,7 @@ public class Leg {
                         //base.getServo().setRawPosition(0);
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), false));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
 
 
         servoTaskList.add(new ServoTask(
@@ -304,7 +304,7 @@ public class Leg {
 
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), true));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
 
         servoTaskList.add(new ServoTask(
                 this.tarsus.getServo(),
@@ -322,12 +322,12 @@ public class Leg {
                         normalTarsusAngle = currentPos;
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), true));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
     }
 
     public void stay() {
-        this.femur.move(femur.getCurrentAngle() - 5);
-        this.tarsus.move(tarsus.getCurrentAngle() - 5);
+        this.femur.move(femur.getCurrentAngle() - 3, true);
+        this.tarsus.move(tarsus.getCurrentAngle() + 3, true);
     }
 
     private double module(double value) {
