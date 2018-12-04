@@ -270,7 +270,7 @@ public class Leg {
                     new FlavorTaskGroup(0, taskGroups)));
             servoTaskList.add(new ServoTask(
                     this.tarsus.getServo(),
-                    (int) -currentElevateAngle,
+                    (int) -currentElevateAngle / 3,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
                     new FlavorTaskGroup(0, taskGroups)));
