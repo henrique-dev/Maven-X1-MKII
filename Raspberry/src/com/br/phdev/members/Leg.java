@@ -255,7 +255,7 @@ public class Leg {
         Log.s("Grau novo da perna: " + angle);
         System.out.println();
 
-        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, 4}) : new TaskGroup(new int[]{4});
+        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, 3}) : new TaskGroup(new int[]{3});
         
         if (elevate) {
             double currentElevateAngle = femur.getCurrentAngle() + 40;
