@@ -245,11 +245,11 @@ public class Leg {
         double tetaf = 0;
         double tetat = 0;
 
-        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf =- 1) {
+        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
             System.out.println(tetaf);
             xf = Math.cos(Math.toRadians(tetaf)) * wf;
             yf = Math.sin(Math.toRadians(tetaf)) * wf;
-            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat =- 1) {
+            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
                 System.out.println(tetat);
                 xt = Math.sin(Math.toRadians(tetat)) * wt;
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
