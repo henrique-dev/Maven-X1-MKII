@@ -255,14 +255,22 @@ public class Leg {
         Log.s("Grau novo da perna: " + angle);
         System.out.println();
 
-        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{1, 4}) : new TaskGroup(new int[]{4});
+        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, 4}) : new TaskGroup(new int[]{4});
         
         if (elevate) {
             double currentElevateAngle = femur.getCurrentAngle() + 40;
+            if (currentElevateAngle > femur.getLimitMax())
+                currentElevateAngle = femur.getLimitMax();
 
             servoTaskList.add(new ServoTask(
                     this.femur.getServo(),
                     (int) currentElevateAngle,
+                    sameDelay ? delayMillis : delayMillis / 2,
+                    null,
+                    new FlavorTaskGroup(0, taskGroups)));
+            servoTaskList.add(new ServoTask(
+                    this.tarsus.getServo(),
+                    (int) -currentElevateAngle,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
                     new FlavorTaskGroup(0, taskGroups)));
