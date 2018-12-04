@@ -251,7 +251,7 @@ public class Leg {
                 cteta, precision, cteta/3, cteta, xft, yft));
 
         Log.s("Novos vetores");
-        Log.s("Comprimento novo da perna: " + String.format("%.2f", xft));
+        Log.s("Comprimento novo da perna: " + String.format("%.2f", base.getLength() + xft));
         Log.s("Grau novo da perna: " + angle);
         System.out.println();
 
