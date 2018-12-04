@@ -241,6 +241,7 @@ public class Leg {
         double xft = 0;
         double yft = 0;
         double cteta = 0;
+        /*
         while (xft < finalLength) {
             xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
             xt = Math.sin(Math.toRadians(cteta)) * wt;
@@ -255,7 +256,33 @@ public class Leg {
             if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
                     cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
                 break;
+        }*/
+        boolean resultFound = false;
+        double tetaf;
+        double tetat;
+
+        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf -= precision) {
+            xf = Math.cos(Math.toRadians(tetaf)) * wf;
+            yf = Math.sin(Math.toRadians(tetaf)) * wf;
+            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat =- precision) {
+                xt = Math.sin(Math.toRadians(tetat)) * wt;
+                yt = Math.cos(Math.toRadians(tetat)) * wt;
+                xft = xf + xt;
+                yft = yf + yt;
+                if (xft >= finalLength - 5 && xft <= finalLength + 5)
+                    resultFound = true;
+            }
         }
+
+        if (resultFound) {
+            Log.s("Solução encontrada");
+            Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
+                    cteta, precision, tetaf, tetat, xft, yft));
+        } else {
+            Log.s("Solução não encontrada");
+        }
+
+        /*
 
         final double nxf = xf;
         final double nxt = xt;
@@ -344,6 +371,8 @@ public class Leg {
                     }
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+
+                */
     }
 
     public void stay() {
