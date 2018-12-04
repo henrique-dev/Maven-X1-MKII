@@ -38,7 +38,7 @@ public class Leg {
         this.normalFemurAngle = femur.getCurrentAngle();
         this.normalFemurAngle = tarsus.getCurrentAngle();
 
-        this.currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() + Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
+        this.currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
     }
 
     public double getNormalFemurAngle() {
@@ -152,8 +152,7 @@ public class Leg {
 
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
-                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() +
-                                        Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
+                                currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(currentPos)) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }
                         }},
@@ -173,8 +172,7 @@ public class Leg {
                                 double oy = tarsus.getOriginVector().y;
                                 tarsus.getFinalVector().set(ox + x, oy + y);
                                 lengthVector = tarsus.getFinalVector();
-                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() +
-                                        Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                                currentLegHeight = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }
                         }},
@@ -192,7 +190,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
-                                currentLegHeight = Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength() + Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength();
+                                currentLegHeight = Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength() - Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }
                         }},
@@ -205,7 +203,7 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-                                currentLegHeight = Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength() + Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength();
+                                currentLegHeight = Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength() - Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }
                         }},
@@ -224,7 +222,7 @@ public class Leg {
                             public void onServoTaskComplete(double currentPos) {
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
-                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() + Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
+                                currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(currentPos)) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }
                         }},
@@ -237,7 +235,7 @@ public class Leg {
                         new TaskListener[]{new TaskListener() {
                             @Override
                             public void onServoTaskComplete(double currentPos) {
-                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() + Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                                currentLegHeight = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }
                         }},
