@@ -152,7 +152,8 @@ public class Leg {
 
                                 if (taskListener != null)
                                     taskListener.onServoTaskComplete(currentPos);
-                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() + Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
+                                currentLegHeight = Math.sin(Math.toRadians(currentPos)) * femur.getLength() +
+                                        Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -171,7 +172,8 @@ public class Leg {
                                 double oy = tarsus.getOriginVector().y;
                                 tarsus.getFinalVector().set(ox + x, oy + y);
                                 lengthVector = tarsus.getFinalVector();
-                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() + Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
+                                currentLegHeight = Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength() +
+                                        Math.cos(Math.toRadians(currentPos)) * tarsus.getLength();
                             }
                         }},
                         new FlavorTaskGroup(0, taskGroups)));
@@ -271,6 +273,7 @@ public class Leg {
         if (resultFound) {
             System.out.println();
             Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+            Log.i("Altura atual: " + currentLegHeight);
             Log.s("Solução encontrada");
             Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
                     cteta, precision, tetaf, tetat, xft, yft));
