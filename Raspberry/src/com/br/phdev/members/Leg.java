@@ -378,8 +378,8 @@ public class Leg {
         double xft = 0;
         double yft = 0;
         double cteta = 0;
-        double tetaf;
-        double tetat;
+        double tetaf = 0;
+        double tetat = 0;
         boolean resultFound = false;
 
         test(precision, finalLength, currentLegHeight);
@@ -474,7 +474,7 @@ public class Leg {
 
         servoTaskList.add(new ServoTask(
                 this.femur.getServo(),
-                (int) (cteta / 3),
+                (int) tetaf,
                 sameDelay ? delayMillis : (int)(delayMillis / 2.5),
                 new TaskListener[]{new TaskListener() {
                     @Override
@@ -491,7 +491,7 @@ public class Leg {
 
         servoTaskList.add(new ServoTask(
                 this.tarsus.getServo(),
-                (int) cteta,
+                (int) tetat,
                 sameDelay ? delayMillis : (int)(delayMillis / 2.5),
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
