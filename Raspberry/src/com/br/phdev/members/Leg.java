@@ -166,7 +166,7 @@ public class Leg {
                         xft = xf + xt;
                         yft = yt - yf;
                         Log.e(String.format("tetaf: %.2f        tetat: %.2f        yft: %.2f       xft: %.2f", tetaf, tetat, yft, xft));
-                        if (xft >= currentLenght - 5 && xft <= currentLenght + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
+                        if (base.getLength() + xft >= currentLenght - 5 && base.getLength() + xft <= currentLenght + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
                     }
