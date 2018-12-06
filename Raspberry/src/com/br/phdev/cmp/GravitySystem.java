@@ -198,16 +198,20 @@ class GravitySystem  {
         }
 
         private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
+            List<Task> taskList = new ArrayList<>();
             center.addMe(vector2D);
-            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, null);
-            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, null);
-            bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, tl);
+            top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, taskList, null);
+            mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, taskList,null);
+            bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, taskList, tl);
+            servoTaskController.addTasks(taskList);
         }
 
         private void adjustBodyToVertex(Vector2D vector2D, int gaitSpeed, TaskListener tl) {
-            top.adjustLegToVertex(vector2D, false, gaitSpeed, true, null);
-            mid.adjustLegToVertex(vector2D, false, gaitSpeed, true, null);
-            bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, tl);
+            List<Task> taskList = new ArrayList<>();
+            top.adjustLegToVertex(vector2D, false, gaitSpeed, true, taskList, null);
+            mid.adjustLegToVertex(vector2D, false, gaitSpeed, true, taskList, null);
+            bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, taskList, tl);
+            servoTaskController.addTasks(taskList);
         }
 
         void stabilize() {
@@ -245,8 +249,6 @@ class GravitySystem  {
 
 
         void adjust(List<Task> servoTaskList, TaskListener tl) {
-            //List<Task> servoTaskList = new ArrayList<>();
-
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;
             double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
@@ -271,21 +273,9 @@ class GravitySystem  {
             Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
             Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
             leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
-            //servoTaskController.addTasks(servoTaskList);
-
-            /*lock.lock();
-            waitFor();
-            lock.unlock();
-            servoTaskList.clear();*/
-
-            //showVertexrInfo("Novos vetores " + name, this);
-            //Log.s("Comprimento novo da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
-            //Log.s("Grau novo da perna: " + leg.getCurrentLegDegrees());
-            //System.out.println();
         }
 
-        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, TaskListener tl) {
-            List<Task> servoTaskList = new ArrayList<>();
+        private void adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, List<Task> taskList, TaskListener tl) {
 
             if (elevate)
                 vertex.addMe(vector2D);
@@ -308,8 +298,7 @@ class GravitySystem  {
             double asin = Math.asin(sin);
             double angle = vdegrees - Math.toDegrees(asin);
 
-            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, servoTaskList, tl);
-            servoTaskController.addTasks(servoTaskList);
+            leg.move(elevate, angle, vhip, precision, gaitSpeed, sameSpeed, taskList, tl);
         }
 
         private void showVertexrInfo(String vertexName, Vertex vertex) {
