@@ -163,7 +163,7 @@ public class Leg {
                         xt = Math.sin(Math.toRadians(tetat)) * wt;
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
-                        yft = yf + yt;
+                        yft = yt + yf;
                         if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
@@ -277,7 +277,7 @@ public class Leg {
                         xt = Math.sin(Math.toRadians(tetat)) * wt;
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
-                        yft = yf + yt;
+                        yft = yt + yf;
                         if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
@@ -343,7 +343,7 @@ public class Leg {
                 xt = Math.sin(Math.toRadians(tetat)) * wt;
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
-                yft = yf + yt;
+                yft = yt + yf;
                 if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
                     resultFound = true;
                 }
