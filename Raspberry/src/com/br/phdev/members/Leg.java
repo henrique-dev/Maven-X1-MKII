@@ -39,6 +39,7 @@ public class Leg {
         this.normalFemurAngle = tarsus.getCurrentAngle();
 
         this.currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
+        Log.e(currentLegHeight);
     }
 
     public double getNormalFemurAngle() {
@@ -163,7 +164,7 @@ public class Leg {
                         xt = Math.sin(Math.toRadians(tetat)) * wt;
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
-                        yft = yt + yf;
+                        yft = yt - yf;
                         if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
@@ -277,7 +278,7 @@ public class Leg {
                         xt = Math.sin(Math.toRadians(tetat)) * wt;
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
-                        yft = yt + yf;
+                        yft = yt - yf;
                         if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
@@ -343,7 +344,7 @@ public class Leg {
                 xt = Math.sin(Math.toRadians(tetat)) * wt;
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
-                yft = yt + yf;
+                yft = yt - yf;
                 if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
                     resultFound = true;
                 }
