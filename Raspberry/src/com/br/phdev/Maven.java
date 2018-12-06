@@ -591,7 +591,7 @@ public class Maven {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
                                                     if (!runningGravitySystem) {
 														robotSystem.getMovementSystem().startGravitySystem(390, 390, 0.5, 2000);
-														robotSystem.getMovementSystem().elevate(0);
+														//robotSystem.getMovementSystem().elevate(0);
 														runningGravitySystem = true;
 													} else
 														robotSystem.getMovementSystem().adjustGravitySystem(390, 390, 0.5, 2000);
@@ -614,7 +614,7 @@ public class Maven {
                                                             "mmx" + height + "mm e precisão de " + precision + "mm com velocidade de passo de " + gaitSpeed);
                                                     if (!runningGravitySystem) {
 														robotSystem.getMovementSystem().startGravitySystem(width, height, precision, gaitSpeed);
-														robotSystem.getMovementSystem().elevate(0);
+														//robotSystem.getMovementSystem().elevate(0);
 														runningGravitySystem = true;
 													} else {
 														robotSystem.getMovementSystem().adjustGravitySystem(width, height, precision, gaitSpeed);

@@ -130,15 +130,54 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void elevate(Body.CurrentHeight nextHeigth, List<Task> servoTaskList, TaskListener taskListener) {
+    public void elevate(Body.CurrentHeight nextHeight, List<Task> servoTaskList, TaskListener taskListener) {
+
+
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
-        switch (nextHeigth) {
+        switch (nextHeight) {
             case MIN: { // DESCER
                 //double totalAngle = module(module(this.femur.getLimitMin()) > module(this.tarsus.getLimitMax()) ? this.tarsus.getLimitMax() : this.femur.getLimitMin());
                 double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
+
+                double wf = this.femur.getLength();
+                double wt = this.tarsus.getLength();
+                double xf = 0;
+                double xt = 0;
+                double yf = 0;
+                double yt = 0;
+                double xft = 0;
+                double yft = 0;
+                double cteta = 0;
+
+                double finalLength = lengthVector.subtract(originVector).getSize();
+                double newLegHeight = 60;
+
+                boolean resultFound = false;
+                double tetaf = 0;
+                double tetat = 0;
+
+                for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
+                    xf = Math.cos(Math.toRadians(tetaf)) * wf;
+                    yf = Math.sin(Math.toRadians(tetaf)) * wf;
+                    for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
+                        xt = Math.sin(Math.toRadians(tetat)) * wt;
+                        yt = Math.cos(Math.toRadians(tetat)) * wt;
+                        xft = xf + xt;
+                        yft = yf + yt;
+                        if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
+                            resultFound = true;
+                        }
+                    }
+                }
+
+                if (!resultFound) {
+                    Log.e("Resultado não encontrado");
+                    return;
+                }
+
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        (int)totalAngle,
+                        (int)tetaf,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -160,7 +199,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        -(int)totalAngle / 2,
+                        (int)tetat,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -213,9 +252,46 @@ public class Leg {
             case MAX: { // SUBIR
                 //double totalAngle = module(module(this.femur.getLimitMax()) > module(this.tarsus.getLimitMin()) ? this.tarsus.getLimitMin() : this.femur.getLimitMax());
                 double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
+
+                double wf = this.femur.getLength();
+                double wt = this.tarsus.getLength();
+                double xf = 0;
+                double xt = 0;
+                double yf = 0;
+                double yt = 0;
+                double xft = 0;
+                double yft = 0;
+                double cteta = 0;
+
+                double finalLength = lengthVector.subtract(originVector).getSize();
+                double newLegHeight = 200;
+
+                boolean resultFound = false;
+                double tetaf = 0;
+                double tetat = 0;
+
+                for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
+                    xf = Math.cos(Math.toRadians(tetaf)) * wf;
+                    yf = Math.sin(Math.toRadians(tetaf)) * wf;
+                    for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
+                        xt = Math.sin(Math.toRadians(tetat)) * wt;
+                        yt = Math.cos(Math.toRadians(tetat)) * wt;
+                        xft = xf + xt;
+                        yft = yf + yt;
+                        if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
+                            resultFound = true;
+                        }
+                    }
+                }
+
+                if (!resultFound) {
+                    Log.e("Resultado não encontrado");
+                    return;
+                }
+
                 servoTaskList.add(new ServoTask(
                         this.femur.getServo(),
-                        (int)-totalAngle / 2,
+                        (int)tetaf,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
@@ -230,7 +306,7 @@ public class Leg {
 
                 servoTaskList.add(new ServoTask(
                         this.tarsus.getServo(),
-                        (int)totalAngle,
+                        (int)tetat,
                         1000,
                         new TaskListener[]{new TaskListener() {
                             @Override
