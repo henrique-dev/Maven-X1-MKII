@@ -382,34 +382,10 @@ public class Leg {
         double tetat = 0;
         boolean resultFound = false;
 
-        test(precision, finalLength, currentLegHeight);
-/*
-        while (xft < finalLength) {
-            xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
-            xt = Math.sin(Math.toRadians(cteta)) * wt;
-            yf = Math.sin(Math.toRadians(cteta / 3)) * wf;
-            yt = Math.cos(Math.toRadians(cteta)) * wt;
-            xft = xf + xt;
-            yft = yf + yt;
-            if (xft >= finalLength)
-                break;
-            else
-                cteta += precision;
-            if (cteta < this.tarsus.getServo().getServoData().getLimitMin() || cteta > this.tarsus.getServo().getServoData().getLimitMax() ||
-                    cteta/3 < (double)this.femur.getServo().getServoData().getLimitMin() || cteta/3 > (double)this.femur.getServo().getServoData().getLimitMax())
-                break;
-        }
-
-
-
-        final double nxf = xf;
-        final double nxt = xt;
-        */
-
-        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
+        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - precision) {
             xf = Math.cos(Math.toRadians(tetaf)) * wf;
             yf = Math.sin(Math.toRadians(tetaf)) * wf;
-            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
+            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - precision) {
                 xt = Math.sin(Math.toRadians(tetat)) * wt;
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
@@ -424,7 +400,7 @@ public class Leg {
         final double nxt = xt;
 
         Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
-                cteta, precision, cteta/3, cteta, xft, yft));
+                cteta, precision, tetaf, tetat, xft, yft));
 
         Log.s("Novos vetores");
         Log.s("Comprimento novo da perna: " + String.format("%.2f", base.getLength() + xft));
