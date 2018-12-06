@@ -360,7 +360,7 @@ public class Leg {
             Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println();
         } else {
-            Log.e("Solução não encontrada");
+            Log.e(String.format("Solução não encontrada para altura %.2f e comprimento %.2f", currentLegHeight, finalLength));
         }
     }
 
