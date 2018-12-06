@@ -160,7 +160,7 @@ public class Leg {
                 for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
                     xf = Math.cos(Math.toRadians(tetaf)) * wf;
                     yf = Math.sin(Math.toRadians(tetaf)) * wf;
-                    for (tetat = tarsus.getLimitMin(); tetat < tarsus.getLimitMax() && !resultFound; tetat = tetat + 1) {
+                    for (tetat = tarsus.getLimitMin(); tetat <= tarsus.getLimitMax() && !resultFound; tetat = tetat + 1) {
                         xt = Math.sin(Math.toRadians(tetat)) * wt;
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
