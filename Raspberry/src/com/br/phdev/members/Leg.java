@@ -266,7 +266,7 @@ public class Leg {
                 double cteta = 0;
 
                 double finalLength = lengthVector.subtract(originVector).getSize();
-                double newLegHeight = 200;
+                double newLegHeight = 150;
 
                 test(1, finalLength, newLegHeight);
 
