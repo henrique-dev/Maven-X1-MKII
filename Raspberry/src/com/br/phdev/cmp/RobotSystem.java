@@ -85,6 +85,7 @@ public class RobotSystem {
                         base = new Base(
                                 this.servos[servoData.getGlobalChannel()]
                         );
+                        base.setLength(legDataList.get(i).getBaseLength());
                         Log.s("Servo da base da perna " + i + " carregado");
                     }
                     if (legDataList.get(i).getFemurServo() == servoData.getGlobalChannel()) {
@@ -92,6 +93,7 @@ public class RobotSystem {
                         femur = new Femur(
                                 this.servos[servoData.getGlobalChannel()]
                         );
+                        femur.setLength(legDataList.get(i).getFemurLength());
                         Log.s("Servo do femur da perna " + i + " carregado");
                     }
                     if (legDataList.get(i).getTarsusServo() == servoData.getGlobalChannel()) {
@@ -99,6 +101,7 @@ public class RobotSystem {
                         tarsus = new Tarsus(
                                 this.servos[servoData.getGlobalChannel()]
                         );
+                        tarsus.setLength(legDataList.get(i).getTarsusLength());
                         Log.s("Servo do tarso da perna " + i + " carregado");
                     }
                 }

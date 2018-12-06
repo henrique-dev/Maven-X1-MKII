@@ -78,18 +78,18 @@ public class Leg {
 
     public void setOriginVector(Vector2D originVector) {
         this.originVector = originVector;
-        base.setLength(legData.getBaseLength());
+        //base.setLength(legData.getBaseLength());
         base.setOriginVector(originVector);
         Vector2D baseXY = Vector2D.createByMagAngle(legData.getBaseLength(), legData.getLegMidDegrees()).addMe(originVector);
         base.setFinalVector(new Vector2D(baseXY.x, baseXY.y));
 
-        femur.setLength(legData.getFemurLength());
+        //femur.setLength(legData.getFemurLength());
         femur.setOriginVector(base.getFinalVector());
         Vector2D femurXY = Vector2D.createByMagAngle(Math.cos(Math.toRadians(femur.getServo().getCurrentPositionDegrees())) * femur.getLength(),
                 legData.getLegMidDegrees()).addMe(base.getFinalVector());
         femur.setFinalVector(new Vector2D(femurXY.x, femurXY.y));
 
-        tarsus.setLength(legData.getTarsusLength());
+        //tarsus.setLength(legData.getTarsusLength());
         tarsus.setOriginVector(femur.getFinalVector());
         Vector2D tarsusXY = Vector2D.createByMagAngle(Math.sin(Math.toRadians(tarsus.getServo().getCurrentPositionDegrees())) * tarsus.getLength(),
                 legData.getLegMidDegrees()).addMe(femur.getFinalVector());
