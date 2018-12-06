@@ -236,7 +236,7 @@ class GravitySystem  {
 
         void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
             List<Task> servoTaskList = new ArrayList<>();
-            leg.elevate(nextHeight, servoTaskList, tl);
+            leg.elevate(nextHeight, vertex.subtract(leg.getOriginVector()).getSize(), servoTaskList, tl);
             servoTaskController.addTasks(servoTaskList);
         }
 

@@ -130,7 +130,7 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void elevate(Body.CurrentHeight nextHeight, List<Task> servoTaskList, TaskListener taskListener) {
+    public void elevate(Body.CurrentHeight nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
 
 
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
@@ -149,14 +149,13 @@ public class Leg {
                 double yft = 0;
                 double cteta = 0;
 
-                double finalLength = lengthVector.subtract(originVector).getSize();
                 double newLegHeight = 60;
 
                 boolean resultFound = false;
                 double tetaf = 0;
                 double tetat = 0;
 
-                test(1, finalLength, newLegHeight);
+                test(1, currentLenght, newLegHeight);
 
                 for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
                     xf = Math.cos(Math.toRadians(tetaf)) * wf;
@@ -166,7 +165,7 @@ public class Leg {
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
                         yft = yt - yf;
-                        if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
+                        if (xft >= currentLenght - 5 && xft <= currentLenght + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
                     }
