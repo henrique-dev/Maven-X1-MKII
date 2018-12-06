@@ -39,9 +39,6 @@ public class Leg {
         this.normalFemurAngle = tarsus.getCurrentAngle();
 
         this.currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
-        Log.e(tarsus.getLength());
-        Log.e(femur.getLength());
-        Log.e(currentLegHeight);
     }
 
     public double getNormalFemurAngle() {
@@ -159,6 +156,8 @@ public class Leg {
                 double tetaf = 0;
                 double tetat = 0;
 
+                test(1, finalLength, newLegHeight);
+
                 for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
                     xf = Math.cos(Math.toRadians(tetaf)) * wf;
                     yf = Math.sin(Math.toRadians(tetaf)) * wf;
@@ -269,6 +268,8 @@ public class Leg {
                 double finalLength = lengthVector.subtract(originVector).getSize();
                 double newLegHeight = 200;
 
+                test(1, finalLength, newLegHeight);
+
                 boolean resultFound = false;
                 double tetaf = 0;
                 double tetat = 0;
@@ -324,7 +325,7 @@ public class Leg {
         }
     }
 
-    void test(double precision, double finalLength) {
+    void test(double precision, double finalLength, double finalHeight) {
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double xf = 0;
@@ -347,32 +348,29 @@ public class Leg {
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
                 yft = yt - yf;
-                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
+                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= finalHeight - 5 && yft <= finalHeight + 5) {
                     resultFound = true;
                 }
             }
         }
 
+        Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
         if (resultFound) {
             System.out.println();
-            Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
-            Log.i("Altura atual da perna: " + currentLegHeight);
             Log.s("Solução encontrada");
+            Log.i("Altura atual da perna: " + currentLegHeight);
             Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
                     cteta, precision, tetaf, tetat, xft, yft));
-            Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.println();
         } else {
             Log.e(String.format("Solução não encontrada para altura %.2f e comprimento %.2f", currentLegHeight, finalLength));
         }
+        Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
     public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
-
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
-        Log.e(wf);
-        Log.e(wt);
         double xf = 0;
         double xt = 0;
         double yf = 0;
@@ -381,7 +379,7 @@ public class Leg {
         double yft = 0;
         double cteta = 0;
 
-        test(precision, finalLength);
+        test(precision, finalLength, currentLegHeight);
 
         while (xft < finalLength) {
             xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
