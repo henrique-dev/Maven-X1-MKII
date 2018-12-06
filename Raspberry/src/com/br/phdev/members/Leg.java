@@ -358,6 +358,7 @@ public class Leg {
         if (resultFound) {
             System.out.println();
             Log.s("Solução encontrada");
+            Log.i("Comprimento atual da perna: " + lengthVector.subtract(originVector).getSize());
             Log.i("Altura atual da perna: " + currentLegHeight);
             Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
                     cteta, precision, tetaf, tetat, xft, yft));
