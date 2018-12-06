@@ -371,6 +371,8 @@ public class Leg {
 
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
+        Log.e(wf);
+        Log.e(wt);
         double xf = 0;
         double xt = 0;
         double yf = 0;
