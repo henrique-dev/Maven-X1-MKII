@@ -39,6 +39,8 @@ public class Leg {
         this.normalFemurAngle = tarsus.getCurrentAngle();
 
         this.currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
+        Log.e(tarsus.getLength());
+        Log.e(femur.getLength());
         Log.e(currentLegHeight);
     }
 
