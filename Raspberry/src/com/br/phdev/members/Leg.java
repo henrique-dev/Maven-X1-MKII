@@ -165,7 +165,7 @@ public class Leg {
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
                         yft = yt - yf;
-                        if (xft >= currentLenght - 1 && xft <= currentLenght + 1 && yft >= newLegHeight - 1 && yft <= newLegHeight + 1) {
+                        if (xft >= currentLenght - 5 && xft <= currentLenght + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
                     }
@@ -378,9 +378,12 @@ public class Leg {
         double xft = 0;
         double yft = 0;
         double cteta = 0;
+        double tetaf;
+        double tetat;
+        boolean resultFound = false;
 
         test(precision, finalLength, currentLegHeight);
-
+/*
         while (xft < finalLength) {
             xf = Math.cos(Math.toRadians(cteta / 3)) * wf;
             xt = Math.sin(Math.toRadians(cteta)) * wt;
@@ -398,6 +401,24 @@ public class Leg {
         }
 
 
+
+        final double nxf = xf;
+        final double nxt = xt;
+        */
+
+        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
+            xf = Math.cos(Math.toRadians(tetaf)) * wf;
+            yf = Math.sin(Math.toRadians(tetaf)) * wf;
+            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
+                xt = Math.sin(Math.toRadians(tetat)) * wt;
+                yt = Math.cos(Math.toRadians(tetat)) * wt;
+                xft = xf + xt;
+                yft = yt - yf;
+                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
+                    resultFound = true;
+                }
+            }
+        }
 
         final double nxf = xf;
         final double nxt = xt;
