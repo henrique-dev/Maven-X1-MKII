@@ -165,6 +165,7 @@ public class Leg {
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
                         yft = yt - yf;
+                        Log.e("tetat: " + tetat + " / yft: " + yft);
                         if (xft >= currentLenght - 5 && xft <= currentLenght + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             resultFound = true;
                         }
@@ -359,7 +360,7 @@ public class Leg {
             Log.s("Solução encontrada");
             Log.i("Comprimento atual da perna: " + lengthVector.subtract(originVector).getSize());
             Log.i("Altura atual da perna: " + currentLegHeight);
-            Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
+            Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaT = %.2f. XFT = %.2f e YFT = %.2f",
                     cteta, precision, tetaf, tetat, xft, yft));
             System.out.println();
         } else {
