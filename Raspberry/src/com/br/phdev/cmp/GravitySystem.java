@@ -98,12 +98,13 @@ class GravitySystem  {
         if (this.leftGravityCell.adjust(taskList, waitingTaskCellListener)) {
             servoTaskController.addTasks(taskList);
             waitForAnotherCell();
+            taskList.clear();
             this.leftGravityCell.stabilize();
             if (this.rightGravityCell.adjust(taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
+                taskList.clear();
                 this.rightGravityCell.stabilize();
-
                 Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
                 Log.w("Celula esquerda: \n" + this.leftGravityCell.toString());
                 Log.w("Celula direita: \n" + this.rightGravityCell.toString());
