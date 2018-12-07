@@ -80,34 +80,34 @@ public class GravityCell {
         bottom.getVertex().addMe(d);
     }
 
-    public void rotateBodyToVertex(double angle, List<Task> taskList, TaskListener tl) {
-        top.rotateBodyToVertex(-angle, taskList, null);
-        mid.rotateBodyToVertex(angle, taskList, null);
-        bottom.rotateBodyToVertex(angle, taskList, tl);
+    public void rotateBodyToVertex(double angle, int gaitSpeed, double precision, List<Task> taskList, TaskListener tl) {
+        top.rotateBodyToVertex(-angle, gaitSpeed, precision, taskList, null);
+        mid.rotateBodyToVertex(angle, gaitSpeed, precision, taskList, null);
+        bottom.rotateBodyToVertex(angle, gaitSpeed, precision, taskList, tl);
     }
 
-    public boolean adjust(List<Task> taskList, TaskListener tl) {
-        if (top.adjust(taskList, null))
-            if (mid.adjust(taskList, null))
-                if (bottom.adjust(taskList, tl))
+    public boolean adjust(int gaitSpeed, double precision, List<Task> taskList, TaskListener tl) {
+        if (top.adjust(gaitSpeed, precision, taskList, null))
+            if (mid.adjust(gaitSpeed, precision, taskList, null))
+                if (bottom.adjust(gaitSpeed, precision, taskList, tl))
                     return true;
         return false;
     }
 
-    public boolean adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, List<Task> taskList, TaskListener tl) {
-        if (top.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, taskList, null))
-            if (mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, taskList,null))
-                if (bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, sameSpeed, taskList, tl)) {
+    public boolean adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, double precision,  boolean sameSpeed, List<Task> taskList, TaskListener tl) {
+        if (top.adjustLegToVertex(vector2D, elevate, gaitSpeed, precision, sameSpeed, taskList, null))
+            if (mid.adjustLegToVertex(vector2D, elevate, gaitSpeed, precision,  sameSpeed, taskList,null))
+                if (bottom.adjustLegToVertex(vector2D, elevate, gaitSpeed, precision, sameSpeed, taskList, tl)) {
                     center.addMe(vector2D);
                     return true;
                 }
         return false;
     }
 
-    public boolean adjustBodyToVertex(Vector2D vector2D, int gaitSpeed, List<Task> servoTaskList, TaskListener tl) {
-        if (top.adjustLegToVertex(vector2D, false, gaitSpeed, true, servoTaskList, null))
-            if (mid.adjustLegToVertex(vector2D, false, gaitSpeed, true, servoTaskList, null))
-                if (bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, servoTaskList, tl))
+    public boolean adjustBodyToVertex(Vector2D vector2D, int gaitSpeed, double precision, List<Task> servoTaskList, TaskListener tl) {
+        if (top.adjustLegToVertex(vector2D, false, gaitSpeed, precision,  true, servoTaskList, null))
+            if (mid.adjustLegToVertex(vector2D, false, gaitSpeed, precision,  true, servoTaskList, null))
+                if (bottom.adjustLegToVertex(vector2D, false, gaitSpeed, precision, true, servoTaskList, tl))
                     return true;
         return false;
     }

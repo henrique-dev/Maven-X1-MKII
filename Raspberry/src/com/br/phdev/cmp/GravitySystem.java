@@ -84,7 +84,7 @@ class GravitySystem  {
     void rotate(double angle) {
         List<Task> taskList = new ArrayList<>();
         leftGravityCell.rotate(angle);
-        if (leftGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, false, taskList, waitingTaskCellListener)) {
+        if (leftGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
             servoTaskController.addTasks(taskList);
             waitForAnotherCell();
             taskList.clear();
@@ -93,7 +93,7 @@ class GravitySystem  {
         leftGravityCell.stabilize();
 
         rightGravityCell.rotate(angle);
-        if (rightGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, false, taskList, waitingTaskCellListener)) {
+        if (rightGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
             servoTaskController.addTasks(taskList);
             waitForAnotherCell();
             taskList.clear();
@@ -102,8 +102,8 @@ class GravitySystem  {
         rightGravityCell.stabilize();
 
 
-        leftGravityCell.rotateBodyToVertex(angle, taskList, null);
-        rightGravityCell.rotateBodyToVertex(angle, taskList, waitingTaskCellListener);
+        leftGravityCell.rotateBodyToVertex(angle, gaitSpeed, precision, taskList, null);
+        rightGravityCell.rotateBodyToVertex(angle, gaitSpeed, precision, taskList, waitingTaskCellListener);
         servoTaskController.addTasks(taskList);
         waitForAnotherCell();
 
@@ -141,12 +141,12 @@ class GravitySystem  {
         this.rightGravityCell.getBottom().getVertex().y = cy - height / 2;
 
         List<Task> taskList = new ArrayList<>();
-        if (this.leftGravityCell.adjust(taskList, waitingTaskCellListener)) {
+        if (this.leftGravityCell.adjust(gaitSpeed, precision, taskList, waitingTaskCellListener)) {
             servoTaskController.addTasks(taskList);
             waitForAnotherCell();
             taskList.clear();
             this.leftGravityCell.stabilize();
-            if (this.rightGravityCell.adjust(taskList, waitingTaskCellListener)) {
+            if (this.rightGravityCell.adjust(gaitSpeed, precision, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
@@ -162,7 +162,7 @@ class GravitySystem  {
         Scanner sc = new Scanner(System.in);
         List<Task> taskList = new ArrayList<>();
         for (int i=0; i<stepAmount; i++) {
-            if (leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, taskList, waitingTaskCellListener)) {
+            if (leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
@@ -170,8 +170,8 @@ class GravitySystem  {
                 Log.e("Movimento invalido");
             leftGravityCell.stabilize();
 
-            if (leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, taskList, null))
-                if (rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, taskList, waitingTaskCellListener)) {
+            if (leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, null))
+                if (rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
                     servoTaskController.addTasks(taskList);
                     waitForAnotherCell();
                     taskList.clear();
@@ -183,7 +183,7 @@ class GravitySystem  {
             leftGravityCell.stabilize();
             rightGravityCell.stabilize();
 
-            if (rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, taskList, waitingTaskCellListener)) {
+            if (rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();

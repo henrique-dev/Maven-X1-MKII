@@ -15,15 +15,10 @@ public class Vertex {
     private Vector2D vertex;
     private Leg leg;
 
-    private double precision;
-    private int gaitSpeed;
-
     public Vertex(String name, Vector2D vertex, Leg leg, double precision, int gaitSpeed) {
         this.vertex = vertex;
         this.leg = leg;
         this.name = name;
-        this.precision = precision;
-        this.gaitSpeed = gaitSpeed;
     }
 
     public String getName() {
@@ -50,22 +45,6 @@ public class Vertex {
         this.leg = leg;
     }
 
-    public double getPrecision() {
-        return precision;
-    }
-
-    public void setPrecision(double precision) {
-        this.precision = precision;
-    }
-
-    public int getGaitSpeed() {
-        return gaitSpeed;
-    }
-
-    public void setGaitSpeed(int gaitSpeed) {
-        this.gaitSpeed = gaitSpeed;
-    }
-
     public boolean elevate(int nextHeight, List<Task> servoTaskList, TaskListener tl) {
         double vw = vertex.x - leg.getOriginVector().x;
         double vh = vertex.y - leg.getOriginVector().y;
@@ -81,7 +60,7 @@ public class Vertex {
         vertex.y = yi - vertexRotated.y;
     }
 
-    public void rotateBodyToVertex(double angle, List<Task> servoTaskList, TaskListener tl) {
+    public void rotateBodyToVertex(double angle, int gaitSpeed, double precision, List<Task> servoTaskList, TaskListener tl) {
         //leg.getOriginVector().rotateMe(angle);
 
         double vw = vertex.x - leg.getOriginVector().x;
@@ -106,7 +85,7 @@ public class Vertex {
     }
 
 
-    public boolean adjust(List<Task> servoTaskList, TaskListener tl) {
+    public boolean adjust(int gaitSpeed, double precision, List<Task> servoTaskList, TaskListener tl) {
         double vw = vertex.x - leg.getOriginVector().x;
         double vh = vertex.y - leg.getOriginVector().y;
         double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
@@ -133,7 +112,7 @@ public class Vertex {
         return leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
     }
 
-    public boolean adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, List<Task> taskList, TaskListener tl) {
+    public boolean adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, double precision, boolean sameSpeed, List<Task> taskList, TaskListener tl) {
         if (elevate)
             vertex.addMe(vector2D);
         else
