@@ -84,7 +84,7 @@ public class ServoTaskController {
                     }
                 }
             } catch (Exception e) {
-                Log.e("Falha no controlador de tarefas");
+                Log.e("Falha no controlador de tarefas. " + e.getMessage());
             }
         }
 
