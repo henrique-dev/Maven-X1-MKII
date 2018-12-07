@@ -200,6 +200,20 @@ class GravitySystem  {
 
             if (i == stepAmount-2)
                 currentVector = halfStep;
+            if (stepAmount > 1 && i < stepAmount-1) {
+                if (leftGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, null))
+                    if (rightGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
+                        servoTaskController.addTasks(taskList);
+                        waitForAnotherCell();
+                        taskList.clear();
+                    } else {
+                        Log.e("Movimento invalido");
+                    } else {
+                    Log.e("Movimento invalido");
+                }
+                leftGravityCell.stabilize();
+                rightGravityCell.stabilize();
+            }
         }
     }
 
