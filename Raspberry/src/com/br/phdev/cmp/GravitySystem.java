@@ -10,6 +10,7 @@ import com.br.phdev.misc.Vector2D;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -68,8 +69,6 @@ class GravitySystem  {
         this.gaitSpeed = gaitSpeed;
         this.width = width;
         this.height = height;
-        //double cx = body.getArea().x / 2;
-        //double cy = body.getArea().y / 2;
 
         double cx = leftGravityCell.center.x;
         double cy = leftGravityCell.center.y;
@@ -124,6 +123,7 @@ class GravitySystem  {
     }
 
     void adjust(Vector2D vector2D, int stepAmount, int gaitSpeed) {
+        Scanner sc = new Scanner(System.in);
         for (int i=0; i<stepAmount; i++) {
             leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, waitingTaskCellListener);
             lock.lock();
@@ -132,15 +132,20 @@ class GravitySystem  {
             leftGravityCell.stabilize();
             Log.s("Celula executou o movimento");
 
+            sc.nextLine();
 
             lock.lock();
-            leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, null);
-            rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, waitingTaskCellListener);
+            List<Task> taskList = new ArrayList<>();
+            leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, taskList, null);
+            rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, taskList, waitingTaskCellListener);
+            servoTaskController.addTasks(taskList);
             waitForAnotherCell();
             lock.unlock();
             leftGravityCell.stabilize();
             rightGravityCell.stabilize();
             Log.s("Celula executou o movimento");
+
+            sc.nextLine();
 
             lock.lock();
             rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, waitingTaskCellListener);
@@ -148,6 +153,8 @@ class GravitySystem  {
             lock.unlock();
             rightGravityCell.stabilize();
             Log.s("Celula executou o movimento");
+
+            sc.nextLine();
         }
 
     }
@@ -208,12 +215,10 @@ class GravitySystem  {
             servoTaskController.addTasks(taskList);
         }
 
-        private void adjustBodyToVertex(Vector2D vector2D, int gaitSpeed, TaskListener tl) {
-            List<Task> taskList = new ArrayList<>();
-            top.adjustLegToVertex(vector2D, false, gaitSpeed, true, taskList, null);
-            mid.adjustLegToVertex(vector2D, false, gaitSpeed, true, taskList, null);
-            bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, taskList, tl);
-            servoTaskController.addTasks(taskList);
+        private void adjustBodyToVertex(Vector2D vector2D, int gaitSpeed, List<Task> servoTaskList, TaskListener tl) {
+            top.adjustLegToVertex(vector2D, false, gaitSpeed, true, servoTaskList, null);
+            mid.adjustLegToVertex(vector2D, false, gaitSpeed, true, servoTaskList, null);
+            bottom.adjustLegToVertex(vector2D, false, gaitSpeed, true, servoTaskList, tl);
         }
 
         void stabilize() {
