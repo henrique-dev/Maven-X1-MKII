@@ -198,7 +198,7 @@ class GravitySystem  {
                 Log.e("Movimento invalido");
             rightGravityCell.stabilize();
 
-            if (stepAmount > 1 && i < stepAmount-1) {
+            if (stepAmount > 1 && i < stepAmount-2) {
                 if (leftGravityCell.adjustBodyToVertex(halfStep, gaitSpeed / 5, precision, taskList, null))
                     if (rightGravityCell.adjustBodyToVertex(halfStep, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
                         servoTaskController.addTasks(taskList);
