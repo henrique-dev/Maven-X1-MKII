@@ -94,6 +94,7 @@ public class Maven {
 						if (initSystem) {
 							robotSystem.loadData(false);
 							robotSystem.injectData(false);
+							robotSystem.injectVectors();
 						} else
 							show(Error.SYSTEM_NOT_STARTED);
 						break;

@@ -118,7 +118,7 @@ public class RobotSystem {
         }
     }
 
-    private void injectVectors() {
+    public void injectVectors() {
         try {Log.i("Injetando vetores em todos os componentes...");
 
             this.body.setArea(new Vector2D(bodyData.getBodyWidth(), bodyData.getBodyLength()));
