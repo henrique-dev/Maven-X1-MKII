@@ -161,8 +161,10 @@ class GravitySystem  {
     void move(Vector2D vector2D, int stepAmount, int gaitSpeed) {
         Scanner sc = new Scanner(System.in);
         List<Task> taskList = new ArrayList<>();
+        Vector2D halfStep = vector2D.clone();
+        Vector2D fullStep = vector2D.clone().multiplyMe(2);
         for (int i=0; i<stepAmount; i++) {
-            if (leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
+            if (leftGravityCell.adjustLegToVertex((stepAmount > 1 ? fullStep : halfStep), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
@@ -183,7 +185,13 @@ class GravitySystem  {
             leftGravityCell.stabilize();
             rightGravityCell.stabilize();
 
-            if (rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
+            if (stepAmount > 1 && i < stepAmount-1) {
+                vector2D.multiply(2);
+            } else {
+
+            }
+
+            if (rightGravityCell.adjustLegToVertex((stepAmount > 1 && i < stepAmount-1 ? fullStep : halfStep), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
