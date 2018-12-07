@@ -76,6 +76,12 @@ public class GravityCell {
         bottom.rotate(angle);
     }
 
+    public void rotateBodyToVertex(double angle, List<Task> taskList, TaskListener tl) {
+        top.rotateBodyToVertex(angle, taskList, tl);
+        mid.rotateBodyToVertex(angle, taskList, tl);
+        bottom.rotateBodyToVertex(angle, taskList, tl);
+    }
+
     public boolean adjust(List<Task> taskList, TaskListener tl) {
         if (top.adjust(taskList, null))
             if (mid.adjust(taskList, null))

@@ -76,6 +76,33 @@ public class Vertex {
         vertex.rotateMe(Math.toRadians(angle));
     }
 
+    public void rotateBodyToVertex(double angle, List<Task> servoTaskList, TaskListener tl) {
+        double vw = vertex.x - leg.getOriginVector().rotateMe(angle).x;
+        double vh = vertex.y - leg.getOriginVector().rotateMe(angle).y;
+        double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
+        double vsin = vh / vhip;
+        double vdegrees = Math.toDegrees(Math.asin(vsin));
+
+        double lw = leg.getLengthVector().rotateMe(angle).x - leg.getOriginVector().x;
+        double lh = leg.getLengthVector().rotateMe(angle).y - leg.getOriginVector().y;
+        double lhip = Math.sqrt(Math.pow(lw, 2) + Math.pow(lh, 2));
+        double lsin = lh / lhip;
+        double ldegrees = Math.toDegrees(Math.asin(lsin));
+
+        double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
+        double asin = Math.asin(sin);
+        //double angle = vdegrees - Math.toDegrees(asin);
+
+        /*Log.m(String.format(name + " VERTEX > Angulo do vertex: %.2f  |  Angulo da perna: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
+                vdegrees, ldegrees, angle,
+                new Vector2D(vw, vh).getSize() + leg.getBase().getLength()));*/
+
+        showVertexrInfo("Antigos vetores " + name, this);
+        Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
+        Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
+        leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
+    }
+
 
     public boolean adjust(List<Task> servoTaskList, TaskListener tl) {
         double vw = vertex.x - leg.getOriginVector().x;
