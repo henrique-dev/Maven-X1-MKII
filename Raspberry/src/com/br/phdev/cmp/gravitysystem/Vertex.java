@@ -91,11 +91,6 @@ public class Vertex {
 
         double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
         double asin = Math.asin(sin);
-        //double angle = vdegrees - Math.toDegrees(asin);
-
-        /*Log.m(String.format(name + " VERTEX > Angulo do vertex: %.2f  |  Angulo da perna: %.2f  |  Angulo a ser aplicado: %.2f  |  Comprimento esperado para a perna: %.2f",
-                vdegrees, ldegrees, angle,
-                new Vector2D(vw, vh).getSize() + leg.getBase().getLength()));*/
 
         showVertexrInfo("Antigos vetores " + name, this);
         Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
