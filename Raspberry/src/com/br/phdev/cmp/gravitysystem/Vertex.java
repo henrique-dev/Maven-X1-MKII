@@ -73,8 +73,12 @@ public class Vertex {
         return leg.elevate(nextHeight, vhip, servoTaskList, tl);
     }
 
-    public void rotate(double angle) {
-        vertex.rotateMe(Math.toRadians(angle));
+    public void rotate(double angle, Vector2D center) {
+        double xi = center.x;
+        double yi = center.y;
+        Vector2D vertexRotated = vertex.rotate(Math.toRadians(angle));
+        vertex.x = xi - vertexRotated.x;
+        vertex.y = yi - vertexRotated.y;
     }
 
     public void rotateBodyToVertex(double angle, List<Task> servoTaskList, TaskListener tl) {

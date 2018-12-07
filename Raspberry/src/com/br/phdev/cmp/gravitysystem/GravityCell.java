@@ -71,9 +71,13 @@ public class GravityCell {
     }
 
     public void rotate(double angle) {
-        top.rotate(angle);
-        mid.rotate(angle);
-        bottom.rotate(angle);
+        top.getVertex().rotateMe(Math.toRadians(angle));
+        mid.getVertex().rotateMe(Math.toRadians(angle));
+        bottom.getVertex().rotateMe(Math.toRadians(angle));
+        Vector2D d = center.subtract(center.rotateMe(Math.toRadians(angle)));
+        top.getVertex().addMe(d);
+        mid.getVertex().addMe(d);
+        bottom.getVertex().addMe(d);
     }
 
     public void rotateBodyToVertex(double angle, List<Task> taskList, TaskListener tl) {
