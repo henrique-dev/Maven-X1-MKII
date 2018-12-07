@@ -102,7 +102,7 @@ class GravitySystem  {
         rightGravityCell.stabilize();
 
 
-        leftGravityCell.rotateBodyToVertex(angle, taskList, null);
+        leftGravityCell.rotateBodyToVertex(-angle, taskList, null);
         rightGravityCell.rotateBodyToVertex(angle, taskList, waitingTaskCellListener);
         servoTaskController.addTasks(taskList);
         waitForAnotherCell();
