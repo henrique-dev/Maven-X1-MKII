@@ -105,7 +105,6 @@ public class Vertex {
     }
 
     public boolean adjustLegToVertex(Vector2D vector2D, boolean elevate, int gaitSpeed, boolean sameSpeed, List<Task> taskList, TaskListener tl) {
-
         if (elevate)
             vertex.addMe(vector2D);
         else

@@ -93,6 +93,19 @@ class GravitySystem  {
             Log.e("Movimento invalido");
         leftGravityCell.stabilize();
 
+        if (leftGravityCell.adjustBodyToVertex(new Vector2D(0,0), gaitSpeed / 5, taskList, null))
+            if (rightGravityCell.adjustBodyToVertex(new Vector2D(0,0), gaitSpeed / 5, taskList, waitingTaskCellListener)) {
+                servoTaskController.addTasks(taskList);
+                waitForAnotherCell();
+                taskList.clear();
+            } else {
+                Log.e("Movimento invalido");
+            } else {
+            Log.e("Movimento invalido");
+        }
+        leftGravityCell.stabilize();
+        rightGravityCell.stabilize();
+
         if (rightGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, false, taskList, waitingTaskCellListener)) {
             servoTaskController.addTasks(taskList);
             waitForAnotherCell();
