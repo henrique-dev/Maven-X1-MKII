@@ -83,6 +83,8 @@ class GravitySystem  {
 
     void rotate(double angle) {
         List<Task> taskList = new ArrayList<>();
+        leftGravityCell.rotate(angle);
+        rightGravityCell.rotate(angle);
         if (leftGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, false, taskList, waitingTaskCellListener)) {
             servoTaskController.addTasks(taskList);
             waitForAnotherCell();
