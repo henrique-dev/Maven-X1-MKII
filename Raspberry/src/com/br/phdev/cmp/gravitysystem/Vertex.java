@@ -91,7 +91,7 @@ public class Vertex {
 
         double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
         double asin = Math.asin(sin);
-        
+
         leg.move(false, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
     }
 
