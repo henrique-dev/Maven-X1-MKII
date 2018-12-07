@@ -131,7 +131,7 @@ public class Leg {
     }
 
     //public void elevate(Body.CurrentHeight nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
-    public void elevate(int nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
+    public boolean elevate(int nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
 
 
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
@@ -206,7 +206,7 @@ public class Leg {
 
                 if (!resultFound) {
                     Log.e("Resultado não encontrado");
-                    return;
+                    return false;
                 }
 
                 servoTaskList.add(new ServoTask(
@@ -253,9 +253,10 @@ public class Leg {
                 break;
             }
         }
+        return true;
     }
 
-    void test(double precision, double finalLength, double finalHeight) {
+    public boolean move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
         double xf = 0;
@@ -264,51 +265,6 @@ public class Leg {
         double yt = 0;
         double xft = 0;
         double yft = 0;
-        double cteta = 0;
-
-        boolean resultFound = false;
-        double tetaf = 0;
-        double tetat = 0;
-
-        for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
-            xf = Math.cos(Math.toRadians(tetaf)) * wf;
-            yf = Math.sin(Math.toRadians(tetaf)) * wf;
-            for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
-                xt = Math.sin(Math.toRadians(tetat)) * wt;
-                yt = Math.cos(Math.toRadians(tetat)) * wt;
-                xft = xf + xt;
-                yft = yt - yf;
-                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= finalHeight - 5 && yft <= finalHeight + 5) {
-                    resultFound = true;
-                }
-            }
-        }
-
-        Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
-        if (resultFound) {
-            System.out.println();
-            Log.s("Solução encontrada");
-            Log.i("Comprimento atual da perna: " + lengthVector.subtract(originVector).getSize());
-            Log.i("Altura atual da perna: " + currentLegHeight);
-            Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaT = %.2f. XFT = %.2f e YFT = %.2f",
-                    cteta, precision, tetaf, tetat, xft, yft));
-            System.out.println();
-        } else {
-            Log.e(String.format("Solução não encontrada para altura %.2f e comprimento %.2f", currentLegHeight, finalLength));
-        }
-        Log.w("---------------------------------------------------------------------------------------------------------------------------------------------------------");
-    }
-
-    public void move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
-        double wf = this.femur.getLength();
-        double wt = this.tarsus.getLength();
-        double xf = 0;
-        double xt = 0;
-        double yf = 0;
-        double yt = 0;
-        double xft = 0;
-        double yft = 0;
-        double cteta = 0;
         double tetaf = 0;
         double tetat = 0;
         double legOffset = base.getLength();
@@ -329,11 +285,17 @@ public class Leg {
             }
         }
 
-        final double nxf = xf;
-        final double nxt = xt;
+        final double nxf;
+        final double nxt;
 
-        Log.i(String.format("O angulo em graus encontrado para solução foi: %.2f com precisão de %.2f graus. Portanto tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
-                cteta, precision, tetaf, tetat, xft, yft));
+        if (resultFound) {
+            nxf = xf;
+            nxt = xt;
+        } else
+            return false;
+
+        Log.i(String.format("tetaF = %.2f e tetaW = %.2f. XFT = %.2f e YFT = %.2f",
+                tetaf, tetat, xft, yft));
 
         Log.s("Novos vetores");
         Log.s("Comprimento novo da perna: " + String.format("%.2f", base.getLength() + xft));
@@ -416,7 +378,7 @@ public class Leg {
                 }},
                 new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
 
-
+        return true;
     }
 
     public void stay() {
