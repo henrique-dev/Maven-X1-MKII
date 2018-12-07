@@ -22,6 +22,8 @@ public class Servo {
     }
 
     private void initServo() {
+        this.setRawPosition(0);
+        waitFor(100);
         this.move(0, false);
         waitFor(300);
         this.setRawPosition(0);
