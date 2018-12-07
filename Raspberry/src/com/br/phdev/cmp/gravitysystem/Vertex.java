@@ -91,10 +91,7 @@ public class Vertex {
 
         double sin = Math.sin(Math.toRadians(leg.getLegData().getLegMidDegrees()));
         double asin = Math.asin(sin);
-
-        showVertexrInfo("Antigos vetores " + name, this);
-        Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
-        Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
+        
         leg.move(false, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
     }
 
