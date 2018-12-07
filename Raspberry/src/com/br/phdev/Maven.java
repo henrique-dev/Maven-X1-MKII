@@ -590,12 +590,13 @@ public class Maven {
 												String values = command.substring(7);
 												double angle = Double.parseDouble(values);
 												robotSystem.getMovementSystem().rotate(angle);
+											} else if (command.startsWith("restart-igs")) {
+												robotSystem.getMovementSystem().startGravitySystem(390, 390, 0.5, 2000);
                                             } else if (command.startsWith("init-gravity-system") || command.startsWith("igs")) {
                                                 if (command.endsWith("init-gravity-system") || command.endsWith("igs")) {
                                                     Log.w("Iniciando sistema de centro de gravidade com medida padrão 430mmx430mm e precisão de 0.5mm");
                                                     if (!runningGravitySystem) {
 														robotSystem.getMovementSystem().startGravitySystem(390, 390, 0.5, 2000);
-														//robotSystem.getMovementSystem().elevate(0);
 														runningGravitySystem = true;
 													} else
 														robotSystem.getMovementSystem().adjustGravitySystem(390, 390, 0.5, 2000);
