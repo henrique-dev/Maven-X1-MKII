@@ -74,9 +74,7 @@ public class GravityCell {
         top.getVertex().rotateMe(Math.toRadians(angle));
         mid.getVertex().rotateMe(Math.toRadians(angle));
         bottom.getVertex().rotateMe(Math.toRadians(angle));
-        double cx = (top.getVertex().x + mid.getVertex().x) / 2;
-        double cy = (top.getVertex().y + bottom.getVertex().y) / 2;
-        Vector2D d = center.subtract(new Vector2D(cx, cy));
+        Vector2D d = center.subtract(center.rotateMe(Math.toRadians(angle)));
         top.getVertex().addMe(d);
         mid.getVertex().addMe(d);
         bottom.getVertex().addMe(d);
