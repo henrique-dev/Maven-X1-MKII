@@ -173,8 +173,8 @@ class GravitySystem  {
                 Log.e("Movimento invalido");
             leftGravityCell.stabilize();
 
-            if (leftGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, null))
-                if (rightGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
+            if (leftGravityCell.adjustBodyToVertex(halfStep, gaitSpeed / 5, precision, taskList, null))
+                if (rightGravityCell.adjustBodyToVertex(halfStep, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
                     servoTaskController.addTasks(taskList);
                     waitForAnotherCell();
                     taskList.clear();
@@ -198,11 +198,9 @@ class GravitySystem  {
                 Log.e("Movimento invalido");
             rightGravityCell.stabilize();
 
-            if (i == stepAmount-2)
-                currentVector = halfStep;
             if (stepAmount > 1 && i < stepAmount-1) {
-                if (leftGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, null))
-                    if (rightGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
+                if (leftGravityCell.adjustBodyToVertex(halfStep, gaitSpeed / 5, precision, taskList, null))
+                    if (rightGravityCell.adjustBodyToVertex(halfStep, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
                         servoTaskController.addTasks(taskList);
                         waitForAnotherCell();
                         taskList.clear();
@@ -214,6 +212,9 @@ class GravitySystem  {
                 leftGravityCell.stabilize();
                 rightGravityCell.stabilize();
             }
+
+            if (i == stepAmount-2)
+                currentVector = halfStep;
         }
     }
 
