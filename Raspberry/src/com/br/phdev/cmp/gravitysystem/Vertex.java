@@ -78,7 +78,7 @@ public class Vertex {
     }
 
     public void rotateBodyToVertex(double angle, List<Task> servoTaskList, TaskListener tl) {
-        leg.getOriginVector().rotateMe(angle);
+        //leg.getOriginVector().rotateMe(angle);
 
         double vw = vertex.x - leg.getOriginVector().x;
         double vh = vertex.y - leg.getOriginVector().y;
@@ -97,8 +97,8 @@ public class Vertex {
 
         double newangle = vdegrees - Math.toDegrees(asin);
 
-        leg.rotate(leg.getCurrentLegDegrees() - angle, gaitSpeed, servoTaskList, tl);
-        //leg.move(false, newangle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
+        //leg.rotate(leg.getCurrentLegDegrees() - angle, gaitSpeed, servoTaskList, tl);
+        leg.move(false, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
     }
 
 
