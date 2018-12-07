@@ -115,7 +115,7 @@ public class Leg {
     }
 
     public double getCurrentLegDegrees() {
-        return currentLegDegrees;
+        return base.getCurrentAngle();
     }
 
     public void setCurrentLegDegrees(double currentLegDegrees) {
