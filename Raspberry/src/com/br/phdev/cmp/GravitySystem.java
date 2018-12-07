@@ -163,8 +163,9 @@ class GravitySystem  {
         List<Task> taskList = new ArrayList<>();
         Vector2D halfStep = vector2D.clone();
         Vector2D fullStep = vector2D.clone().multiplyMe(2);
+        Vector2D currentVector = halfStep;
         for (int i=0; i<stepAmount; i++) {
-            if (leftGravityCell.adjustLegToVertex((stepAmount > 1 ? fullStep : halfStep), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
+            if (leftGravityCell.adjustLegToVertex(currentVector, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
@@ -172,8 +173,8 @@ class GravitySystem  {
                 Log.e("Movimento invalido");
             leftGravityCell.stabilize();
 
-            if (leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, null))
-                if (rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
+            if (leftGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, null))
+                if (rightGravityCell.adjustBodyToVertex(currentVector, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
                     servoTaskController.addTasks(taskList);
                     waitForAnotherCell();
                     taskList.clear();
@@ -186,19 +187,19 @@ class GravitySystem  {
             rightGravityCell.stabilize();
 
             if (stepAmount > 1 && i < stepAmount-1) {
-                vector2D.multiply(2);
-            } else {
-
+                currentVector = fullStep;
             }
 
-            if (rightGravityCell.adjustLegToVertex((stepAmount > 1 && i < stepAmount-1 ? fullStep : halfStep), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
+            if (rightGravityCell.adjustLegToVertex(currentVector, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
             } else
                 Log.e("Movimento invalido");
-
             rightGravityCell.stabilize();
+
+            if (i == stepAmount-2)
+                currentVector = halfStep;
         }
     }
 
