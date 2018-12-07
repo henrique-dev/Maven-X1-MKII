@@ -132,7 +132,7 @@ class GravitySystem  {
             leftGravityCell.stabilize();
             Log.s("Celula executou o movimento");
 
-            sc.nextLine();
+            //sc.nextLine();
 
             lock.lock();
             List<Task> taskList = new ArrayList<>();
@@ -145,7 +145,7 @@ class GravitySystem  {
             rightGravityCell.stabilize();
             Log.s("Celula executou o movimento");
 
-            sc.nextLine();
+            //sc.nextLine();
 
             lock.lock();
             rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, false, waitingTaskCellListener);
@@ -154,7 +154,7 @@ class GravitySystem  {
             rightGravityCell.stabilize();
             Log.s("Celula executou o movimento");
 
-            sc.nextLine();
+            //sc.nextLine();
         }
 
     }
