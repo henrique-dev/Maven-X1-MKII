@@ -157,17 +157,17 @@ public class Leg {
 
                 //test(1, currentLenght, newLegHeight);
 
-                for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
+                for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin(); tetaf = tetaf - 1) {
                     xf = Math.cos(Math.toRadians(tetaf)) * wf;
                     yf = Math.sin(Math.toRadians(tetaf)) * wf;
-                    for (tetat = tarsus.getLimitMin(); tetat <= tarsus.getLimitMax() && !resultFound; tetat = tetat + 1) {
+                    for (tetat = tarsus.getLimitMin(); tetat <= tarsus.getLimitMax(); tetat = tetat + 1) {
                         xt = Math.sin(Math.toRadians(tetat)) * wt;
                         yt = Math.cos(Math.toRadians(tetat)) * wt;
                         xft = xf + xt;
                         yft = yt - yf;
                         if (xft >= currentLenght - 5 && xft <= currentLenght + 5 &&
                                 yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
-                            Log.e(String.format("tetaf: %.2f        tetat: %.2f        yft: %.2f       xft: %.2f        targetH: %.2f        targetL: %.2f",
+                            Log.e(String.format("leg " + legData.getLegNumber() + " ) tetaf: %.2f        tetat: %.2f        yft: %.2f       xft: %.2f        targetH: %.2f        targetL: %.2f",
                                     tetaf, tetat, yft, xft, newLegHeight, currentLenght));
                             resultFound = true;
                         }
