@@ -72,6 +72,10 @@ public class Vertex {
         return leg.elevate(nextHeight, vhip, servoTaskList, tl);
     }
 
+    public void rotate(double angle) {
+        vertex.rotateMe(Math.toRadians(angle));
+    }
+
 
     public boolean adjust(List<Task> servoTaskList, TaskListener tl) {
         double vw = vertex.x - leg.getOriginVector().x;

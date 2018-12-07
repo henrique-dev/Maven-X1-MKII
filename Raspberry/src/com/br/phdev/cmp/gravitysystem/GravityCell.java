@@ -70,6 +70,12 @@ public class GravityCell {
         return false;
     }
 
+    public void rotate(double angle) {
+        top.rotate(angle);
+        mid.rotate(angle);
+        bottom.rotate(angle);
+    }
+
     public boolean adjust(List<Task> taskList, TaskListener tl) {
         if (top.adjust(taskList, null))
             if (mid.adjust(taskList, null))

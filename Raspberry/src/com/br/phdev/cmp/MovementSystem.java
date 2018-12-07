@@ -28,28 +28,19 @@ public class MovementSystem {
     }
 
     public void adjustGravitySystem(double width, double height, double precision, int gaitSpeed) {
-        this.gravitySystem.adjust(width, height, precision, gaitSpeed);
+        this.gravitySystem.adjustGravitySystem(width, height, precision, gaitSpeed);
     }
 
     public void move(double stepSizeX, double stepSizeY, int stepAmount, int gaitSpeed) {
-        this.gravitySystem.adjust(new Vector2D(stepSizeX, stepSizeY), stepAmount, gaitSpeed);
+        this.gravitySystem.move(new Vector2D(stepSizeX, stepSizeY), stepAmount, gaitSpeed);
     }
 
     public void elevate(int elevateType) {
-
-        /*
-        switch (elevateType) {
-            case 0:
-                this.gravitySystem.elevate(Body.CurrentHeight.MIN);
-                break;
-            case 1:
-                this.gravitySystem.elevate(Body.CurrentHeight.NORMAL);
-                break;
-            case 2:
-                this.gravitySystem.elevate(Body.CurrentHeight.MAX);
-                break;
-        }*/
         this.gravitySystem.elevate(elevateType);
+    }
+
+    public void rotate(double angle) {
+        this.gravitySystem.rotate(angle);
     }
 
 }
