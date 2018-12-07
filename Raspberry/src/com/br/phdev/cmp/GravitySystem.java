@@ -101,11 +101,11 @@ class GravitySystem  {
             Log.e("Movimento invalido");
         rightGravityCell.stabilize();
 
-        /*
+
         leftGravityCell.rotateBodyToVertex(angle, taskList, null);
         rightGravityCell.rotateBodyToVertex(angle, taskList, waitingTaskCellListener);
         servoTaskController.addTasks(taskList);
-        waitForAnotherCell();*/
+        waitForAnotherCell();
 
     }
 
