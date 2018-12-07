@@ -97,7 +97,8 @@ public class Vertex {
 
         double newangle = vdegrees - Math.toDegrees(asin);
 
-        leg.move(false, newangle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
+        leg.rotate(leg.getCurrentLegDegrees() - angle, gaitSpeed, servoTaskList, tl);
+        //leg.move(false, newangle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
     }
 
 

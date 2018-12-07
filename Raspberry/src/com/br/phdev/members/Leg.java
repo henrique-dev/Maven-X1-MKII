@@ -256,8 +256,24 @@ public class Leg {
         return true;
     }
 
-    public void rotate(double angle, double finalLength, double precision, int delayMillis, List<Task> servoTaskList, TaskListener taskListener) {
-
+    public void rotate(double angle, int delayMillis, List<Task> servoTaskList, TaskListener taskListener) {
+        TaskGroup taskGroups = new TaskGroup(new int[1]);
+        servoTaskList.add(new ServoTask(
+                this.base.getServo(),
+                (int) angle,
+                delayMillis / 5,
+                new TaskListener[]{new TaskListener() {
+                    @Override
+                    public void onServoTaskComplete(double currentPos) {
+                        /*double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
+                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
+                        double ox = base.getOriginVector().x;
+                        double oy = base.getOriginVector().y;
+                        base.getFinalVector().set(ox + x, oy + y);
+                        currentLegDegrees = currentPos;*/
+                    }
+                }},
+                new FlavorTaskGroup(0, taskGroups)));
     }
 
     public boolean move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
