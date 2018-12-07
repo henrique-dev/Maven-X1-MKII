@@ -383,6 +383,8 @@ public class Leg {
         double cteta = 0;
         double tetaf = 0;
         double tetat = 0;
+        double legOffset = base.getLength();
+        Log.e(legOffset);
         boolean resultFound = false;
 
         for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - precision) {
@@ -393,7 +395,7 @@ public class Leg {
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
                 yft = yt - yf;
-                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
+                if (legOffset + xft >= finalLength - 5 && legOffset + xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
                     resultFound = true;
                 }
             }
