@@ -100,7 +100,7 @@ public class Vertex {
         showVertexrInfo("Antigos vetores " + name, this);
         Log.s("Comprimento atual da perna: " + leg.getLengthVector().subtract(leg.getOriginVector()).getSize());
         Log.s("Grau atual da perna: " + leg.getCurrentLegDegrees());
-        leg.move(true, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
+        leg.move(false, angle, vhip, precision, gaitSpeed, false, servoTaskList, tl);
     }
 
 
