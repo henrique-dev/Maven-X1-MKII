@@ -186,7 +186,7 @@ class GravitySystem  {
             leftGravityCell.stabilize();
             rightGravityCell.stabilize();
 
-            if (stepAmount > 1 && i < stepAmount-1) {
+            if (stepAmount > 1 && i < stepAmount-2) {
                 currentVector = fullStep;
             }
 
