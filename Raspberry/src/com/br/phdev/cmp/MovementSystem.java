@@ -36,6 +36,8 @@ public class MovementSystem {
     }
 
     public void elevate(int elevateType) {
+
+        /*
         switch (elevateType) {
             case 0:
                 this.gravitySystem.elevate(Body.CurrentHeight.MIN);
@@ -46,7 +48,8 @@ public class MovementSystem {
             case 2:
                 this.gravitySystem.elevate(Body.CurrentHeight.MAX);
                 break;
-        }
+        }*/
+        this.gravitySystem.elevate(elevateType);
     }
 
 }

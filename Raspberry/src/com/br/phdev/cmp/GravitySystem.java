@@ -111,8 +111,9 @@ class GravitySystem  {
         Log.w("Celula direita: \n" + this.rightGravityCell.toString());
     }
 
-    void elevate(Body.CurrentHeight nextHeight) {
-        body.setCurrentHeight(nextHeight);
+    //void elevate(Body.CurrentHeight nextHeight) {
+    void elevate(int nextHeight) {
+        //body.setCurrentHeight(nextHeight);
         leftGravityCell.elevate(nextHeight, null);
         rightGravityCell.elevate(nextHeight, waitingTaskCellListener);
         lock.lock();
@@ -183,7 +184,8 @@ class GravitySystem  {
             this.bottom = bottom;
         }
 
-        void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
+        //void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
+        void elevate(int nextHeight, TaskListener tl) {
             top.elevate(nextHeight, null);
             mid.elevate(nextHeight, null);
             bottom.elevate(nextHeight, tl);
@@ -238,7 +240,8 @@ class GravitySystem  {
             this.name = name;
         }
 
-        void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
+        //void elevate(Body.CurrentHeight nextHeight, TaskListener tl) {
+        void elevate(int nextHeight, TaskListener tl) {
             List<Task> servoTaskList = new ArrayList<>();
             double vw = vertex.x - leg.getOriginVector().x;
             double vh = vertex.y - leg.getOriginVector().y;

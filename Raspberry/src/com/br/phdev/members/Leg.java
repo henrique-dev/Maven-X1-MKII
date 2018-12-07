@@ -130,14 +130,44 @@ public class Leg {
         this.onGround = onGround;
     }
 
-    public void elevate(Body.CurrentHeight nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
+    //public void elevate(Body.CurrentHeight nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
+    public void elevate(int nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
 
 
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (nextHeight) {
-            case MIN: { // DESCER
-                //double totalAngle = module(module(this.femur.getLimitMin()) > module(this.tarsus.getLimitMax()) ? this.tarsus.getLimitMax() : this.femur.getLimitMin());
-                double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
+            case -1: { // RETORNAR A POSIÇÃO ORIGINAL
+                //this.move(false, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, taskListener);
+                servoTaskList.add(new ServoTask(
+                        this.femur.getServo(),
+                        (int)normalFemurAngle,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+                                if (taskListener != null)
+                                    taskListener.onServoTaskComplete(currentPos);
+                                currentLegHeight = Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength() - Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength();
+                                Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+
+                servoTaskList.add(new ServoTask(
+                        this.tarsus.getServo(),
+                        (int)normalTarsusAngle,
+                        1000,
+                        new TaskListener[]{new TaskListener() {
+                            @Override
+                            public void onServoTaskComplete(double currentPos) {
+                                currentLegHeight = Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength() - Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength();
+                                Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
+                            }
+                        }},
+                        new FlavorTaskGroup(0, taskGroups)));
+                break;
+            }
+            default: {
 
                 double wf = this.femur.getLength();
                 double wt = this.tarsus.getLength();
@@ -149,7 +179,7 @@ public class Leg {
                 double yft = 0;
                 double cteta = 0;
 
-                double newLegHeight = 60;
+                double newLegHeight = nextHeight;
 
                 boolean resultFound = false;
                 double tetaf = 0;
@@ -215,108 +245,6 @@ public class Leg {
                                 double oy = tarsus.getOriginVector().y;
                                 tarsus.getFinalVector().set(ox + x, oy + y);
                                 lengthVector = tarsus.getFinalVector();
-                                currentLegHeight = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
-                                Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
-                            }
-                        }},
-                        new FlavorTaskGroup(0, taskGroups)));
-                break;
-            }
-            case NORMAL: { // RETORNAR A POSIÇÃO ORIGINAL
-                //this.move(false, this.currentLegDegrees, getLengthVector().subtract(base.getFinalVector()).getSize(), 0.5, 1000, true, servoTaskList, taskListener);
-                servoTaskList.add(new ServoTask(
-                        this.femur.getServo(),
-                        (int)normalFemurAngle,
-                        1000,
-                        new TaskListener[]{new TaskListener() {
-                            @Override
-                            public void onServoTaskComplete(double currentPos) {
-                                if (taskListener != null)
-                                    taskListener.onServoTaskComplete(currentPos);
-                                currentLegHeight = Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength() - Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength();
-                                Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
-                            }
-                        }},
-                        new FlavorTaskGroup(0, taskGroups)));
-
-                servoTaskList.add(new ServoTask(
-                        this.tarsus.getServo(),
-                        (int)normalTarsusAngle,
-                        1000,
-                        new TaskListener[]{new TaskListener() {
-                            @Override
-                            public void onServoTaskComplete(double currentPos) {
-                                currentLegHeight = Math.cos(Math.toRadians(normalTarsusAngle)) * tarsus.getLength() - Math.sin(Math.toRadians(normalFemurAngle)) * femur.getLength();
-                                Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
-                            }
-                        }},
-                        new FlavorTaskGroup(0, taskGroups)));
-                break;
-            }
-            case MAX: { // SUBIR
-                //double totalAngle = module(module(this.femur.getLimitMax()) > module(this.tarsus.getLimitMin()) ? this.tarsus.getLimitMin() : this.femur.getLimitMax());
-                double totalAngle = Math.min(module(femur.getLimitMin()), Math.min(module(tarsus.getLimitMin()), Math.min(module(femur.getLimitMax()), module(tarsus.getLimitMax()))));
-
-                double wf = this.femur.getLength();
-                double wt = this.tarsus.getLength();
-                double xf = 0;
-                double xt = 0;
-                double yf = 0;
-                double yt = 0;
-                double xft = 0;
-                double yft = 0;
-                double cteta = 0;
-
-                double finalLength = lengthVector.subtract(originVector).getSize();
-                double newLegHeight = 150;
-
-                test(1, finalLength, newLegHeight);
-
-                boolean resultFound = false;
-                double tetaf = 0;
-                double tetat = 0;
-
-                for (tetaf = femur.getLimitMax(); tetaf >= femur.getLimitMin() && !resultFound; tetaf = tetaf - 1) {
-                    xf = Math.cos(Math.toRadians(tetaf)) * wf;
-                    yf = Math.sin(Math.toRadians(tetaf)) * wf;
-                    for (tetat = tarsus.getLimitMax(); tetat >= tarsus.getLimitMin() && !resultFound; tetat = tetat - 1) {
-                        xt = Math.sin(Math.toRadians(tetat)) * wt;
-                        yt = Math.cos(Math.toRadians(tetat)) * wt;
-                        xft = xf + xt;
-                        yft = yt - yf;
-                        if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
-                            resultFound = true;
-                        }
-                    }
-                }
-
-                if (!resultFound) {
-                    Log.e("Resultado não encontrado");
-                    return;
-                }
-
-                servoTaskList.add(new ServoTask(
-                        this.femur.getServo(),
-                        (int)tetaf,
-                        1000,
-                        new TaskListener[]{new TaskListener() {
-                            @Override
-                            public void onServoTaskComplete(double currentPos) {
-                                if (taskListener != null)
-                                    taskListener.onServoTaskComplete(currentPos);
-                                currentLegHeight = Math.cos(Math.toRadians(tarsus.getCurrentAngle())) * tarsus.getLength() - Math.sin(Math.toRadians(currentPos)) * femur.getLength();
-                                Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
-                            }
-                        }},
-                        new FlavorTaskGroup(0, taskGroups)));
-
-                servoTaskList.add(new ServoTask(
-                        this.tarsus.getServo(),
-                        (int)tetat,
-                        1000,
-                        new TaskListener[]{new TaskListener() {
-                            @Override
-                            public void onServoTaskComplete(double currentPos) {
                                 currentLegHeight = Math.cos(Math.toRadians(currentPos)) * tarsus.getLength() - Math.sin(Math.toRadians(femur.getCurrentAngle())) * femur.getLength();
                                 Log.w("Altura atual da perna " + legData.getLegNumber() + ": " + currentLegHeight);
                             }

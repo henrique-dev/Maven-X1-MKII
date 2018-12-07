@@ -17,8 +17,6 @@ public class Body {
     public static final int LEG_MID_LEFT = 3;
     public static final int LEG_BACK_RIGHT = 5;
 
-    private CurrentHeight currentHeight;
-
     private Vector2D area;
 
     private BodyData bodyData;
@@ -28,7 +26,6 @@ public class Body {
     public Body(Leg[] legs, BodyData bodyData) {
         this.legs = legs;
         this.bodyData = bodyData;
-        this.currentHeight = CurrentHeight.NORMAL;
     }
 
     public Vector2D getArea() {
@@ -49,14 +46,6 @@ public class Body {
 
     public void setLegs(Leg[] legs) {
         this.legs = legs;
-    }
-
-    public CurrentHeight getCurrentHeight() {
-        return currentHeight;
-    }
-
-    public void setCurrentHeight(CurrentHeight currentHeight) {
-        this.currentHeight = currentHeight;
     }
 
     public void stay() {
