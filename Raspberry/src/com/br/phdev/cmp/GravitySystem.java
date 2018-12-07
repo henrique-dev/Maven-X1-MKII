@@ -1,10 +1,11 @@
 package com.br.phdev.cmp;
 
+import com.br.phdev.cmp.gravitysystem.GravityCell;
+import com.br.phdev.cmp.gravitysystem.Vertex;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
 import com.br.phdev.members.Body;
-import com.br.phdev.members.Leg;
 import com.br.phdev.misc.Log;
 import com.br.phdev.misc.Vector2D;
 
@@ -47,16 +48,16 @@ class GravitySystem  {
 
         this.leftGravityCell = new GravityCell(
                 new Vector2D(cx, cy),
-                new Vertex("Top", new Vector2D(cx - width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT)),
-                new Vertex("Mid", new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT)),
-                new Vertex("Bottom", new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT))
+                new Vertex("Top", new Vector2D(cx - width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_LEFT), precision, gaitSpeed),
+                new Vertex("Mid", new Vector2D(cx + width / 2, cy), body.getLeg(Body.LEG_MID_RIGHT), precision, gaitSpeed),
+                new Vertex("Bottom", new Vector2D(cx - width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_LEFT), precision, gaitSpeed)
         );
 
         this.rightGravityCell = new GravityCell(
                 new Vector2D(cx, cy),
-                new Vertex("Top", new Vector2D(cx + width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_RIGHT)),
-                new Vertex("Mid", new Vector2D(cx - width / 2, cy), body.getLeg(Body.LEG_MID_LEFT)),
-                new Vertex("Bottom", new Vector2D(cx + width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_RIGHT))
+                new Vertex("Top", new Vector2D(cx + width / 2, cy + height / 2), body.getLeg(Body.LEG_FRONT_RIGHT), precision, gaitSpeed),
+                new Vertex("Mid", new Vector2D(cx - width / 2, cy), body.getLeg(Body.LEG_MID_LEFT), precision, gaitSpeed),
+                new Vertex("Bottom", new Vector2D(cx + width / 2, cy - height / 2), body.getLeg(Body.LEG_BACK_RIGHT), precision, gaitSpeed)
         );
 
         Log.s("Centro de gravidade em (" + cx + "," + cy + ")");
@@ -70,29 +71,29 @@ class GravitySystem  {
         this.width = width;
         this.height = height;
 
-        double cx = leftGravityCell.center.x;
-        double cy = leftGravityCell.center.y;
+        double cx = leftGravityCell.getCenter().x;
+        double cy = leftGravityCell.getCenter().y;
 
-        this.leftGravityCell.center.x += cx - this.leftGravityCell.center.x;
-        this.leftGravityCell.center.y += cy - this.leftGravityCell.center.y;
-        this.leftGravityCell.top.vertex.x = cx - width / 2;
-        this.leftGravityCell.top.vertex.y = cy + height / 2;
-        this.leftGravityCell.mid.vertex.x = cx + width / 2;
-        this.leftGravityCell.mid.vertex.y = cy;
-        this.leftGravityCell.bottom.vertex.x = cx - width / 2;
-        this.leftGravityCell.bottom.vertex.y = cy - height / 2;
+        this.leftGravityCell.getCenter().x += cx - this.leftGravityCell.getCenter().x;
+        this.leftGravityCell.getCenter().y += cy - this.leftGravityCell.getCenter().y;
+        this.leftGravityCell.getTop().getVertex().x = cx - width / 2;
+        this.leftGravityCell.getTop().getVertex().y = cy + height / 2;
+        this.leftGravityCell.getMid().getVertex().x = cx + width / 2;
+        this.leftGravityCell.getMid().getVertex().y = cy;
+        this.leftGravityCell.getBottom().getVertex().x = cx - width / 2;
+        this.leftGravityCell.getBottom().getVertex().y = cy - height / 2;
 
-        cx = rightGravityCell.center.x;
-        cy = rightGravityCell.center.y;
+        cx = rightGravityCell.getCenter().x;
+        cy = rightGravityCell.getCenter().y;
 
-        this.rightGravityCell.center.x += cx - this.rightGravityCell.center.x;
-        this.rightGravityCell.center.y += cy - this.rightGravityCell.center.y;
-        this.rightGravityCell.top.vertex.x = cx + width / 2;
-        this.rightGravityCell.top.vertex.y = cy + height / 2;
-        this.rightGravityCell.mid.vertex.x = cx - width / 2;
-        this.rightGravityCell.mid.vertex.y = cy;
-        this.rightGravityCell.bottom.vertex.x = cx + width / 2;
-        this.rightGravityCell.bottom.vertex.y = cy - height / 2;
+        this.rightGravityCell.getCenter().x += cx - this.rightGravityCell.getCenter().x;
+        this.rightGravityCell.getCenter().y += cy - this.rightGravityCell.getCenter().y;
+        this.rightGravityCell.getTop().getVertex().x = cx + width / 2;
+        this.rightGravityCell.getTop().getVertex().y = cy + height / 2;
+        this.rightGravityCell.getMid().getVertex().x = cx - width / 2;
+        this.rightGravityCell.getMid().getVertex().y = cy;
+        this.rightGravityCell.getBottom().getVertex().x = cx + width / 2;
+        this.rightGravityCell.getBottom().getVertex().y = cy - height / 2;
 
         List<Task> taskList = new ArrayList<>();
         if (this.leftGravityCell.adjust(taskList, waitingTaskCellListener)) {
@@ -118,6 +119,7 @@ class GravitySystem  {
             if (rightGravityCell.elevate(nextHeight, taskList, waitingTaskCellListener)) {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
+                taskList.clear();
             } else {
                 Log.e("Movimento invalido");
             } else {
@@ -191,6 +193,7 @@ class GravitySystem  {
         }
     }
 
+    /*
     private class GravityCell {
 
         boolean moving;
@@ -251,8 +254,9 @@ class GravitySystem  {
         public String toString() {
             return "T" + top.toString() + "  M" + mid.toString() + "  B" + bottom.toString() + "\n";
         }
-    }
+    }*/
 
+    /*
     private class Vertex {
 
         String name;
@@ -355,7 +359,7 @@ class GravitySystem  {
         public String toString() {
             return " " + leg.getLegData().getLegNumber() + String.format("(%.2f,%.2f)", vertex.x, vertex.y);
         }
-    }
+    }*/
 
     private TaskListener taskListener = currentPos -> {
         lock.lock();
