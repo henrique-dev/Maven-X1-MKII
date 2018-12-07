@@ -77,14 +77,14 @@ public class Vertex {
     }
 
     public void rotateBodyToVertex(double angle, List<Task> servoTaskList, TaskListener tl) {
-        double vw = vertex.x - leg.getOriginVector().rotateMe(angle).x;
-        double vh = vertex.y - leg.getOriginVector().rotateMe(angle).y;
+        double vw = vertex.x - leg.getOriginVector().x;
+        double vh = vertex.y - leg.getOriginVector().y;
         double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));
         double vsin = vh / vhip;
         double vdegrees = Math.toDegrees(Math.asin(vsin));
 
-        double lw = leg.getLengthVector().rotateMe(angle).x - leg.getOriginVector().x;
-        double lh = leg.getLengthVector().rotateMe(angle).y - leg.getOriginVector().y;
+        double lw = leg.getLengthVector().x - leg.getOriginVector().x;
+        double lh = leg.getLengthVector().y - leg.getOriginVector().y;
         double lhip = Math.sqrt(Math.pow(lw, 2) + Math.pow(lh, 2));
         double lsin = lh / lhip;
         double ldegrees = Math.toDegrees(Math.asin(lsin));
