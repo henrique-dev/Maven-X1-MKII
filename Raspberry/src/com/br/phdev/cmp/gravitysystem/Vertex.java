@@ -1,5 +1,6 @@
 package com.br.phdev.cmp.gravitysystem;
 
+import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
 import com.br.phdev.members.Leg;
@@ -77,6 +78,8 @@ public class Vertex {
     }
 
     public void rotateBodyToVertex(double angle, List<Task> servoTaskList, TaskListener tl) {
+        leg.getOriginVector().rotateMe(angle);
+
         double vw = vertex.x - leg.getOriginVector().x;
         double vh = vertex.y - leg.getOriginVector().y;
         double vhip = Math.sqrt(Math.pow(vw, 2) + Math.pow(vh, 2));

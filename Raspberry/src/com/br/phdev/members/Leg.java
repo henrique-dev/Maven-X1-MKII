@@ -256,6 +256,10 @@ public class Leg {
         return true;
     }
 
+    public void rotate(double angle, double finalLength, double precision, int delayMillis, List<Task> servoTaskList, TaskListener taskListener) {
+
+    }
+
     public boolean move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
         double wf = this.femur.getLength();
         double wt = this.tarsus.getLength();
