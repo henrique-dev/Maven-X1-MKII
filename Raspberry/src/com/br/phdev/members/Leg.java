@@ -262,7 +262,7 @@ public class Leg {
                 this.base.getServo(),
                 (int) angle,
                 delayMillis / 5,
-                new TaskListener[]{new TaskListener() {
+                new TaskListener[]{taskListener, new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
                         /*double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
