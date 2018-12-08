@@ -199,6 +199,7 @@ public class Leg {
                                 yft >= newLegHeight - 5 && yft <= newLegHeight + 5) {
                             Log.e(String.format("leg " + legData.getLegNumber() + " ) tetaf: %.2f        tetat: %.2f        yft: %.2f       xft: %.2f        targetH: %.2f        targetL: %.2f",
                                     tetaf, tetat, yft, xft, newLegHeight, currentLenght));
+                            Log.s( ((Math.sin(Math.toRadians(tetaf)) * wf) + Math.cos(Math.toRadians(-tetat)) * wt) );
                             resultFound = true;
                         }
                     }
