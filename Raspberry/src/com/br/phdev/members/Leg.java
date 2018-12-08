@@ -303,7 +303,7 @@ public class Leg {
                 yt = Math.cos(Math.toRadians(tetat)) * wt;
                 xft = xf + xt;
                 yft = yt - yf;
-                if (legOffset + xft >= finalLength - 5 && legOffset + xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
+                if (xft >= finalLength - 5 && xft <= finalLength + 5 && yft >= currentLegHeight - 5 && yft <= currentLegHeight + 5) {
                     firstResultFound = true;
                     currentSumF += tetaf;
                     currentSumT += tetat;
