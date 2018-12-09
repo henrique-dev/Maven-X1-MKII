@@ -93,7 +93,7 @@ public class PCA9685 extends Module {
 	 * @param on      0..4095 (2^12 positions)
 	 * @param off     0..4095 (2^12 positions)
 	 */
-	public void setPWM(int channel, int on, int off) throws IllegalArgumentException {
+	synchronized public void setPWM(int channel, int on, int off) throws IllegalArgumentException {
 		if (channel < 0 || channel > 15) {
 			throw new IllegalArgumentException("Channel must be in [0, 15]");
 		}

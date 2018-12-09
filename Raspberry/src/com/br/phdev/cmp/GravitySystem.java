@@ -2,6 +2,7 @@ package com.br.phdev.cmp;
 
 import com.br.phdev.cmp.gravitysystem.GravityCell;
 import com.br.phdev.cmp.gravitysystem.Vertex;
+import com.br.phdev.cmp.servo.ServoTask;
 import com.br.phdev.cmp.servo.ServoTaskController;
 import com.br.phdev.cmp.task.Task;
 import com.br.phdev.cmp.task.TaskListener;
@@ -23,7 +24,7 @@ class GravitySystem  {
     private final Condition movingLeg = lock.newCondition();
     private final Condition movingCell = lock.newCondition();
 
-    private ServoTaskController servoTaskController;
+    //private ServoTaskController servoTaskController;
 
     private double precision;
 
@@ -38,7 +39,7 @@ class GravitySystem  {
     private Body body;
 
     public GravitySystem(ServoTaskController servoTaskController, Body body, double width, double height, double precision, int gaitSpeed) {
-        this.servoTaskController = servoTaskController;
+        //this.servoTaskController = servoTaskController;
         this.precision = precision;
         this.gaitSpeed = gaitSpeed;
         this.width = width;
@@ -70,7 +71,8 @@ class GravitySystem  {
         List<Task> taskList = new ArrayList<>();
         if (leftGravityCell.elevate(nextHeight, taskList, null))
             if (rightGravityCell.elevate(nextHeight, taskList, waitingTaskCellListener)) {
-                servoTaskController.addTasks(taskList);
+                //servoTaskController.addTasks(taskList);
+                executeServoMove(taskList);
                 waitForAnotherCell();
                 taskList.clear();
             } else {
@@ -86,7 +88,8 @@ class GravitySystem  {
         List<Task> taskList = new ArrayList<>();
         leftGravityCell.rotate(angle);
         if (leftGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
-            servoTaskController.addTasks(taskList);
+            //servoTaskController.addTasks(taskList);
+            executeServoMove(taskList);
             waitForAnotherCell();
             taskList.clear();
         } else
@@ -95,7 +98,8 @@ class GravitySystem  {
 
         rightGravityCell.rotate(angle);
         if (rightGravityCell.adjustLegToVertex(new Vector2D(0,0), true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
-            servoTaskController.addTasks(taskList);
+            //servoTaskController.addTasks(taskList);
+            executeServoMove(taskList);
             waitForAnotherCell();
             taskList.clear();
         } else
@@ -105,7 +109,8 @@ class GravitySystem  {
 
         leftGravityCell.rotateBodyToVertex(angle, gaitSpeed, precision, taskList, null);
         rightGravityCell.rotateBodyToVertex(angle, gaitSpeed, precision, taskList, waitingTaskCellListener);
-        servoTaskController.addTasks(taskList);
+        //servoTaskController.addTasks(taskList);
+        executeServoMove(taskList);
         waitForAnotherCell();
 
     }
@@ -143,12 +148,14 @@ class GravitySystem  {
 
         List<Task> taskList = new ArrayList<>();
         if (this.leftGravityCell.adjust(gaitSpeed, precision, taskList, waitingTaskCellListener)) {
-            servoTaskController.addTasks(taskList);
+            //servoTaskController.addTasks(taskList);
+            executeServoMove(taskList);
             waitForAnotherCell();
             taskList.clear();
             this.leftGravityCell.stabilize();
             if (this.rightGravityCell.adjust(gaitSpeed, precision, taskList, waitingTaskCellListener)) {
-                servoTaskController.addTasks(taskList);
+                //servoTaskController.addTasks(taskList);
+                executeServoMove(taskList);
                 waitForAnotherCell();
                 taskList.clear();
                 this.rightGravityCell.stabilize();
@@ -163,7 +170,8 @@ class GravitySystem  {
         List<Task> taskList = new ArrayList<>();
         for (int i=0; i<stepAmount; i++) {
             if (leftGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
-                servoTaskController.addTasks(taskList);
+                //servoTaskController.addTasks(taskList);
+                executeServoMove(taskList);
                 waitForAnotherCell();
                 taskList.clear();
             } else
@@ -172,7 +180,8 @@ class GravitySystem  {
 
             if (leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, null))
                 if (rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
-                    servoTaskController.addTasks(taskList);
+                    //servoTaskController.addTasks(taskList);
+                    executeServoMove(taskList);
                     waitForAnotherCell();
                     taskList.clear();
                 } else {
@@ -184,7 +193,8 @@ class GravitySystem  {
             rightGravityCell.stabilize();
 
             if (rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
-                servoTaskController.addTasks(taskList);
+                //servoTaskController.addTasks(taskList);
+                executeServoMove(taskList);
                 waitForAnotherCell();
                 taskList.clear();
             } else
@@ -212,6 +222,14 @@ class GravitySystem  {
         }
     }
 
+    private void waitFor(long delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     private TaskListener taskListener = currentPos -> {
         lock.lock();
         movingLeg.signal();
@@ -227,13 +245,11 @@ class GravitySystem  {
         }
     };
 
-    class AccGirThread extends Thread {
-
-        @Override
-        public void run() {
-
+    public void executeServoMove(List<Task> taskList) {
+        for (Task task : taskList) {
+            task.executeNow();
         }
-
+        waitFor(500);
     }
 
 }

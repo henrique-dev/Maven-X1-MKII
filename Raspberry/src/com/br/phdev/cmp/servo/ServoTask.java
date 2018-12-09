@@ -55,6 +55,17 @@ public class ServoTask implements Task {
     }
 
     @Override
+    public void executeNow() {
+        this.servo.move(this.targetPos, false);
+        if (this.taskListener != null) {
+            for (int i=0; i<this.taskListener.length; i++) {
+                if (taskListener[i] != null)
+                    this.taskListener[i].onServoTaskComplete(this.targetPos);
+            }
+        }
+    }
+
+    @Override
     public long getTaskId() {
         return this.taskId;
     }
