@@ -296,7 +296,6 @@ public class Leg {
         double yft = 0;
         double tetaf = 0;
         double tetat = 0;
-        double legOffset = base.getLength();
         boolean firstResultFound = false;
         boolean resultFound = false;
 
@@ -345,7 +344,7 @@ public class Leg {
         Log.s("Grau novo da perna: " + angle);
         System.out.println();
 
-        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, 3}) : new TaskGroup(new int[]{3});
+        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, (angle == currentLegDegrees ? 2 : 3)}) : new TaskGroup(new int[]{angle == currentLegDegrees ? 2 : 3});
         
         if (elevate) {
             double currentElevateAngle = femur.getCurrentAngle() + 40;
@@ -366,25 +365,24 @@ public class Leg {
                     new FlavorTaskGroup(0, taskGroups)));
         }
 
-        //base.getServo().move(base.getServo().getCurrentPositionDegrees());
-        servoTaskList.add(new ServoTask(
-                this.base.getServo(),
-                (int) angle,
-                sameDelay ? delayMillis : delayMillis / 5,
-                new TaskListener[]{new TaskListener() {
-                    @Override
-                    public void onServoTaskComplete(double currentPos) {
-                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
-                        double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
-                        double ox = base.getOriginVector().x;
-                        double oy = base.getOriginVector().y;
-                        base.getFinalVector().set(ox + x, oy + y);
-                        currentLegDegrees = currentPos;
-                        //base.getServo().setRawPosition(0);
-                    }
-                }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
-
+        if (angle != currentLegDegrees) {
+            servoTaskList.add(new ServoTask(
+                    this.base.getServo(),
+                    (int) angle,
+                    sameDelay ? delayMillis : delayMillis / 5,
+                    new TaskListener[]{new TaskListener() {
+                        @Override
+                        public void onServoTaskComplete(double currentPos) {
+                            double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
+                            double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
+                            double ox = base.getOriginVector().x;
+                            double oy = base.getOriginVector().y;
+                            base.getFinalVector().set(ox + x, oy + y);
+                            currentLegDegrees = currentPos;
+                        }
+                    }},
+                    new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+        }
 
         servoTaskList.add(new ServoTask(
                 this.femur.getServo(),
