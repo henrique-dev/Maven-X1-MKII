@@ -344,7 +344,7 @@ public class Leg {
         Log.s("Grau novo da perna: " + angle);
         System.out.println();
 
-        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, (angle == currentLegDegrees ? 2 : 3)}) : new TaskGroup(new int[]{angle == currentLegDegrees ? 2 : 3});
+        TaskGroup taskGroups = elevate ? new TaskGroup(new int[]{2, (angle == getCurrentLegDegrees() ? 2 : 3)}) : new TaskGroup(new int[]{angle == getCurrentLegDegrees() ? 2 : 3});
         
         if (elevate) {
             double currentElevateAngle = femur.getCurrentAngle() + 40;
@@ -365,7 +365,7 @@ public class Leg {
                     new FlavorTaskGroup(0, taskGroups)));
         }
 
-        if (angle != currentLegDegrees) {
+        if (angle != getCurrentLegDegrees()) {
             servoTaskList.add(new ServoTask(
                     this.base.getServo(),
                     (int) angle,
