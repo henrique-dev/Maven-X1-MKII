@@ -167,31 +167,33 @@ class GravitySystem  {
                 servoTaskController.addTasks(taskList);
                 waitForAnotherCell();
                 taskList.clear();
-            } else
-                Log.e("Movimento invalido");
-            leftGravityCell.stabilize();
 
-            if (leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, null))
-                if (rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
-                    servoTaskController.addTasks(taskList);
-                    waitForAnotherCell();
-                    taskList.clear();
-                } else {
+                leftGravityCell.stabilize();
+
+                if (leftGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, null))
+                    if (rightGravityCell.adjustBodyToVertex(vector2D, gaitSpeed / 5, precision, taskList, waitingTaskCellListener)) {
+                        servoTaskController.addTasks(taskList);
+                        waitForAnotherCell();
+                        taskList.clear();
+
+                        leftGravityCell.stabilize();
+                        rightGravityCell.stabilize();
+
+                        if (rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
+                            servoTaskController.addTasks(taskList);
+                            waitForAnotherCell();
+                            taskList.clear();
+
+                            rightGravityCell.stabilize();
+                        } else
+                            Log.e("Movimento invalido");
+                    } else {
+                        Log.e("Movimento invalido");
+                    } else {
                     Log.e("Movimento invalido");
-                } else {
-                Log.e("Movimento invalido");
-            }
-            leftGravityCell.stabilize();
-            rightGravityCell.stabilize();
-
-            if (rightGravityCell.adjustLegToVertex(vector2D, true, gaitSpeed, precision, false, taskList, waitingTaskCellListener)) {
-                servoTaskController.addTasks(taskList);
-                waitForAnotherCell();
-                taskList.clear();
+                }
             } else
                 Log.e("Movimento invalido");
-
-            rightGravityCell.stabilize();
         }
     }
 
