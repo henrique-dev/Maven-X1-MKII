@@ -258,7 +258,7 @@ public class Leg {
         double beforeLegLenght = currentLegHeight;
         this.currentLegHeight = nextHeight;
         base.getServo().setRawPosition(0);
-        if (!this.move(false, getCurrentLegDegrees(), currentLenght, 0.5, 0, true, servoTaskList, taskListener)) {
+        if (!this.move(false, getCurrentLegDegrees(), currentLenght, 0.5, 500, true, servoTaskList, taskListener)) {
             this.currentLegHeight = beforeLegLenght;
             return false;
         }

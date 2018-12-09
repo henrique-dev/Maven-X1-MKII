@@ -55,17 +55,6 @@ public class ServoTask implements Task {
     }
 
     @Override
-    public void executeNow() {
-        this.servo.move(this.targetPos, false);
-        if (this.taskListener != null) {
-            for (int i=0; i<this.taskListener.length; i++) {
-                if (taskListener[i] != null)
-                    this.taskListener[i].onServoTaskComplete(this.targetPos);
-            }
-        }
-    }
-
-    @Override
     public long getTaskId() {
         return this.taskId;
     }
@@ -75,8 +64,6 @@ public class ServoTask implements Task {
         if (!this.jusForDelay) {
             if (this.servo.getTaskSlave() == -1 && !taskOver) {
                 if (this.flavorTaskGroup.isMyTurn()) {
-
-/*
                     this.startPosition = servo.getCurrentPositionDegrees();
                     this.currentPos = servo.getCurrentPositionDegrees();
                     if (this.delay > 0)
@@ -85,9 +72,6 @@ public class ServoTask implements Task {
                         this.step = (targetPos - this.currentPos);
                     this.startTask = true;
                     this.timer.start();
-                    this.servo.setTaskSlave(this.taskId);*/
-
-                    this.startTask = true;
                     this.servo.setTaskSlave(this.taskId);
                 }
             }
@@ -100,11 +84,7 @@ public class ServoTask implements Task {
     @Override
     public void doTask() {
         if (!this.taskOver && this.startTask) {
-            this.taskOver = true;
-            this.startTask = false;
-            executeNow();
-            this.flavorTaskGroup.taskCompleted();
-/*
+            //System.out.println("executando tarefa");
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 if (this.delay > 0) {
                     this.currentPos = this.step * this.currentTime;
@@ -127,7 +107,7 @@ public class ServoTask implements Task {
                     }
                     this.flavorTaskGroup.taskCompleted();
                 }
-            }*/
+            }
         }
     }
 
