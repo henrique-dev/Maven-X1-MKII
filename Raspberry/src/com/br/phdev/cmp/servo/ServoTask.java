@@ -99,10 +99,10 @@ public class ServoTask implements Task {
     @Override
     public void doTask() {
         if (!this.taskOver && this.startTask) {
-            this.taskOver = true;
-            this.startTask = false;
-            executeNow();
-            /*
+            //this.taskOver = true;
+            //this.startTask = false;
+            //executeNow();
+
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 if (this.delay > 0) {
                     this.currentPos = this.step * this.currentTime;
@@ -125,7 +125,7 @@ public class ServoTask implements Task {
                     }
                     this.flavorTaskGroup.taskCompleted();
                 }
-            }*/
+            }
         }
     }
 

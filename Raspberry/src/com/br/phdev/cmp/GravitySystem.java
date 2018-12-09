@@ -213,14 +213,6 @@ class GravitySystem  {
         }
     }
 
-    private void waitFor(long delay) {
-        try {
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
     private TaskListener taskListener = currentPos -> {
         lock.lock();
         movingLeg.signal();
