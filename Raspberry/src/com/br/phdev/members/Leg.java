@@ -133,7 +133,7 @@ public class Leg {
     //public void elevate(Body.CurrentHeight nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
     public boolean elevate(int nextHeight, double currentLenght, List<Task> servoTaskList, TaskListener taskListener) {
 
-
+/*
         TaskGroup taskGroups = new TaskGroup(new int[]{4});
         switch (nextHeight) {
             case -1: { // RETORNAR A POSIÇÃO ORIGINAL
@@ -253,6 +253,13 @@ public class Leg {
                         new FlavorTaskGroup(0, taskGroups)));
                 break;
             }
+        }
+        return true;*/
+        double beforeLegLenght = currentLegHeight;
+        this.currentLegHeight = nextHeight;
+        if (!this.move(false, getCurrentLegDegrees(), currentLenght, 0.5, 800, true, servoTaskList, taskListener)) {
+            this.currentLegHeight = beforeLegLenght;
+            return false;
         }
         return true;
     }
