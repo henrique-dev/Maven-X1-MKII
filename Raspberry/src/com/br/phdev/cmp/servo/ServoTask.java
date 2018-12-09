@@ -76,7 +76,7 @@ public class ServoTask implements Task {
             if (this.servo.getTaskSlave() == -1 && !taskOver) {
                 if (this.flavorTaskGroup.isMyTurn()) {
 
-
+/*
                     this.startPosition = servo.getCurrentPositionDegrees();
                     this.currentPos = servo.getCurrentPositionDegrees();
                     if (this.delay > 0)
@@ -85,6 +85,9 @@ public class ServoTask implements Task {
                         this.step = (targetPos - this.currentPos);
                     this.startTask = true;
                     this.timer.start();
+                    this.servo.setTaskSlave(this.taskId);*/
+
+                    this.startTask = true;
                     this.servo.setTaskSlave(this.taskId);
                 }
             }
@@ -97,10 +100,11 @@ public class ServoTask implements Task {
     @Override
     public void doTask() {
         if (!this.taskOver && this.startTask) {
-            //this.taskOver = true;
-            //this.startTask = false;
-            //executeNow();
-
+            this.taskOver = true;
+            this.startTask = false;
+            executeNow();
+            this.flavorTaskGroup.taskCompleted();
+/*
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 if (this.delay > 0) {
                     this.currentPos = this.step * this.currentTime;
@@ -123,7 +127,7 @@ public class ServoTask implements Task {
                     }
                     this.flavorTaskGroup.taskCompleted();
                 }
-            }
+            }*/
         }
     }
 
