@@ -54,7 +54,8 @@ public class DataRepo {
                         rs.getInt("limit_min"),
                         rs.getInt("limit_max"),
                         rs.getInt("degrees_opening"),
-                        rs.getBoolean("inverted")
+                        rs.getBoolean("inverted"),
+                        rs.getInt("mid_correction")
                 );
                 servoDataList.add(servoData);
             }
@@ -88,6 +89,9 @@ public class DataRepo {
                 break;
             case "inverted":
                 sql = "update servos_data set inverted=" + (int)pos + " where global_channel=" + globalChannel;
+                break;
+            case "midcorrection":
+                sql = "update servos_data set mid_correction=" + (int)pos + " where global_channel=" + globalChannel;
                 break;
             default:
                 return;

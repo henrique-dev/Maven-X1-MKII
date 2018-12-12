@@ -152,7 +152,7 @@ public class Maven {
 															parameter = in.nextLine();
 															switch (parameter.trim()) {
 																case "opening": case "limit-min": case "limit-max": case "min": case "mid": case "max":
-																case "inverted": case "move": {
+																case "inverted": case "move": case "mid-correction": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
 																	float valueForServo = -1;
@@ -177,6 +177,7 @@ public class Maven {
 																								robotSystem.getServos()[globalChannel].getServoData().setStep();
 																								break;
 																							case "inverted": robotSystem.getServos()[globalChannel].getServoData().setInverted(valueForServo == 1);
+																							case "mid-correction": robotSystem.getServos()[globalChannel].getServoData().setMidCorrection((int)valueForServo); break;
 																						}
 																						Log.s("A configuração foi salva");
 																					} else
@@ -230,7 +231,7 @@ public class Maven {
 																								else
 																									valueForServo = -1;
 																								break;
-																							case "limit-min": case "limit-max":
+																							case "limit-min": case "limit-max": case "mid-correction":
 																								valueForServo = Integer.parseInt(parameter);
 																								float step = robotSystem.getServos()[globalChannel].getServoData().getStep();
 																								float max = robotSystem.getServos()[globalChannel].getServoData().getMaxPosition();
@@ -239,7 +240,6 @@ public class Maven {
 																								float servoPos = valueForServo * step;
 																								boolean inverted = robotSystem.getServos()[globalChannel].getServoData().isInverted();
 																								float newServoPos = inverted ? mid - servoPos : mid + servoPos;
-
 																								if (newServoPos >= min && newServoPos <= max) {
 																									Log.w("DENTRO DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);

@@ -13,8 +13,9 @@ public class ServoData {
     private int degreesOpening;
     private float step;
     private boolean inverted;
+    private int midCorrection;
 
-    public ServoData(String moduleAddress, int globalChannel, int localChannel, float minPosition, float midPosition, float maxPosition, int limitMin, int limitMax, int degreesOpening, boolean inverted) {
+    public ServoData(String moduleAddress, int globalChannel, int localChannel, float minPosition, float midPosition, float maxPosition, int limitMin, int limitMax, int degreesOpening, boolean inverted, int midCorrection) {
         this.moduleAddress = moduleAddress;
         this.globalChannel = globalChannel;
         this.localChannel = localChannel;
@@ -25,6 +26,7 @@ public class ServoData {
         this.limitMax = limitMax;
         this.degreesOpening = degreesOpening;
         this.inverted = inverted;
+        this.midCorrection = midCorrection;
         if (degreesOpening != 0)
             this.step = (maxPosition - minPosition) / (float)degreesOpening;
         else
@@ -126,6 +128,14 @@ public class ServoData {
         this.inverted = inverted;
     }
 
+    public int getMidCorrection() {
+        return midCorrection;
+    }
+
+    public void setMidCorrection(int midCorrection) {
+        this.midCorrection = midCorrection;
+    }
+
     @Override
     public String toString() {
         return "\nModulo pertencente: " + this.moduleAddress + "\n" +
@@ -138,7 +148,8 @@ public class ServoData {
                 "Limite máximo de abertura: " + this.limitMax + "°" + "\n" +
                 "Limite mínimo de abertura: " + this.limitMin + "°" + "\n" +
                 "Passo: " + this.step + "\n" +
-                "Invertido: " + this.inverted + "\n";
+                "Invertido: " + this.inverted + "\n" +
+                "Correção do ponto neutro: " + this.midCorrection + "\n";
     }
 
 }
