@@ -66,9 +66,9 @@ public class Servo {
     public void move(double degrees, boolean justForCorrection) {
         if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
             if (this.servoData.isInverted()) {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - (this.servoData.getStep() * degrees)));
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - (this.servoData.getStep() * degrees)) + servoData.getMidCorrection());
             } else {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + (this.servoData.getStep() * degrees)));
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + (this.servoData.getStep() * degrees)) + servoData.getMidCorrection());
             }
             if (!justForCorrection)
                 this.currentPositionDegrees = degrees;
@@ -76,17 +76,17 @@ public class Servo {
             Log.w("Posição ultrapassa os limites");
             if (degrees > this.servoData.getLimitMax()) {
                 if (this.servoData.isInverted()) {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMax()))  + servoData.getMidCorrection());
                 } else {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMax())));
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMax())) + servoData.getMidCorrection());
                 }
                 if (!justForCorrection)
                     this.currentPositionDegrees = this.servoData.getLimitMax();
             } else if (degrees < this.servoData.getLimitMin()) {
                 if (this.servoData.isInverted()) {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - (this.servoData.getStep() * (float) this.servoData.getLimitMin())) + servoData.getMidCorrection());
                 } else {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMin())));
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + (this.servoData.getStep() * (float) this.servoData.getLimitMin())) + servoData.getMidCorrection());
                 }
                 if (!justForCorrection)
                     this.currentPositionDegrees = this.servoData.getLimitMin();
