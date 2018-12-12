@@ -142,7 +142,7 @@ public class Leg {
     }
 
     public void rotate(double angle, int delayMillis, List<Task> servoTaskList, TaskListener taskListener) {
-        TaskGroup taskGroups = new TaskGroup(new int[1]);
+        /*TaskGroup taskGroups = new TaskGroup(new int[1]);
         servoTaskList.add(new ServoTask(
                 this.base.getServo(),
                 (int) angle,
@@ -150,15 +150,15 @@ public class Leg {
                 new TaskListener[]{taskListener, new TaskListener() {
                     @Override
                     public void onServoTaskComplete(double currentPos) {
-                        /*double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
+                        double x = Math.cos(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
                         double y = Math.sin(Math.toRadians(legData.getLegMidDegrees() - currentPos)) * base.getLength();
                         double ox = base.getOriginVector().x;
                         double oy = base.getOriginVector().y;
                         base.getFinalVector().set(ox + x, oy + y);
-                        currentLegDegrees = currentPos;*/
+                        currentLegDegrees = currentPos;
                     }
                 }},
-                new FlavorTaskGroup(0, taskGroups)));
+                new FlavorTaskGroup(0, taskGroups)));*/
     }
 
     public boolean move(boolean elevate, double angle, double finalLength, double precision, int delayMillis, boolean sameDelay, List<Task> servoTaskList, TaskListener taskListener) {
@@ -232,13 +232,13 @@ public class Leg {
                     (int) currentElevateAngle,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
-                    new FlavorTaskGroup(0, taskGroups)));
+                    new FlavorTaskGroup(0, taskGroups), true));
             servoTaskList.add(new ServoTask(
                     this.tarsus.getServo(),
                     (int) -currentElevateAngle / 3,
                     sameDelay ? delayMillis : delayMillis / 2,
                     null,
-                    new FlavorTaskGroup(0, taskGroups)));
+                    new FlavorTaskGroup(0, taskGroups), true));
         }
 
         if (angle != getCurrentLegDegrees()) {
@@ -257,7 +257,7 @@ public class Leg {
                             currentLegDegrees = currentPos;
                         }
                     }},
-                    new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+                    new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), false));
         }
 
         servoTaskList.add(new ServoTask(
@@ -275,7 +275,7 @@ public class Leg {
                         //normalFemurAngle = currentPos;
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), false));
 
         servoTaskList.add(new ServoTask(
                 this.tarsus.getServo(),
@@ -293,7 +293,7 @@ public class Leg {
                         //normalTarsusAngle = currentPos;
                     }
                 }},
-                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups)));
+                new FlavorTaskGroup(elevate ? 1 : 0, taskGroups), false));
 
         return true;
     }

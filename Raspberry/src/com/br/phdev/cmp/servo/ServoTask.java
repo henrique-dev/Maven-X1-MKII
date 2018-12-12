@@ -28,8 +28,9 @@ public class ServoTask implements Task {
     private FlavorTaskGroup flavorTaskGroup;
 
     private boolean jusForDelay;
+    private boolean forceDegrees;
 
-    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup) {
+    private ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, FlavorTaskGroup flavorTaskGroup, boolean forceDegrees) {
         this.servo = servo;
         this.targetPos = targetPosDegrees;
         this.delay = delayInMilli;
@@ -40,10 +41,11 @@ public class ServoTask implements Task {
         this.taskId = currentTaskId++;
         this.flavorTaskGroup = flavorTaskGroup;
         this.jusForDelay = false;
+        this.forceDegrees = forceDegrees;
     }
 
-    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup) {
-        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup);
+    public ServoTask(Servo servo, int targetPosDegrees, long delayInMilli, TaskListener taskListener[], FlavorTaskGroup flavorTaskGroup, boolean forceDegrees) {
+        this(servo, targetPosDegrees, delayInMilli, flavorTaskGroup, forceDegrees);
         this.taskListener = taskListener;
     }
 
@@ -52,6 +54,7 @@ public class ServoTask implements Task {
         this.delay = delayInMilli;
         this.flavorTaskGroup = flavorTaskGroup;
         this.jusForDelay = true;
+        this.forceDegrees = false;
     }
 
     @Override
@@ -88,15 +91,15 @@ public class ServoTask implements Task {
             if (this.timer.getTicksInMilliSeconds() >= this.currentTime) {
                 if (this.delay > 0) {
                     this.currentPos = this.step * this.currentTime;
-                    this.servo.move(this.startPosition + this.currentPos, false);
+                    this.servo.move(this.startPosition + this.currentPos, false, false);
                 } else {
-                    this.servo.move(this.targetPos, false);
+                    this.servo.move(this.targetPos, false, this.forceDegrees);
                     this.currentPos = this.targetPos;
                 }
                 this.currentTime += 100;
                 if (this.currentTime > this.delay) {
                     if (this.targetPos != this.currentPos)
-                        this.servo.move(this.targetPos, false);
+                        this.servo.move(this.targetPos, false, this.forceDegrees);
                     this.taskOver = true;
                     this.startTask = false;
                     if (this.taskListener != null) {

@@ -255,7 +255,7 @@ public class Maven {
 																								break;
 																							case "move":
 																								valueForServo = Float.parseFloat(parameter);
-																								robotSystem.getServos()[globalChannel].move(valueForServo, false);
+																								robotSystem.getServos()[globalChannel].move(valueForServo, false, false);
 																								break;
 																							case "opening":
 																								valueForServo = Integer.parseInt(parameter);
@@ -481,21 +481,21 @@ public class Maven {
 																	robotSystem.getServos()[sc.getServoNum()],
 																	robotSystem.getServos()[sc.getServoNum()].getServoData().getLimitMax(), sc.getDelay(),
 																	null,
-																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
+																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup), false));
 															break;
 														case MID:
 															taskList.add(new ServoTask(
 																	robotSystem.getServos()[sc.getServoNum()],
 																	0, sc.getDelay(),
 																	null,
-																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
+																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup), false));
 															break;
 														case DOWN:
 															taskList.add(new ServoTask(
 																	robotSystem.getServos()[sc.getServoNum()],
 																	robotSystem.getServos()[sc.getServoNum()].getServoData().getLimitMin(), sc.getDelay(),
 																	null,
-																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup)));
+																	new FlavorTaskGroup(sc.getScriptGroup(), taskGroup), false));
 															break;
 													}
 												} else {

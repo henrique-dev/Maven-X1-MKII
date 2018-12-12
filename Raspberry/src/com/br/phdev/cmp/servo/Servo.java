@@ -22,13 +22,8 @@ public class Servo {
     }
 
     private void initServo() {
-        //this.setRawPosition(0);
-        //waitFor(100);
-        //this.move(0, false);
         moveToMid();
         waitFor(300);
-        //this.setRawPosition(0);
-        //waitFor(100);
     }
 
     public long getTaskSlave() {
@@ -64,12 +59,15 @@ public class Servo {
                 module.setPWM(this.servoData.getLocalChannel(), on, off);
     }
 
-    public void move(double degrees, boolean justForCorrection) {
+    public void move(double degrees, boolean justForCorrection, boolean ignoreDegreesLimits) {
+        int servoSignal;
         if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
             if (this.servoData.isInverted()) {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - getSignalFromDegrees(degrees) - getSignalFromDegrees(servoData.getMidCorrection())));
+                servoSignal =  (int)(this.servoData.getMidPosition() - getSignalFromDegrees(degrees) - getSignalFromDegrees(servoData.getMidCorrection()));
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, servoSignal);
             } else {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + getSignalFromDegrees(degrees) + getSignalFromDegrees(servoData.getMidCorrection())));
+                servoSignal = (int)(this.servoData.getMidPosition() + getSignalFromDegrees(degrees) + getSignalFromDegrees(servoData.getMidCorrection()));
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, servoSignal);
             }
             if (!justForCorrection)
                 this.currentPositionDegrees = degrees;
@@ -77,21 +75,59 @@ public class Servo {
             Log.w("Posição ultrapassa os limites");
             if (degrees > this.servoData.getLimitMax()) {
                 if (this.servoData.isInverted()) {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMax())  - getSignalFromDegrees(servoData.getMidCorrection())));
+                    if (ignoreDegreesLimits) {
+                        servoSignal = (int) (this.servoData.getMidPosition() - getSignalFromDegrees(degrees) - getSignalFromDegrees(servoData.getMidCorrection()));
+                        if (servoSignal < 150 || servoSignal > 600) {
+                            servoSignal = (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMax()) - getSignalFromDegrees(servoData.getMidCorrection()));
+                            degrees = this.servoData.getLimitMax();
+                        }
+                    } else {
+                        servoSignal = (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMax()) - getSignalFromDegrees(servoData.getMidCorrection()));
+                        degrees = this.servoData.getLimitMax();
+                    }
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, servoSignal);
                 } else {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMax())  + getSignalFromDegrees(servoData.getMidCorrection())));
+                    if (ignoreDegreesLimits) {
+                        servoSignal = (int) (this.servoData.getMidPosition() + getSignalFromDegrees(degrees) + getSignalFromDegrees(servoData.getMidCorrection()));
+                        if (servoSignal < 150 || servoSignal > 600) {
+                            servoSignal = (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMax()) + getSignalFromDegrees(servoData.getMidCorrection()));
+                            degrees = this.servoData.getLimitMax();
+                        }
+                    } else {
+                        servoSignal = (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMax()) + getSignalFromDegrees(servoData.getMidCorrection()));
+                        degrees = this.servoData.getLimitMax();
+                    }
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, servoSignal);
                 }
-                if (!justForCorrection)
-                    this.currentPositionDegrees = this.servoData.getLimitMax();
             } else if (degrees < this.servoData.getLimitMin()) {
                 if (this.servoData.isInverted()) {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMin())  - getSignalFromDegrees(servoData.getMidCorrection())));
+                    if (ignoreDegreesLimits) {
+                        servoSignal = (int) (this.servoData.getMidPosition() - getSignalFromDegrees(degrees) - getSignalFromDegrees(servoData.getMidCorrection()));
+                        if (servoSignal < 150 || servoSignal > 600) {
+                            servoSignal = (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMin()) - getSignalFromDegrees(servoData.getMidCorrection()));
+                            degrees = this.servoData.getLimitMin();
+                        }
+                    } else {
+                        servoSignal = (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMin()) - getSignalFromDegrees(servoData.getMidCorrection()));
+                        degrees = this.servoData.getLimitMin();
+                    }
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, servoSignal);
                 } else {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMin())  + getSignalFromDegrees(servoData.getMidCorrection())));
+                    if (ignoreDegreesLimits) {
+                        servoSignal = (int) (this.servoData.getMidPosition() + getSignalFromDegrees(degrees) + getSignalFromDegrees(servoData.getMidCorrection()));
+                        if (servoSignal < 150 || servoSignal > 600) {
+                            servoSignal = (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMin()) + getSignalFromDegrees(servoData.getMidCorrection()));
+                            degrees = this.servoData.getLimitMin();
+                        }
+                    } else {
+                        servoSignal = (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMin()) + getSignalFromDegrees(servoData.getMidCorrection()));
+                        degrees = this.servoData.getLimitMin();
+                    }
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, servoSignal);
                 }
-                if (!justForCorrection)
-                    this.currentPositionDegrees = this.servoData.getLimitMin();
             }
+            if (!justForCorrection)
+                this.currentPositionDegrees = degrees;
         }
     }
 
