@@ -67,7 +67,7 @@ public class Servo {
     public void move(double degrees, boolean justForCorrection) {
         if (degrees >= this.servoData.getLimitMin() && degrees <= this.servoData.getLimitMax()) {
             if (this.servoData.isInverted()) {
-                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - getSignalFromDegrees(degrees) + getSignalFromDegrees(servoData.getMidCorrection())));
+                this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() - getSignalFromDegrees(degrees) - getSignalFromDegrees(servoData.getMidCorrection())));
             } else {
                 this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)(this.servoData.getMidPosition() + getSignalFromDegrees(degrees) + getSignalFromDegrees(servoData.getMidCorrection())));
             }
@@ -77,7 +77,7 @@ public class Servo {
             Log.w("Posição ultrapassa os limites");
             if (degrees > this.servoData.getLimitMax()) {
                 if (this.servoData.isInverted()) {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMax())  + getSignalFromDegrees(servoData.getMidCorrection())));
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMax())  - getSignalFromDegrees(servoData.getMidCorrection())));
                 } else {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMax())  + getSignalFromDegrees(servoData.getMidCorrection())));
                 }
@@ -85,7 +85,7 @@ public class Servo {
                     this.currentPositionDegrees = this.servoData.getLimitMax();
             } else if (degrees < this.servoData.getLimitMin()) {
                 if (this.servoData.isInverted()) {
-                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMin())  + getSignalFromDegrees(servoData.getMidCorrection())));
+                    this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() - getSignalFromDegrees(this.servoData.getLimitMin())  - getSignalFromDegrees(servoData.getMidCorrection())));
                 } else {
                     this.module.setPWM(this.servoData.getLocalChannel(), 0, (int) (this.servoData.getMidPosition() + getSignalFromDegrees(this.servoData.getLimitMin())  + getSignalFromDegrees(servoData.getMidCorrection())));
                 }
