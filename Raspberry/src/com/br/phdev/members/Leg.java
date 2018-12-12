@@ -299,8 +299,8 @@ public class Leg {
     }
 
     public void stay() {
-        this.femur.move(femur.getCurrentAngle() - 3, true);
-        this.tarsus.move(tarsus.getCurrentAngle() + 3, true);
+        this.femur.move(femur.getCurrentAngle() - 3, true, false);
+        this.tarsus.move(tarsus.getCurrentAngle() + 3, true, false);
     }
 
     private double module(double value) {
