@@ -104,7 +104,7 @@ public class Servo {
     }
 
     public void moveToMid() {
-        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.servoData.getMidPosition() + (int)getSignalFromDegrees(servoData.getMidCorrection()));
+        this.module.setPWM(this.servoData.getLocalChannel(), 0, (int)this.servoData.getMidPosition() - (int)getSignalFromDegrees(servoData.getMidCorrection()));
     }
 
     public void moveToMax() {
