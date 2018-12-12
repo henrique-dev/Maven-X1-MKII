@@ -736,12 +736,12 @@ public class Maven {
 		System.out.println("                       m           m");
 		System.out.println("   _____       _____  _m___     ___m_ _____       _____");
 		System.out.println("  |     |     |     ||     |   |     |     |     |     |");
-		System.out.println("  | " + s_(legs[2].getTarsus().getServo().getServoData().getGlobalChannel()) +
-				"  |o o o| " + s_(legs[2].getFemur().getServo().getServoData().getGlobalChannel()) +
-				"  || " + s_(legs[2].getBase().getServo().getServoData().getGlobalChannel()) + "  |   | " +
-				s_(legs[3].getBase().getServo().getServoData().getGlobalChannel())+"  | " +
-				s_(legs[3].getFemur().getServo().getServoData().getGlobalChannel())+"  |o o o| " +
-				s_(legs[3].getTarsus().getServo().getServoData().getGlobalChannel())+"  |");
+		System.out.println("  | " + s_(legs[3].getTarsus().getServo().getServoData().getGlobalChannel()) +
+				"  |o o o| " + s_(legs[3].getFemur().getServo().getServoData().getGlobalChannel()) +
+				"  || " + s_(legs[3].getBase().getServo().getServoData().getGlobalChannel()) + "  |   | " +
+				s_(legs[2].getBase().getServo().getServoData().getGlobalChannel())+"  | " +
+				s_(legs[2].getFemur().getServo().getServoData().getGlobalChannel())+"  |o o o| " +
+				s_(legs[2].getTarsus().getServo().getServoData().getGlobalChannel())+"  |");
 		System.out.println("  |_____|     |_____||_____|   |_____|_____|     |_____|");
 		System.out.println("                       m           m");
 		System.out.println("                       m           m");
