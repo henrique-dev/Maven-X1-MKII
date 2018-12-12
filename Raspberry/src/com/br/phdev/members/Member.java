@@ -56,8 +56,8 @@ public class Member {
         return this.servo.getServoData().getLimitMin();
     }
 
-    public void move(double angle, boolean justForCorrection) {
-        this.servo.move(angle, justForCorrection);
+    public void move(double angle, boolean justForCorrection, boolean ignoreDegrees) {
+        this.servo.move(angle, justForCorrection, ignoreDegrees);
     }
 
 }
