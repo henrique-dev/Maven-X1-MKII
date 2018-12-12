@@ -155,7 +155,8 @@ public class Maven {
 																case "inverted": case "move": case "mid-correction": {
 																	String currentServoConfigName = parameter.trim();
 																	boolean runningServoPosConfig = true;
-																	float valueForServo = -1;
+																	float valueForServo = 0;
+																	boolean valueForServoDef = false;
 																	while (runningServoPosConfig) {
 																		currentPath = "configure-servos (servo " + globalChannel + " - " + currentServoConfigName + ") ";
 																		System.out.print(currentPath + "> ");
@@ -163,7 +164,7 @@ public class Maven {
 																			parameter = in.nextLine();
 																			switch (parameter.trim()) {
 																				case "save":
-																					if (valueForServo != -1) {
+																					if (vvalueForServoDef) {
 																						DataRepo dataRepo = new DataRepo();
 																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, valueForServo);
 																						switch (currentServoConfigName) {
@@ -222,14 +223,15 @@ public class Maven {
 																					break;
 																				default:
 																					try {
-
 																						switch (currentServoConfigName) {
 																							case "min": case "mid": case "max":
 																								valueForServo = Float.parseFloat(parameter);
-																								if (valueForServo >= 100 && valueForServo <= 650 || valueForServo == 0)
-																									robotSystem.getServos()[globalChannel].setRawPosition(valueForServo);
+																								if (valueForServo >= 100 && valueForServo <= 650 || valueForServo == 0) {
+                                                                                                    robotSystem.getServos()[globalChannel].setRawPosition(valueForServo);
+                                                                                                    valueForServoDef = true;
+                                                                                                }
 																								else
-																									valueForServo = -1;
+                                                                                                    valueForServoDef = false;
 																								break;
 																							case "limit-min": case "limit-max": case "mid-correction":
 																								valueForServo = Integer.parseInt(parameter);
@@ -244,10 +246,11 @@ public class Maven {
 																									Log.w("DENTRO DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
 																									robotSystem.getServos()[globalChannel].setRawPosition(newServoPos);
+                                                                                                    valueForServoDef = true;
 																								} else {
 																									Log.e("FORA DOS VALORES");
 																									Log.w("Posição do servo correspondente ao grau: " + newServoPos);
-																									valueForServo = -1;
+                                                                                                    valueForServoDef = false;
 																								}
 																								break;
 																							case "move":
