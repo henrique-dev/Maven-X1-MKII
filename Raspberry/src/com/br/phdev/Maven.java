@@ -164,7 +164,7 @@ public class Maven {
 																			parameter = in.nextLine();
 																			switch (parameter.trim()) {
 																				case "save":
-																					if (vvalueForServoDef) {
+																					if (valueForServoDef) {
 																						DataRepo dataRepo = new DataRepo();
 																						dataRepo.saveServoPosData(globalChannel, currentServoConfigName, valueForServo);
 																						switch (currentServoConfigName) {
