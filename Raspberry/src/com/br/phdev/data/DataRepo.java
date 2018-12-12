@@ -90,7 +90,7 @@ public class DataRepo {
             case "inverted":
                 sql = "update servos_data set inverted=" + (int)pos + " where global_channel=" + globalChannel;
                 break;
-            case "midcorrection":
+            case "mid-correction":
                 sql = "update servos_data set mid_correction=" + (int)pos + " where global_channel=" + globalChannel;
                 break;
             default:
