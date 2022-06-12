@@ -1,30 +1,29 @@
 # Maven-X1-MKII
-## Robô hexápode
+## Hexapod robot
 
-Este projeto se encontra em atualização.
+This project is currently being updated.
 
-Passos a serem concluidos:
-- [ ] Implementação do MPU9250
-- [ ] Movimentação autônoma
-- [ ] Robô se movimentando
+Steps to be completed:
+- [ ] Implementation of MPU9250
+- [ ] Autonomous movement
+- [ ] Robot moving
 
-Passos concluídos:
+Completed steps:
 - [x] ...
 
-### Descrição
+### Description
 
-Construido a partir de um modelo 3D, seu controle é realizado através da comunicação
-entre as aplicações deste com a de um smartphone. Ambas as aplicações serão feitas feitas em Java.
+Built from a 3D model, its control is carried out through communication
+between its applications with that of a smartphone. Both applications will be made in Java.
 
-Sua movimentação se dará por movimentos calculados em tempo real, não sendo necessário um esquema algorítmico. 
+Its movement will be by movements calculated in real time, not requiring an algorithmic scheme.
 
-Seu hardware é composto por:
-- 1 Raspberry pi zero
-- 2 Módulos PWM PCA9685
+Your hardware consists of:
+- 1 Raspberry Pi Zero
+- 2 PCA9685 PWM Modules
 - 1 MPU 9250
-- 18 Servo Motor MG995
+- 18 MG995 Servo Motor
 
-Na raiz do projeto existem os diretórios:
+At the root of the project there are directories:
 
-**Raspberry** se encontra o código relativo à aplicação do robô.
-
+**Raspberry** is the code related to the robot application.
